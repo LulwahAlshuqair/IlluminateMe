@@ -1,0 +1,4 @@
+#Sun Feb 03 22:57:08 IST 2019
+base.0=/home/apponward/Downloads/Illuminate_me/app/build/intermediates/transforms/dexMerger/debug/6
+path.0=classes.dex
+renamed.0=classes.dex
