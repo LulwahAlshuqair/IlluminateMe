@@ -211,6 +211,7 @@ public class Recognizer {
         }
         return Bitmap.createScaledBitmap(bitmap, resizedWidth, resizedHeight, false);
     }
+
     public Image getBase64EncodedJpeg(Bitmap bitmap) {
         Image image = new Image();
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();

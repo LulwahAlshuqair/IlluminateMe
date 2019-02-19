@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/lulubn/Downloads/Pronuncer-master/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
+            "outputFile": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-hdpi-v4/values-hdpi-v4.xml",
             "map": [
                 {
                     "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/values-hdpi-v4/values-hdpi-v4.xml",

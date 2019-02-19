@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
         //(2)
         uploadPic.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    ImageDescription img = new ImageDescription();
+    //ImageDescription img = new ImageDescription();
         pronouncer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
