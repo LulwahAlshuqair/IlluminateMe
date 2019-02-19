@@ -411,6 +411,7 @@ color foreground_material_dark
 color foreground_material_light
 color highlighted_text_material_dark
 color highlighted_text_material_light
+color instagram
 color material_blue_grey_800
 color material_blue_grey_900
 color material_blue_grey_950
@@ -448,6 +449,10 @@ color switch_thumb_normal_material_dark
 color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
+color transparent
+color twitter
+color whatsApp
+color whatsapp
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -671,6 +676,7 @@ drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable insta2
 drawable logo
 drawable logo1
 drawable notification_action_background
@@ -687,6 +693,8 @@ drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+drawable twit
+drawable wa
 id ALT
 id CTRL
 id FUNCTION

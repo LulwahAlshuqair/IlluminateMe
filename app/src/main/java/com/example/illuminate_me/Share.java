@@ -1,19 +1,21 @@
 package com.example.illuminate_me;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.io.File;
 
 public class Share extends AppCompatActivity {
 
-    private Button inst ;
-    private Button whats ;
-    private Button twitter ;
+    private ImageButton inst ;
+    private ImageButton whats ;
+    private ImageButton twitter ;
     private UploadTakeImage ut = new UploadTakeImage() ;
 
     @Override
