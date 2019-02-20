@@ -770,6 +770,7 @@ id forever
 id gone
 id group_divider
 id groups
+id guideline
 id home
 id homeAsUp
 id icon
@@ -855,6 +856,7 @@ id title_template
 id toggletts
 id top
 id topPanel
+id txtview1
 id uniform
 id up
 id uploadPic_btn

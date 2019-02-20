@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Feb 19 20:38:21 AST 2019
+#Tue Feb 19 21:32:53 AST 2019
 2.base=/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/transforms/mergeJniLibs/debug/0
 5.set=NATIVE_RESOURCE
 0.path=lib/armeabi-v7a/libdmt_speex.so

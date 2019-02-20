@@ -178,7 +178,6 @@ public class UploadTakeImage extends AppCompatActivity {
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
 
-
         // getExternalFilesDir(Environment.DIRECTORY_PICTURES); < this will make the img available in our app only
         File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) ;
 
@@ -188,8 +187,6 @@ public class UploadTakeImage extends AppCompatActivity {
              Fimage = File.createTempFile(imageFileName,  /* prefix */
                     ".jpg",         /* suffix */
                     storageDir      /* directory */);
-
-
 
         } catch (Exception e) {
             Log.d("mylog", "ExceptionF : " + e.toString() ) ;
