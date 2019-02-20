@@ -779,6 +779,7 @@ id icon_only
 id ifRoom
 id image
 id imageToUpload
+id imageToUpload2
 id info
 id invisible
 id italic

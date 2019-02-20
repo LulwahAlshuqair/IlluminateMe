@@ -20,6 +20,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -38,6 +39,7 @@ public class UploadTakeImage extends AppCompatActivity {
     private Bitmap takenPicture ;
     private  String pathToFile ;
 
+
     // we should replace the selected and taken with only one attribute
 
 
@@ -50,6 +52,7 @@ public class UploadTakeImage extends AppCompatActivity {
 
         setContentView(R.layout.activity_upload_take_image);
         image= findViewById(R.id.imageToUpload);
+
 
 
         // Permissions :

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/imageToUpload"
+    android:id="@+id/imageToUpload2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UploadTakeImage"
@@ -24,10 +25,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:background="#07000000"
-        android:singleLine="true"
-        android:textColor="#FFFFFF"
-        android:textSize="14sp"
+        android:background="#9518546e"
+
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        android:text="وردة حمراء "
+        android:textColor="#ffffff"
+
+        android:textSize="30sp"
+        app:fontFamily="@font/scheherazade_bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
