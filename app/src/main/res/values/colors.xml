@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorPrimary">#14536E</color>
+    <color name="colorPrimaryDark">#2C627B</color>
     <color name="colorAccent">#d81b60</color>
     <color name="whatsApp">#6412a10a</color>
     <color name="instagram">#c5a23c92</color>
     <color name="twitter">#641da1f3</color>
     <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+
 </resources>

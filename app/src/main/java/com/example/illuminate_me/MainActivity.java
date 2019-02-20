@@ -8,6 +8,8 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
+import android.graphics.Typeface;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +19,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int TAKE_PIC =2;
    private  Button takePic;
    private Button uploadPic;
-    private Button pronouncer;
+
+    ///private Button pronouncer;
 EnglishToTagalog ett ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,8 +29,19 @@ EnglishToTagalog ett ;
        // getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
+      Typeface cusFont = Typeface.createFromAsset(getAssets(),"fonts/coconnextarabic-light.ttf");
+
         //initiate buttons
         setbtnviews ();
+
+        //Setting fonts
+        takePic.setTypeface(cusFont);
+        uploadPic.setTypeface(cusFont);
+        takePic.setTextSize(50);
+        uploadPic.setTextSize(50);
+
+
+
         //button listeners
         //(1)
         takePic.setOnClickListener(new View.OnClickListener() {
@@ -56,21 +70,20 @@ EnglishToTagalog ett ;
         //Toast.makeText(this, msg, 1);
 
     //ImageDescription img = new ImageDescription();
-        pronouncer.setOnClickListener(new View.OnClickListener() {
+      /*  pronouncer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent = new Intent (MainActivity.this, Pronouncer.class);
                 startActivity(intent);
             }
-        });
+        });*/
     }
 
-    private void setbtnviews (){
+    private void setbtnviews(){
 
         takePic = findViewById(R.id.takePic_btn);
         uploadPic = findViewById(R.id.uploadPic_btn);
-        pronouncer = findViewById(R.id.pronouncer);
     }
 
 }

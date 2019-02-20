@@ -2,4 +2,7 @@
     <string name="app_name">Illuminate_me</string>
     <string name="todo">TODO</string>
     <string name="api_key">298dc5482d5046f3b557479d97de8eec</string>
+    <string name="take">التقط صورة</string>
+    <string name="upload">ارفع صورة</string>
+
 </resources>
