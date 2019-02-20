@@ -34,10 +34,12 @@ import static android.os.Environment.getExternalStoragePublicDirectory;
 public class UploadTakeImage extends AppCompatActivity {
     private float x1,x2,y1,y2;
     private ImageView image;
+    private TextView txtView;
     private Uri selectedImage ;
     private Uri photoUri ;
     private Bitmap takenPicture ;
     private  String pathToFile ;
+
 
 
     // we should replace the selected and taken with only one attribute
@@ -52,6 +54,8 @@ public class UploadTakeImage extends AppCompatActivity {
 
         setContentView(R.layout.activity_upload_take_image);
         image= findViewById(R.id.imageToUpload);
+        txtView = findViewById(R.id.txtview1) ;
+
 
 
 

@@ -11,6 +11,10 @@ anim abc_slide_out_bottom
 anim abc_slide_out_top
 anim abc_tooltip_enter
 anim abc_tooltip_exit
+array com_google_android_gms_fonts_certs
+array com_google_android_gms_fonts_certs_dev
+array com_google_android_gms_fonts_certs_prod
+array preloaded_fonts
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -695,6 +699,13 @@ drawable tooltip_frame_dark
 drawable tooltip_frame_light
 drawable twit
 drawable wa
+font adamina
+font amiri_bold
+font el_messiri
+font lateef
+font lemonada_semibold
+font scheherazade
+font scheherazade_bold
 id ALT
 id CTRL
 id FUNCTION

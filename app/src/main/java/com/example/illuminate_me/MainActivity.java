@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
    private  Button takePic;
    private Button uploadPic;
     private Button pronouncer;
-
+EnglishToTagalog ett ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent (MainActivity.this, UploadTakeImage.class);
                 startActivity(intent);
             }
+
         });
 
 
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //Toast.makeText(this, msg, 1);
 
     //ImageDescription img = new ImageDescription();
         pronouncer.setOnClickListener(new View.OnClickListener() {

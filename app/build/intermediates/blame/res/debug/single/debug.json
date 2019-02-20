@@ -380,6 +380,10 @@
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/drawable-xxxhdpi-v4/abc_switch_track_mtrl_alpha.9.png"
     },
     {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/font_el_messiri.ttf.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/font/el_messiri.ttf"
+    },
+    {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/color_abc_secondary_text_material_light.xml.flat",
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/color/abc_secondary_text_material_light.xml"
     },
@@ -696,6 +700,10 @@
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/drawable/abc_spinner_textfield_background_material.xml"
     },
     {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/font_amiri_bold.ttf.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/font/amiri_bold.ttf"
+    },
+    {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/layout_abc_alert_dialog_button_bar_material.xml.flat",
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
@@ -850,6 +858,10 @@
     {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/color_switch_thumb_material_light.xml.flat",
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/color/switch_thumb_material_light.xml"
+    },
+    {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/font_scheherazade.ttf.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/font/scheherazade.ttf"
     },
     {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/drawable-hdpi-v4_abc_btn_radio_to_on_mtrl_000.png.flat",
@@ -1368,6 +1380,10 @@
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/drawable-hdpi-v4/abc_menu_hardkey_panel_mtrl_mult.9.png"
     },
     {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/font_lemonada_semibold.ttf.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/font/lemonada_semibold.ttf"
+    },
+    {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_abc_ic_star_black_48dp.png.flat",
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/drawable-xxhdpi-v4/abc_ic_star_black_48dp.png"
     },
@@ -1540,6 +1556,10 @@
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/support-media-compat-26.1.0.aar/5c53e30821efb844ea1f6184c6902e0a/res/layout/notification_template_media.xml"
     },
     {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/font_scheherazade_bold.ttf.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/font/scheherazade_bold.ttf"
+    },
+    {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/color-v23_abc_tint_btn_checkable.xml.flat",
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/color-v23/abc_tint_btn_checkable.xml"
     },
@@ -1572,12 +1592,12 @@
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/868d4db467fa75f0d8d6e96e23b96af9/res/layout-v21/notification_action_tombstone.xml"
     },
     {
-        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
-    },
-    {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/xml_file_paths.xml.flat",
         "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/xml/file_paths.xml"
+    },
+    {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/drawable-ldrtl-mdpi-v17_abc_ic_menu_copy_mtrl_am_alpha.png.flat",
@@ -1650,6 +1670,10 @@
     {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/drawable-xxhdpi-v4_abc_scrubber_track_mtrl_alpha.9.png.flat",
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/drawable-xxhdpi-v4/abc_scrubber_track_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/font_adamina.ttf.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/font/adamina.ttf"
     },
     {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/drawable-xhdpi-v4_abc_btn_switch_to_on_mtrl_00012.9.png.flat",
@@ -1762,6 +1786,10 @@
     {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/drawable-mdpi-v4_abc_switch_track_mtrl_alpha.9.png.flat",
         "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/drawable-mdpi-v4/abc_switch_track_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/font_lateef.ttf.flat",
+        "source": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/src/main/res/font/lateef.ttf"
     },
     {
         "merged": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/res/merged/debug/drawable_abc_vector_test.xml.flat",
