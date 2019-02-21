@@ -3761,18 +3761,17 @@ public final class R {
   }
   public static final class mipmap {
     public static final int ic_launcher=0x7f0c0000;
-    public static final int ic_launcher_foreground=0x7f0c0001;
-    public static final int ic_launcher_foreground5=0x7f0c0002;
-    public static final int ic_launcher_round=0x7f0c0003;
-    public static final int take11=0x7f0c0004;
-    public static final int take111=0x7f0c0005;
-    public static final int take11_round=0x7f0c0006;
-    public static final int up=0x7f0c0007;
-    public static final int up1=0x7f0c0008;
-    public static final int up1_round=0x7f0c0009;
-    public static final int upload1=0x7f0c000a;
-    public static final int upload11=0x7f0c000b;
-    public static final int upload11_round=0x7f0c000c;
+    public static final int ic_launcher_foreground5=0x7f0c0001;
+    public static final int ic_launcher_round=0x7f0c0002;
+    public static final int take11=0x7f0c0003;
+    public static final int take111=0x7f0c0004;
+    public static final int take11_round=0x7f0c0005;
+    public static final int up=0x7f0c0006;
+    public static final int up1=0x7f0c0007;
+    public static final int up1_round=0x7f0c0008;
+    public static final int upload1=0x7f0c0009;
+    public static final int upload11=0x7f0c000a;
+    public static final int upload11_round=0x7f0c000b;
   }
   public static final class string {
     public static final int abc_action_bar_home_description=0x7f0d0000;

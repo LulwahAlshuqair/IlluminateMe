@@ -17,4 +17,26 @@ public class ImageDescription {
     public String translatedDescription = "i'm fatimah sheikho";
   //  private Clip  verbalDescription;
 
+
+    public void setDescription(String description){
+
+        description=description;
+    }
+
+    public void setTranslatedDescription(String description){
+
+        translatedDescription=description;
+    }
+
+    public String getTranslatedDescription(){
+
+       return  translatedDescription;
+    }
+
+    public String getDescription(){
+
+        return  description;
+    }
+
+
 }

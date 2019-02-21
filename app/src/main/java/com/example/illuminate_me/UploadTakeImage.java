@@ -39,11 +39,11 @@ public class UploadTakeImage extends AppCompatActivity {
     private Uri photoUri ;
     private Bitmap takenPicture ;
     private  String pathToFile ;
-
-
-
+    private Recognizer recognizer;
+    private Translator translator;
+    private Pronouncer pronouncer;
+    private ImageDescription imageDescription;
     // we should replace the selected and taken with only one attribute
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,11 +56,19 @@ public class UploadTakeImage extends AppCompatActivity {
         image= findViewById(R.id.imageToUpload);
         txtView = findViewById(R.id.txtview1) ;
 
+        try {
+            recognizer.callCloudVision(takenPicture);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        imageDescription.setDescription(recognizer.getDescription());
 
+       //imageDescription.setTranslatedDescription(translator.translate(imageDescription.getDescription(),"en");
+        imageDescription.setTranslatedDescription("مرحبا");
+        pronouncer.synthesize(imageDescription.getTranslatedDescription());
 
         // Permissions :
-
         if (Build.VERSION.SDK_INT >= 23 )
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2) ;
 

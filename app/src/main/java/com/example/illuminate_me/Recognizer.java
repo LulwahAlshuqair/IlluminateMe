@@ -44,8 +44,8 @@ public class Recognizer {
     static final int REQUEST_GALLERY_IMAGE = 10;
     static final int REQUEST_PERMISSIONS = 13;
     private final String LOG_TAG = "MainActivity";
-    private TextView resultTextView;
-    private ImageView selectedImage;
+
+    private String finalResult;
 
     private static ArrayList<ColorName> initColorList() {
         ArrayList<ColorName> colorList = new ArrayList<ColorName>();
@@ -86,8 +86,8 @@ public class Recognizer {
 //(1)
 
     @SuppressLint("StaticFieldLeak")
-    private void callCloudVision(final Bitmap bitmap) throws IOException {
-        resultTextView.setText("Retrieving results from cloud");
+    public void callCloudVision(final Bitmap bitmap) throws IOException {
+       // resultTextView.setText("Retrieving results from cloud");
 
      new AsyncTask<Object, Void, String>() {
             @Override
@@ -152,8 +152,8 @@ public class Recognizer {
             }
 
             protected void onPostExecute(String result) {
-
-                resultTextView.setText(result+"\n");
+ finalResult =result;
+               // resultTextView.setText(result+"\n");
             }
         }.execute();
     }//end callcloudvision
@@ -332,10 +332,8 @@ public class Recognizer {
         return Textcolors; }
 
     //(6) generate Description
-    public String generateDescription (){
-        String description = "";
-        //code
-        return description;
+    public String getDescription (){
+       return finalResult;
     }
 
 }//end class

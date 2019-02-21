@@ -68,7 +68,7 @@ public class Pronouncer extends AppCompatActivity implements View.OnClickListene
                 //If we are not loading TTS from the server, then we should do so.
                 if(ttsTransaction == null) {
                //     toggleTTS.setText(getResources().getString(R.string.cancel));
-                    synthesize();
+                   // synthesize();
                 }
                 //Otherwise lets attempt to cancel that transaction
                 else {
@@ -86,7 +86,7 @@ public class Pronouncer extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    private void synthesize() {
+    public void synthesize(String description) {
         //Setup our TTS transaction options.
         Transaction.Options options = new Transaction.Options();
         options.setLanguage(new Language(Configuration.LANGUAGE));
@@ -94,7 +94,7 @@ public class Pronouncer extends AppCompatActivity implements View.OnClickListene
         options.setVoice(new Voice(voice)); //optionally change the Voice of the speaker, but will use the default if omitted.
 System.out.print(ttsText.getText().toString());
         //Start a TTS transaction
-        ttsTransaction = speechSession.speakString(ttsText.getText().toString(), options, new Transaction.Listener() {
+        ttsTransaction = speechSession.speakString(description, options, new Transaction.Listener() {
         //ttsTransaction = speechSession.speakString("hello my name is lulu", options, new Transaction.Listener() {
             @Override
             public void onAudio(Transaction transaction, Audio audio) {
