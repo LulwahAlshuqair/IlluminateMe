@@ -39,10 +39,12 @@ public class UploadTakeImage extends AppCompatActivity {
     private Uri photoUri ;
     private Bitmap takenPicture ;
     private  String pathToFile ;
-    private Recognizer recognizer;
-    private Translator translator;
-    private Pronouncer pronouncer;
-    private ImageDescription imageDescription;
+    private Recognizer recognizer=new Recognizer();
+    private Translator translator=new Translator();
+    private Pronouncer pronouncer=new Pronouncer();
+    private ImageDescription imageDescription= new ImageDescription();
+    private EnglishToTagalog ett ;
+    UserImage userImage =new UserImage();
     // we should replace the selected and taken with only one attribute
 
     @Override
@@ -56,17 +58,8 @@ public class UploadTakeImage extends AppCompatActivity {
         image= findViewById(R.id.imageToUpload);
         txtView = findViewById(R.id.txtview1) ;
 
-        try {
-            recognizer.callCloudVision(takenPicture);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-        imageDescription.setDescription(recognizer.getDescription());
 
-       //imageDescription.setTranslatedDescription(translator.translate(imageDescription.getDescription(),"en");
-        imageDescription.setTranslatedDescription("مرحبا");
-        pronouncer.synthesize(imageDescription.getTranslatedDescription());
 
         // Permissions :
         if (Build.VERSION.SDK_INT >= 23 )
@@ -76,9 +69,13 @@ public class UploadTakeImage extends AppCompatActivity {
         // repeatDescription =(Button) findViewById(R.id.repeatDescription);
         // TO PEN THE GALLARY
         if(MainActivity.chosenButton==MainActivity.UPLOAD_PIC)
+        {
             uploadPicture();
+       }
         else
+        {
             takePicture();
+       }
     }
 
     //to allow user select image from the gallary
@@ -104,6 +101,7 @@ public class UploadTakeImage extends AppCompatActivity {
 
                 photoUri = FileProvider.getUriForFile(this,"com.example.android.fileprovider",photoFile);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri) ;
+
                 startActivityForResult(cameraIntent,MainActivity.chosenButton);
 
             }
@@ -120,15 +118,61 @@ public class UploadTakeImage extends AppCompatActivity {
         //to upload picture
 
         if( requestCode==MainActivity.UPLOAD_PIC&&resultCode==RESULT_OK &&data!=null){
-            selectedImage = data.getData();
-            image.setImageURI(selectedImage);
-        }
+            selectedImage = data.getData(); // This is URI need to convert to Bitmap
+            try {
+                takenPicture = MediaStore.Images.Media.getBitmap(this.getContentResolver() , selectedImage) ;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //image.setImageURI(selectedImage);
+
+            if (selectedImage == null ){
+                txtView.setText("null upload");
+            } else {
+            try {
+                userImage.setImageUri(selectedImage);
+               // userImage.setImageBit(recognizer.resizeBitmap(userImage.getImageBit()));
+                recognizer.callCloudVision(userImage.getImageBit());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            imageDescription.setDescription(recognizer.getDescription());
+            ett =  new EnglishToTagalog("en",imageDescription.getDescription());
+            ett.doInBackground();
+            ett.translated();
+            imageDescription.setTranslatedDescription(ett.getMsg());
+            txtView.setText(imageDescription.getTranslatedDescription());
+            pronouncer.synthesize(imageDescription.getTranslatedDescription());
+        }}
 
         // allow user to take a picture
         if( requestCode==MainActivity.TAKE_PIC && resultCode==RESULT_OK){
-            takenPicture = BitmapFactory.decodeFile(pathToFile) ;
-            image.setImageBitmap(takenPicture);
-            Toast.makeText(this, pathToFile, Toast.LENGTH_SHORT).show();
+            takenPicture = BitmapFactory.decodeFile(pathToFile) ; // This is Bitmap
+            userImage.setImageBit(takenPicture);
+
+            if (takenPicture == null ){
+                txtView.setText("null take");
+            // image.setImageBitmap(takenPicture);
+        }
+            else {
+                try {
+                 //   userImage.setImageBit(recognizer.resizeBitmap(userImage.getImageBit()));
+                    recognizer.callCloudVision(userImage.getImageBit());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                imageDescription.setDescription(recognizer.getDescription());
+           /* ett =  new EnglishToTagalog("en",imageDescription.getDescription());
+            ett.doInBackground();
+            ett.translated();
+            imageDescription.setTranslatedDescription(ett.getMsg());*/
+                txtView.setText(imageDescription.getDescription());
+                //pronouncer.synthesize(imageDescription.getTranslatedDescription());
+
+            }
+
+
+
 
 
         }
@@ -160,12 +204,8 @@ public class UploadTakeImage extends AppCompatActivity {
                 if (x1>x2) {
                     // swipe left
                     // share menu
-
                     Intent intent = new Intent (UploadTakeImage.this, Share.class);
                     startActivity(intent);
-
-
-
                 }
                 break;
 

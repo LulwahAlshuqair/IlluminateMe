@@ -89,6 +89,7 @@ public class Recognizer {
     public void callCloudVision(final Bitmap bitmap) throws IOException {
        // resultTextView.setText("Retrieving results from cloud");
 
+
      new AsyncTask<Object, Void, String>() {
             @Override
             protected String doInBackground(Object... params) {
@@ -152,7 +153,7 @@ public class Recognizer {
             }
 
             protected void onPostExecute(String result) {
- finalResult =result;
+              finalResult =result;
                // resultTextView.setText(result+"\n");
             }
         }.execute();
