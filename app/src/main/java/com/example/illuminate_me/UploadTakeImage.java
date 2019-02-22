@@ -207,7 +207,9 @@ public class UploadTakeImage extends AppCompatActivity {
             ett.translated();
             imageDescription.setTranslatedDescription(ett.getMsg());
             txtView.setText(imageDescription.getTranslatedDescription());
-            pronouncer.synthesize(imageDescription.getTranslatedDescription());*/
+             pronouncer.synthesize(imageDescription.getTranslatedDescription());
+            */
+
             }
         }
 
@@ -318,7 +320,7 @@ public class UploadTakeImage extends AppCompatActivity {
 //start
 @SuppressLint("StaticFieldLeak")
 private void callCloudVision(final Bitmap bitmap) throws IOException {
-    txtView.setText("Retrieving results from cloud");
+    txtView.setText("Uploading...");
 
     new AsyncTask<Object, Void, String>() {
         @Override
@@ -388,7 +390,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
     }.execute();
 } //end callcloudvision
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-        StringBuilder message = new StringBuilder("Results:\n");
+        StringBuilder message = new StringBuilder("");
         StringBuilder TextOCR = new StringBuilder("");
         StringBuilder TextfacialExpressions = new StringBuilder("");
         StringBuilder Textlabel = new StringBuilder("");
@@ -419,7 +421,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             ocrtext.toLowerCase();
             ocrtext=ocrtext.replaceAll("[\r\n]+", " ");
 
-            TextOCR.append(ocrtext); }
+            TextOCR.append("Written on it: "+ocrtext); }
         else {
             TextOCR.append(""); }
 
@@ -468,11 +470,15 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         //colors
         // message.append("\n"+"COLORS:\n");
         DominantColorsAnnotation colors  = response.getResponses().get(0).getImagePropertiesAnnotation().getDominantColors();
-        for (ColorInfo color : colors.getColors()) {
-            Textcolors.append(
-                    "" +getColorNameFromRgb((int)Math.round(color.getColor().getRed()),(int)Math.round(color.getColor().getGreen()),(int)Math.round(color.getColor().getBlue())));
-            break;}
-
+        if(faces==null) {
+            for (ColorInfo color : colors.getColors()) {
+                Textcolors.append(
+                        "" + getColorNameFromRgb((int) Math.round(color.getColor().getRed()), (int) Math.round(color.getColor().getGreen()), (int) Math.round(color.getColor().getBlue())));
+                break;
+            }
+        }
+        else {
+            Textcolors.append(""); }
         //HERE COMBINED RECEIVED STRING
         if(!(Textlabel.toString().equals("Written Text:")))
             message.append(Textcolors+" ");

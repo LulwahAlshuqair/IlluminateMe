@@ -4,12 +4,12 @@
         "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\mipmap-mdpi\\upload11_round.png"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_tooltip.xml.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\layout\\abc_tooltip.xml"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_cab_background_top_material.xml.flat",
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable\\abc_cab_background_top_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_tooltip.xml.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\layout\\abc_tooltip.xml"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_secondary_text_material_light.xml.flat",
@@ -28,12 +28,12 @@
         "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\font\\amiri_bold.ttf"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_text_select_handle_middle_mtrl_light.png.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xhdpi-v4\\abc_text_select_handle_middle_mtrl_light.png"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_take11_round.xml.flat",
         "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\mipmap-anydpi-v26\\take11_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_text_select_handle_middle_mtrl_light.png.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xhdpi-v4\\abc_text_select_handle_middle_mtrl_light.png"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_upload11_round.png.flat",
@@ -72,12 +72,12 @@
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-mdpi-v4\\abc_ab_share_pack_mtrl_alpha.9.png"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_select_dialog_item_material.xml.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\layout\\select_dialog_item_material.xml"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_ic_menu_copy_mtrl_am_alpha.png.flat",
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxxhdpi-v4\\abc_ic_menu_copy_mtrl_am_alpha.png"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_select_dialog_item_material.xml.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\layout\\select_dialog_item_material.xml"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_upload11_round.png.flat",
@@ -96,12 +96,12 @@
         "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\color\\whatsapp.xml"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_tts.xml.flat",
-        "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\layout\\activity_tts.xml"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher_foreground5.png.flat",
         "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher_foreground5.png"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_tts.xml.flat",
+        "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\layout\\activity_tts.xml"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_textfield_search_activated_mtrl_alpha.9.png.flat",
@@ -132,12 +132,12 @@
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-auth-16.0.1.aar\\9dfeac68c2da176a5e947db16ce05646\\res\\drawable-watch-v20\\common_google_signin_btn_text_light_normal.xml"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_icon_light_focused.xml.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.1.0.aar\\5577c57fa3fcef7bca874a57a414186b\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_list_menu_item_icon.xml.flat",
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\layout\\abc_list_menu_item_icon.xml"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable_common_google_signin_btn_icon_light_focused.xml.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.1.0.aar\\5577c57fa3fcef7bca874a57a414186b\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_notification_bg_normal.9.png.flat",
@@ -152,16 +152,16 @@
         "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\font\\adamina.ttf"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_part_time.xml.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-28.0.0.aar\\fb1ab7a4a1cda25cab640120782c24a0\\res\\layout\\notification_template_part_time.xml"
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxxhdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_up1_round.png.flat",
         "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\mipmap-hdpi\\up1_round.png"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_spinner_mtrl_am_alpha.9.png.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxxhdpi-v4\\abc_spinner_mtrl_am_alpha.9.png"
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_part_time.xml.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\support-compat-28.0.0.aar\\fb1ab7a4a1cda25cab640120782c24a0\\res\\layout\\notification_template_part_time.xml"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_search_view.xml.flat",
@@ -184,12 +184,12 @@
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_check_to_on_mtrl_015.png.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxhdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_list_focused_holo.9.png.flat",
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxhdpi-v4\\abc_list_focused_holo.9.png"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_check_to_on_mtrl_015.png.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxhdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_btn_switch_to_on_mtrl_00001.9.png.flat",
@@ -368,12 +368,12 @@
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxxhdpi-v4\\abc_ic_star_half_black_16dp.png"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ratingbar_material.xml.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable\\abc_ratingbar_material.xml"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_googleg_disabled_color_18.png.flat",
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-16.1.0.aar\\5577c57fa3fcef7bca874a57a414186b\\res\\drawable-xhdpi-v4\\googleg_disabled_color_18.png"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ratingbar_material.xml.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable\\abc_ratingbar_material.xml"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_switch_thumb_material.xml.flat",
@@ -396,12 +396,12 @@
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-v23\\abc_control_background_material.xml"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_take111.png.flat",
-        "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\mipmap-mdpi\\take111.png"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ratingbar_small_material.xml.flat",
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable\\abc_ratingbar_small_material.xml"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_take111.png.flat",
+        "source": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\src\\main\\res\\mipmap-mdpi\\take111.png"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_background_cache_hint_selector_material_dark.xml.flat",
@@ -576,12 +576,12 @@
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\layout\\abc_screen_content_include.xml"
     },
     {
-        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_textfield_activated_mtrl_alpha.9.png.flat",
-        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxhdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png"
-    },
-    {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_text_select_handle_left_mtrl_light.png.flat",
         "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxxhdpi-v4\\abc_text_select_handle_left_mtrl_light.png"
+    },
+    {
+        "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_textfield_activated_mtrl_alpha.9.png.flat",
+        "source": "C:\\Users\\areej\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-28.0.0.aar\\d3d32908daff10ebbc29963a69abf37d\\res\\drawable-xxhdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png"
     },
     {
         "merged": "C:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_take11_round.png.flat",

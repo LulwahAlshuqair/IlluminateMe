@@ -92,7 +92,7 @@ public class Pronouncer extends AppCompatActivity implements View.OnClickListene
         options.setLanguage(new Language(Configuration.LANGUAGE));
 
         options.setVoice(new Voice(voice)); //optionally change the Voice of the speaker, but will use the default if omitted.
-System.out.print(ttsText.getText().toString());
+//System.out.print(ttsText.getText().toString());
         //Start a TTS transaction
         ttsTransaction = speechSession.speakString(description, options, new Transaction.Listener() {
         //ttsTransaction = speechSession.speakString("hello my name is lulu", options, new Transaction.Listener() {
