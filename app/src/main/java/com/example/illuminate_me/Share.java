@@ -33,6 +33,7 @@ public class Share extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // Instagram share
                 // Create the new Intent using the 'Send' action.
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/*");
@@ -54,6 +55,8 @@ public class Share extends AppCompatActivity {
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 // Twitter share
             }
         });
