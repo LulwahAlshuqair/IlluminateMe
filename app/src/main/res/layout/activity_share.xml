@@ -4,49 +4,53 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".Share"
     tools:layout_editor_absoluteY="25dp">
 
     <ImageButton
         android:id="@+id/btn_twitter"
-        android:layout_width="368dp"
-        android:layout_height="140dp"
-        android:layout_marginTop="24dp"
-        android:background="@color/twitter"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="93dp"
+        android:background="@drawable/roundcornert"
+        android:padding="5dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/btn_inst"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/twit" />
+        app:layout_constraintVertical_bias="0.966"
+        app:srcCompat="@drawable/tw" />
 
     <ImageButton
         android:id="@+id/btn_inst"
-        android:layout_width="368dp"
-        android:layout_height="143dp"
-        android:background="@color/instagram"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/roundcorneri"
+        android:padding="4dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@+id/btn_whats"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_twitter"
-        app:srcCompat="@drawable/insta2" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/ins" />
 
     <ImageButton
         android:id="@+id/btn_whats"
-        android:layout_width="368dp"
-        android:layout_height="146dp"
-        android:layout_marginBottom="16dp"
-        android:background="@color/whatsApp"
-        android:padding="16dp"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/roundcornerw"
+        android:padding="4dp"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_inst"
-        app:srcCompat="@drawable/wa" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:srcCompat="@drawable/wh" />
 
 </android.support.constraint.ConstraintLayout>

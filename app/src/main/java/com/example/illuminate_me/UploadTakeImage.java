@@ -15,6 +15,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -125,14 +127,18 @@ public class UploadTakeImage extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_upload_take_image);
-        image = findViewById(R.id.imageToUpload);
-        txtView = findViewById(R.id.txtview1);
-
-
         // Permissions :
         if (Build.VERSION.SDK_INT >= 23)
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+
+
+        setContentView(R.layout.activity_upload_take_image);
+        image = findViewById(R.id.imageToUpload);
+        txtView = findViewById(R.id.txtview1);
+        txtView.setMovementMethod(new ScrollingMovementMethod());
+
+
+
 
 
         // repeatDescription =(Button) findViewById(R.id.repeatDescription);
@@ -264,8 +270,29 @@ public class UploadTakeImage extends AppCompatActivity {
                 if (x1 < x2) {
                     // swipe right
                     // go to previous screen
-                    Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
-                    startActivity(intent);
+                   // Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
+                   // startActivity(intent);
+                    Bitmap  saving =  userImage.getImageBit();
+
+
+
+                    String root = Environment.getExternalStorageDirectory().toString();
+                    File myDir = new File(root + "/saved_images");
+                    myDir.mkdirs();
+
+                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                    String fname = "Shutta_"+ timeStamp +".jpg";
+
+                    File file = new File(myDir, fname);
+                    if (file.exists()) file.delete ();
+                    try {
+                        FileOutputStream out = new FileOutputStream(file);
+                        saving.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        out.flush();
+                        out.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
@@ -274,6 +301,7 @@ public class UploadTakeImage extends AppCompatActivity {
                     // share menu
                     Intent intent = new Intent(UploadTakeImage.this, Share.class);
                     startActivity(intent);
+                    finish() ;
                 }
                 break;
 
