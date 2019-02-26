@@ -235,7 +235,7 @@ public class UploadTakeImage extends AppCompatActivity {
                     // recognizer.callCloudVision(userImage.getImageBit());
                     callCloudVision(userImage.getImageBit());
                     //    imageDescription.setDescription(recognizer.getDescription());
-                    String des = (String) txtView.getText();
+                    String des = "" + txtView.getText();
 
                 } catch (IOException e) {
                     e.printStackTrace();

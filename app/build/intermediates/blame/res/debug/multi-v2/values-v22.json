@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/lulu/StudioProjects/IlluminateMe/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v22/values-v22.xml",
+            "outputFile": "/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-v22/values-v22.xml",
             "map": [
                 {
-                    "source": "/Users/lulu/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/6c81286e8c33ce4ff8e35ea290e406b5/res/values-v22/values-v22.xml",
+                    "source": "/Users/lulubn/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/56fdadaa7c517225af02f87bfc381a57/res/values-v22/values-v22.xml",
                     "from": {
                         "startLines": "2,3,4,9",
                         "startColumns": "4,4,4,4",
