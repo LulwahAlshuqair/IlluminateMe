@@ -79,8 +79,8 @@ public class UploadTakeImage extends AppCompatActivity {
     private String pathToFile;
     private Recognizer recognizer = new Recognizer();
     private Translator translator = new Translator();
-    private Pronouncer pronouncer = new Pronouncer();
     private ImageDescription imageDescription = new ImageDescription();
+    private  String TranslatedText;
     private EnglishToTagalog ett;
     UserImage userImage = new UserImage();
     // we should replace the selected and taken with only one attribute
@@ -91,24 +91,24 @@ public class UploadTakeImage extends AppCompatActivity {
         colorList.add(new ColorName("Black", 0x00, 0x00, 0x00));/////
         colorList.add(new ColorName("Blue", 0x00, 0x00, 0xFF));///
         colorList.add(new ColorName("Brown", 0xA5, 0x2A, 0x2A));///
-        colorList.add(new ColorName("DarkBlue", 0x00, 0x00, 0x8B));//
-        colorList.add(new ColorName("DarkGray", 0xA9, 0xA9, 0xA9));///
-        colorList.add(new ColorName("DarkGreen", 0x00, 0x64, 0x00));//
-        colorList.add(new ColorName("DarkOrange", 0xFF, 0x8C, 0x00));//
-        colorList.add(new ColorName("DarkRed", 0x8B, 0x00, 0x00));//
+        colorList.add(new ColorName("Dark Blue", 0x00, 0x00, 0x8B));//
+        colorList.add(new ColorName("Dark Gray", 0xA9, 0xA9, 0xA9));///
+        colorList.add(new ColorName("Dark Green", 0x00, 0x64, 0x00));//
+        colorList.add(new ColorName("Dark Orange", 0xFF, 0x8C, 0x00));//
+        colorList.add(new ColorName("Dark Red", 0x8B, 0x00, 0x00));//
         colorList.add(new ColorName("Gold", 0xFF, 0xD7, 0x00));///
         colorList.add(new ColorName("Gray", 0x80, 0x80, 0x80));///
         colorList.add(new ColorName("Green", 0x00, 0x80, 0x00));///
-        colorList.add(new ColorName("GreenYellow", 0xAD, 0xFF, 0x2F));///
+        colorList.add(new ColorName("Green Yellowish", 0xAD, 0xFF, 0x2F));///
         colorList.add(new ColorName("Ivory", 0xFF, 0xFF, 0xF0));////
-        colorList.add(new ColorName("LightBlue", 0xAD, 0xD8, 0xE6));///
-        colorList.add(new ColorName("LightGray", 0xD3, 0xD3, 0xD3));//
-        colorList.add(new ColorName("LightGreen", 0x90, 0xEE, 0x90));//
-        colorList.add(new ColorName("LightYellow", 0xFF, 0xFF, 0xE0));//
+        colorList.add(new ColorName("Light Blue", 0xAD, 0xD8, 0xE6));///
+        colorList.add(new ColorName("Light Gray", 0xD3, 0xD3, 0xD3));//
+        colorList.add(new ColorName("Light Green", 0x90, 0xEE, 0x90));//
+        colorList.add(new ColorName("Light Yellow", 0xFF, 0xFF, 0xE0));//
         colorList.add(new ColorName("Maroon", 0x80, 0x00, 0x00));///
         colorList.add(new ColorName("Navy", 0x00, 0x00, 0x80));//
         colorList.add(new ColorName("Orange", 0xFF, 0xA5, 0x00));//
-        colorList.add(new ColorName("OrangeRed", 0xFF, 0x45, 0x00));//
+        colorList.add(new ColorName("Orange Reddish", 0xFF, 0x45, 0x00));//
         colorList.add(new ColorName("Pink", 0xFF, 0xC0, 0xCB));///
         colorList.add(new ColorName("Purple", 0x80, 0x00, 0x80));///
         colorList.add(new ColorName("Red", 0xFF, 0x00, 0x00));///
@@ -412,8 +412,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
 
         protected void onPostExecute(String result) {
 
-            txtView.setText(result + "\n");
-
+            txtView.setText(result + "\n" );
+            Pronouncer p = new Pronouncer(result);
         }
     }.execute();
 } //end callcloudvision
@@ -474,9 +474,12 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 String surprise =String.format(face.getSurpriseLikelihood());
                 if (surprise.equals("VERY_LIKELY")||surprise.equals("LIKELY")||surprise.equals("POSSIBLE"))
                     person="a surprised person";
-                if (numberofpersons > 1 )
-                    TextfacialExpressions.append(" and \n"+person);
-                else TextfacialExpressions.append(person);
+                if (numberofpersons > 1 ){
+                    //person=+person;
+                TextfacialExpressions.append("and "+person);} else
+
+                TextfacialExpressions.append(person);
+
             }
 
         } else {
@@ -512,8 +515,23 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             message.append(Textcolors+" ");
         message.append(Textlabel+" ");
         message.append(TextfacialExpressions+" ");
-        message.append(TextOCR+" ");
-        return message.toString();
+        //message.append(TextOCR+" ");
+
+        ett =  new EnglishToTagalog(from,ocrtext);
+        if (texts!=null&& from!="ar"){
+        ett.doInBackground();
+        ett.translated();
+        ocrtext=ett.getMsg();}
+        if(!(message.equals(""))){
+        ett.setFrom("en");
+        ett.setMsg(message.toString());
+        ett.doInBackground();
+        ett.translated();
+        TranslatedText=ett.getMsg();}
+
+        imageDescription.setTranslatedDescription(ett.getMsg());
+
+        return TranslatedText + ocrtext;
     }// end tostring
     public Bitmap resizeBitmap(Bitmap bitmap) {
         int maxDimension = 1024;

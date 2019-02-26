@@ -1,5 +1,6 @@
 package com.example.illuminate_me;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -24,20 +25,30 @@ public class Pronouncer extends AppCompatActivity implements View.OnClickListene
     private String voice ="Tarik";
     private Button toggleTTS;
     private EditText ttsText;
-
+private  String tts;
 
 //(1)
     /*   public Clip provideVerbalDescription(String text){
 
 }*/
+public Pronouncer(String tts){
+    this.tts=tts;
 
+toggleTTS();
+    setState(State.IDLE);
+}
+    public void setTts(String tts) {
+        this.tts = tts;
+    }
+
+    @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_tts);
 
-       ttsText = (EditText)findViewById(R.id.edittext);
+       ttsText = (EditText)findViewById(R.id.txtview1);
        // language = (EditText)findViewById(R.id.language);
        // language.setText(Configuration.LANGUAGE_CODE);
 
@@ -86,7 +97,7 @@ public class Pronouncer extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    public void synthesize(String description) {
+    public void synthesize() {
         //Setup our TTS transaction options.
         Transaction.Options options = new Transaction.Options();
         options.setLanguage(new Language(Configuration.LANGUAGE));
@@ -94,7 +105,7 @@ public class Pronouncer extends AppCompatActivity implements View.OnClickListene
         options.setVoice(new Voice(voice)); //optionally change the Voice of the speaker, but will use the default if omitted.
 //System.out.print(ttsText.getText().toString());
         //Start a TTS transaction
-        ttsTransaction = speechSession.speakString(description, options, new Transaction.Listener() {
+        ttsTransaction = speechSession.speakString(tts, options, new Transaction.Listener() {
         //ttsTransaction = speechSession.speakString("hello my name is lulu", options, new Transaction.Listener() {
             @Override
             public void onAudio(Transaction transaction, Audio audio) {
