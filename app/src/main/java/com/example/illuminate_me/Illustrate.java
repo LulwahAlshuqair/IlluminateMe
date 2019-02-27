@@ -1,87 +1,48 @@
 package com.example.illuminate_me;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
-import com.nuance.speechkit.AudioPlayer;
-import com.nuance.speechkit.Session;
-import com.nuance.speechkit.Transaction;
-
+import android.content.Context;
 
 import com.nuance.speechkit.Audio;
+import com.nuance.speechkit.AudioPlayer;
 import com.nuance.speechkit.Language;
+import com.nuance.speechkit.Session;
+import com.nuance.speechkit.Transaction;
 import com.nuance.speechkit.TransactionException;
 import com.nuance.speechkit.Voice;
 
-public class Pronouncer extends AppCompatActivity implements View.OnClickListener, AudioPlayer.Listener {
+public class Illustrate implements  AudioPlayer.Listener{
     private Session speechSession;
     private Transaction ttsTransaction;
-    private State state = State.IDLE;
+    private Illustrate.State state = Illustrate.State.IDLE;
     private String voice ="Tarik";
-    private Button toggleTTS;
-    private EditText ttsText;
-private  String tts;
-
-//(1)
-    /*   public Clip provideVerbalDescription(String text){
-
-}*/
-public Pronouncer(String tts){
-    this.tts=tts;
-
-     toggleTTS();
-    setState(State.IDLE);
-}
+    private Context context;
+    private String text;
 
 
-    public void setTts(String tts) {
-        this.tts = tts;
-    }
-
-    @SuppressLint("WrongViewCast")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_tts);
-
-       ttsText = (EditText)findViewById(R.id.txtview1);
-       // language = (EditText)findViewById(R.id.language);
-       // language.setText(Configuration.LANGUAGE_CODE);
-
-      //  logs = (TextView)findViewById(R.id.logs);
-      //  clearLogs = (Button)findViewById(R.id.clear_logs);
-      //  clearLogs.setOnClickListener(this);
-
-        toggleTTS = (Button)findViewById(R.id.toggletts);
-        toggleTTS.setOnClickListener(this);
+    public Illustrate(String tts, Context context) {
+this.context=context;
+this.text=tts;
 
         //Create a session
-        speechSession = Session.Factory.session(this, Configuration.SERVER_URI, Configuration.APP_KEY);
+        speechSession = Session.Factory.session(context, Configuration.SERVER_URI, Configuration.APP_KEY);
         speechSession.getAudioPlayer().setListener(this);
 
-        setState(State.IDLE);
+        setState(Illustrate.State.IDLE);
+      //  startSynthesize();
     }
-    @Override
-    public void onClick(View v) {
-        if(v == toggleTTS) {
-            toggleTTS();
-        }
+
+    public void startSynthesize() {
+       toggleTTS();
     }
-    /* TTS transactions */
+
 
     private void toggleTTS() {
         switch (state) {
             case IDLE:
                 //If we are not loading TTS from the server, then we should do so.
                 if(ttsTransaction == null) {
-               //     toggleTTS.setText(getResources().getString(R.string.cancel));
-                   // synthesize();
+                    //     toggleTTS.setText(getResources().getString(R.string.cancel));
+                    synthesize();
                 }
                 //Otherwise lets attempt to cancel that transaction
                 else {
@@ -90,11 +51,11 @@ public Pronouncer(String tts){
                 break;
             case PLAYING:
                 speechSession.getAudioPlayer().pause();
-                setState(State.PAUSED);
+                setState(Illustrate.State.PAUSED);
                 break;
             case PAUSED:
                 speechSession.getAudioPlayer().play();
-                setState(State.PLAYING);
+                setState(Illustrate.State.PLAYING);
                 break;
         }
     }
@@ -107,27 +68,27 @@ public Pronouncer(String tts){
         options.setVoice(new Voice(voice)); //optionally change the Voice of the speaker, but will use the default if omitted.
 //System.out.print(ttsText.getText().toString());
         //Start a TTS transaction
-        ttsTransaction = speechSession.speakString(tts, options, new Transaction.Listener() {
-        //ttsTransaction = speechSession.speakString("hello my name is lulu", options, new Transaction.Listener() {
+        ttsTransaction = speechSession.speakString(text, options, new Transaction.Listener() {
+            //ttsTransaction = speechSession.speakString("hello my name is lulu", options, new Transaction.Listener() {
             @Override
             public void onAudio(Transaction transaction, Audio audio) {
-             //   logs.append("\nonAudio");
+                //   logs.append("\nonAudio");
 
                 //The TTS audio has returned from the server, and has begun auto-playing.
                 ttsTransaction = null;
-            //    toggleTTS.setText(getResources().getString(R.string.speak_string));
+                //    toggleTTS.setText(getResources().getString(R.string.speak_string));
             }
 
             @Override
             public void onSuccess(Transaction transaction, String s) {
-           //     logs.append("\nonSuccess");
+                //     logs.append("\nonSuccess");
 
                 //Notification of a successful transaction. Nothing to do here.
             }
 
             @Override
             public void onError(Transaction transaction, String s, TransactionException e) {
-             //   logs.append("\nonError: " + e.getMessage() + ". " + s);
+                //   logs.append("\nonError: " + e.getMessage() + ". " + s);
 
                 //Something went wrong. Check Configuration.java to ensure that your settings are correct.
                 //The user could also be offline, so be sure to handle this case appropriately.
@@ -136,6 +97,7 @@ public Pronouncer(String tts){
             }
         });
     }
+
 
     /**
      * Cancel the TTS transaction.
@@ -147,21 +109,23 @@ public Pronouncer(String tts){
 
     @Override
     public void onBeginPlaying(AudioPlayer audioPlayer, Audio audio) {
-    //    logs.append("\nonBeginPlaying");
+        //    logs.append("\nonBeginPlaying");
 
         //The TTS Audio will begin playing.
 
-        setState(State.PLAYING);
+        setState(Illustrate.State.PLAYING);
     }
 
     @Override
     public void onFinishedPlaying(AudioPlayer audioPlayer, Audio audio) {
-      //  logs.append("\nonFinishedPlaying");
+        //  logs.append("\nonFinishedPlaying");
 
         //The TTS Audio has finished playing
 
-        setState(State.IDLE);
+        setState(Illustrate.State.IDLE);
     }
+
+
 
 
     private enum State {
@@ -173,23 +137,21 @@ public Pronouncer(String tts){
     /**
      * Set the state and update the button text.
      */
-    private void setState(State newState) {
+    private void setState(Illustrate.State newState) {
         state = newState;
         switch (newState) {
             case IDLE:
                 // Next possible action is speaking
-             //   toggleTTS.setText(getResources().getString(R.string.speak_string));
+                //   toggleTTS.setText(getResources().getString(R.string.speak_string));
                 break;
             case PLAYING:
                 // Next possible action is pausing
-               // toggleTTS.setText(getResources().getString(R.string.pause));
+                // toggleTTS.setText(getResources().getString(R.string.pause));
                 break;
             case PAUSED:
                 // Next possible action is resuming the speech
-               // toggleTTS.setText(getResources().getString(R.string.speak_string));
+                // toggleTTS.setText(getResources().getString(R.string.speak_string));
                 break;
         }
     }
-
-
 }

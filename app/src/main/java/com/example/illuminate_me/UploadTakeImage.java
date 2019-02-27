@@ -409,7 +409,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         protected void onPostExecute(String result) {
 
             txtView.setText(result + "\n" );
-            Pronouncer p = new Pronouncer(result);
+            Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
+            illustrate.startSynthesize();
         }
     }.execute();
 } //end callcloudvision

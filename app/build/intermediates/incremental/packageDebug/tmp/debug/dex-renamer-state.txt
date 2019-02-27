@@ -1,4 +1,4 @@
-#Tue Feb 26 20:46:46 AST 2019
-base.0=/Users/fatimahsheikho/StudioProjects/IlluminateMe/app/build/intermediates/dex/debug/mergeDexDebug/out
+#Wed Feb 27 22:21:53 AST 2019
+base.0=/Users/lulubn/AndroidStudioProjects/IlluminateMe/app/build/intermediates/dex/debug/mergeDexDebug/out
 path.0=classes.dex
 renamed.0=classes.dex

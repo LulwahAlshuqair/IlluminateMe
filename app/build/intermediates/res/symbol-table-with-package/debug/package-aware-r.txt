@@ -656,7 +656,6 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
-drawable bk
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
 drawable common_google_signin_btn_icon_dark_focused
@@ -774,7 +773,6 @@ id dimensions
 id direct
 id disableHome
 id edit_query
-id edittext
 id end
 id end_padder
 id expand_activities_button
@@ -870,7 +868,6 @@ id time
 id title
 id titleDividerNoCustom
 id title_template
-id toggletts
 id top
 id topPanel
 id txtview1
@@ -919,7 +916,6 @@ layout abc_tooltip
 layout activity_logo_screen
 layout activity_main
 layout activity_share
-layout activity_tts
 layout activity_upload_take_image
 layout notification_action
 layout notification_action_tombstone
