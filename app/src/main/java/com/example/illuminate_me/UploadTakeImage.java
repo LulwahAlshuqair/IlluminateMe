@@ -2,6 +2,7 @@ package com.example.illuminate_me;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -24,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -82,6 +84,9 @@ public class UploadTakeImage extends AppCompatActivity {
     private ImageDescription imageDescription = new ImageDescription();
     private  String TranslatedText;
     private EnglishToTagalog ett;
+    private byte[] photo ;
+    String imageFileName ;
+
     UserImage userImage = new UserImage();
     // we should replace the selected and taken with only one attribute
 //startttt
@@ -203,7 +208,11 @@ public class UploadTakeImage extends AppCompatActivity {
                     userImage.setImageBit(recognizer.resizeBitmap(takenPicture));
                     image.setImageBitmap(takenPicture);
                     // recognizer.callCloudVision(userImage.getImageBit());
+
+
                     callCloudVision(userImage.getImageBit());
+
+                    //
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -233,7 +242,11 @@ public class UploadTakeImage extends AppCompatActivity {
                     image.setImageBitmap(takenPicture);
                     userImage.setImageBit(resizeBitmap(takenPicture));
                     // recognizer.callCloudVision(userImage.getImageBit());
+
+
                     callCloudVision(userImage.getImageBit());
+
+                    //
                     //    imageDescription.setDescription(recognizer.getDescription());
                     String des = "" + txtView.getText();
 
@@ -252,7 +265,15 @@ public class UploadTakeImage extends AppCompatActivity {
 
         }
 
+
+
+
+
+
     }
+
+
+    // Transfer the image to the share class
 
 
     @Override
@@ -272,33 +293,18 @@ public class UploadTakeImage extends AppCompatActivity {
                     // go to previous screen
                    // Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
                    // startActivity(intent);
-                    Bitmap  saving =  userImage.getImageBit();
 
-
-
-                    String root = Environment.getExternalStorageDirectory().toString();
-                    File myDir = new File(root + "/saved_images");
-                    myDir.mkdirs();
-
-                    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                    String fname = "Shutta_"+ timeStamp +".jpg";
-
-                    File file = new File(myDir, fname);
-                    if (file.exists()) file.delete ();
-                    try {
-                        FileOutputStream out = new FileOutputStream(file);
-                        saving.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        out.flush();
-                        out.close();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    // Save test:
+                    saveImage(takenPicture) ;
                 }
 
 
                 if (x1 > x2) {
                     // swipe left
                     // share menu
+
+
+
                     Intent intent = new Intent(UploadTakeImage.this, Share.class);
                     startActivity(intent);
                     finish() ;
@@ -311,23 +317,13 @@ public class UploadTakeImage extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
-    public Uri getSelectedImage() {
-        return selectedImage;
-    }
 
-    public Bitmap getTakenPicture() {
-        return takenPicture;
-    }
-
-    public Drawable getImageView() {
-        return image.getDrawable();
-
-    }
 
     private File createImageFile() {
         // Create an image file name
         @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        imageFileName = "JPEG_" + timeStamp + "_";
+        setImageFileName(imageFileName);
 
         // getExternalFilesDir(Environment.DIRECTORY_PICTURES); < this will make the img available in our app only
         File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -340,7 +336,7 @@ public class UploadTakeImage extends AppCompatActivity {
                     storageDir      /* directory */);
 
         } catch (Exception e) {
-            Log.d("mylog", "ExceptionF : " + e.toString());
+            Log.d("mylog", "Exception : " + e.toString());
         }
         return Fimage;
     }
@@ -417,6 +413,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         }
     }.execute();
 } //end callcloudvision
+
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
         StringBuilder message = new StringBuilder("");
         StringBuilder TextOCR = new StringBuilder("");
@@ -533,6 +530,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
 
         return TranslatedText + ocrtext;
     }// end tostring
+
+
     public Bitmap resizeBitmap(Bitmap bitmap) {
         int maxDimension = 1024;
         int originalWidth = bitmap.getWidth();
@@ -597,5 +596,58 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         int b = (hexColor & 0xFF);
         return getColorNameFromRgb(r, g, b);
     }// end getcolorhex
+
+
+    public void saveImage (Bitmap img) {
+
+/*
+        boolean success = false;
+
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/saved_images");
+        myDir.mkdirs();
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String fname = "Shutta_"+ timeStamp +".jpg";
+
+        File file = new File(myDir, fname);
+        if (file.exists()) file.delete ();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            img.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            success = true ;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (success) {
+            Toast.makeText(getApplicationContext(), "تم حفظ الصورة بنجاح", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath(), Toast.LENGTH_LONG).show();
+
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "لم يتم حفظ الصورة", Toast.LENGTH_LONG).show();
+        }
+
+
+        //To get the path :        جالس يحفظهم ب > /storage/emulated/0/Pictures
+    */   }
+
+    // to know the exact name of the image.
+    public void setImageFileName (String name) {
+        name = name ;
+    }
+    public String getImageFileName () {
+        return imageFileName ;
+    }
+
+
+
+
+
+
+
 
 }//end callcloudvision

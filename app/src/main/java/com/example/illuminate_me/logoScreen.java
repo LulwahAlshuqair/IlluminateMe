@@ -10,7 +10,10 @@ public class logoScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
+
         //to remove top bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         //to make it cover the entire screen
@@ -19,12 +22,20 @@ public class logoScreen extends AppCompatActivity {
         setContentView(R.layout.activity_logo_screen);
         // to hide the action bar
         //getSupportActionBar().hide();
+
+
+        // to not go back to this screen
+
         logoLauncher logo = new logoLauncher();
-        logo.start();
+       logo.start();
+
+
     }// end onCreate
 
     // this class purpose is to make the logo screen appears for a number of seconds before showing the main screen
+
     private class logoLauncher extends Thread {
+
 
         public void run (){
             try {
@@ -41,4 +52,5 @@ public class logoScreen extends AppCompatActivity {
         }// end run method
 
     } // end private class
+
 }

@@ -2,21 +2,30 @@ package com.example.illuminate_me;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Share extends AppCompatActivity {
@@ -25,14 +34,20 @@ public class Share extends AppCompatActivity {
     private ImageButton inst ;
     private ImageButton whats ;
     private ImageButton twitter ;
-    private UploadTakeImage ut = new UploadTakeImage() ;
+    private UploadTakeImage uti ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_share);
 
+
+        setContentView(R.layout.activity_share);
         setbtnviews ();
+
+
+
+
+
 
         //  btn listeners
         inst.setOnClickListener(new View.OnClickListener() {
@@ -40,14 +55,25 @@ public class Share extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Instagram share
-                // Create the new Intent using the 'Send' action.
-                Intent share = new Intent(Intent.ACTION_SEND);
-                share.setType("image/*");
-                share.putExtra(Intent.EXTRA_STREAM, ut.getSelectedImage());
-                // Broadcast the Intent.
-                startActivity(Intent.createChooser(share, "Share to"));
+
+                Bitmap img = retriveImg() ;
+                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
+                shareIntent.setType("image/*");
+
+                final ContentResolver cr = getContentResolver();
+                final String[] p1 = new String[] {
+                        MediaStore.Images.ImageColumns._ID, MediaStore.Images.ImageColumns.TITLE, MediaStore.Images.ImageColumns.DATE_TAKEN
+                };
+                Cursor c1 = cr.query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, p1, null, null, p1[1] + " DESC");
+
+
+                shareIntent.putExtra(Intent.EXTRA_STREAM, img);
+                shareIntent.setPackage("com.instagram.android");
+
+                c1.close();
+
             }
-        });
+         });
 
         whats.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,40 +95,13 @@ public class Share extends AppCompatActivity {
 
     }
 
-    public boolean onTouchEvent(MotionEvent event) {
 
-        // Problem: when it goes back it opens the "gallery" or "camera" not go back to the description
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1=event.getX();
-                y1=event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2=event.getX();
-                y2=event.getY();
-                if(x1<x2){
-                    // swipe right
-                    // go to previous screen
-                    Intent intent = new Intent (Share.this, UploadTakeImage.class);
-                    startActivity(intent);
-                }
-
-                break;
-
-        }//end switch
-        return super.onTouchEvent(event);
-
-    }
-        private void setbtnviews (){
-
-        inst = findViewById(R.id.btn_inst);
-        whats = findViewById(R.id.btn_whats);
-        twitter = findViewById(R.id.btn_twitter);
-    }
 
     private void shareTwitter(String message , Uri Shimg) {
         //UploadTakeImage img = new UploadTakeImage();
        // Uri Shimg =  img.getSelectedImage();
+
+        /*
         if (Shimg==null) {
             Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
         }
@@ -140,7 +139,7 @@ public class Share extends AppCompatActivity {
             startActivity(i);
             Toast.makeText(this, "Twitter app isn't found", Toast.LENGTH_LONG).show();
         }
-    }
+    */}
 
     private String urlEncode(String s) {
         try {
@@ -151,4 +150,46 @@ public class Share extends AppCompatActivity {
             return "";
         }}
 
+
+        public Bitmap retriveImg () {
+        // To get the image path:
+            String fname = uti.getImageFileName() ;
+            String path = "/storage/emulated/0/Pictures/" + fname ;
+            Bitmap bitmap = BitmapFactory.decodeFile(path);
+            return bitmap ;
+
+    }
+
+
+    public boolean onTouchEvent(MotionEvent event) {
+
+        // Problem: when it goes back it opens the "gallery" or "camera" not go back to the description
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                x1=event.getX();
+                y1=event.getY();
+                break;
+            case MotionEvent.ACTION_UP:
+                x2=event.getX();
+                y2=event.getY();
+                if(x1<x2){
+                    // swipe right
+                    // go to previous screen
+                    Intent intent = new Intent (Share.this, UploadTakeImage.class);
+                    startActivity(intent);
+                }
+
+                break;
+
+        }//end switch
+        return super.onTouchEvent(event);
+
+    }
+    private void setbtnviews (){
+
+        inst = findViewById(R.id.btn_inst);
+        whats = findViewById(R.id.btn_whats);
+        twitter = findViewById(R.id.btn_twitter);
+
+    }
     }

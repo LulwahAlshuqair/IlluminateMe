@@ -34,9 +34,11 @@ private  String tts;
 public Pronouncer(String tts){
     this.tts=tts;
 
-toggleTTS();
+     toggleTTS();
     setState(State.IDLE);
 }
+
+
     public void setTts(String tts) {
         this.tts = tts;
     }
