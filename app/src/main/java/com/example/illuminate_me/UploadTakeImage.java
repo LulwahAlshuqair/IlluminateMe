@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -136,12 +137,22 @@ public class UploadTakeImage extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 23)
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
 
+        try {
 
-        setContentView(R.layout.activity_upload_take_image);
-        image = findViewById(R.id.imageToUpload);
-        txtView = findViewById(R.id.txtview1);
-        txtView.setMovementMethod(new ScrollingMovementMethod());
+            setContentView(R.layout.activity_upload_take_image);
+            image = findViewById(R.id.imageToUpload);
+            txtView = findViewById(R.id.txtview1);
+            txtView.setMovementMethod(new ScrollingMovementMethod());
 
+            Typeface cusFont = Typeface.createFromAsset(getAssets(),"fonts/coconnextarabic-light.ttf");
+
+            //Setting fonts
+            txtView.setTypeface(cusFont);
+
+        } catch (Exception e){
+            Log.d("mylog", "ExcCCCeption : " + e.toString());
+
+        }
 
 
 
