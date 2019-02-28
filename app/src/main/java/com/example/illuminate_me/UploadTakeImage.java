@@ -86,7 +86,10 @@ public class UploadTakeImage extends AppCompatActivity {
     private  String TranslatedText;
     private EnglishToTagalog ett;
     private byte[] photo ;
-    String imageFileName ;
+    private String imageFileName ;
+    private SwipeDetector sd ;
+
+
 
     UserImage userImage = new UserImage();
     // we should replace the selected and taken with only one attribute
@@ -133,10 +136,6 @@ public class UploadTakeImage extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // getSupportActionBar().hide();
 
-        // Permissions :
-        if (Build.VERSION.SDK_INT >= 23)
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-
         try {
 
             setContentView(R.layout.activity_upload_take_image);
@@ -145,14 +144,44 @@ public class UploadTakeImage extends AppCompatActivity {
             txtView.setMovementMethod(new ScrollingMovementMethod());
 
             Typeface cusFont = Typeface.createFromAsset(getAssets(),"fonts/coconnextarabic-light.ttf");
-
-            //Setting fonts
+                //Setting fonts
             txtView.setTypeface(cusFont);
 
         } catch (Exception e){
             Log.d("mylog", "ExcCCCeption : " + e.toString());
-
         }
+
+        // Swiping :
+          sd = new SwipeDetector(this, new SwipeDetector.OnSwipeListener() {
+
+            @Override
+            public void onSwipeUp(float distance, float velocity) {
+                // Save
+
+            }
+
+            @Override
+            public void onSwipeRight(float distance, float velocity) {
+                // previous
+                Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onSwipeLeft(float distance, float velocity) {
+                // SHARE
+                Intent intent = new Intent(UploadTakeImage.this, Share.class);
+                startActivity(intent);
+                finish() ;
+            }
+
+            @Override
+            public void onSwipeDown(float distance, float velocity) {
+                // Home page
+                Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
+                startActivity(intent) ;
+            }
+        });
 
 
 
@@ -291,41 +320,8 @@ public class UploadTakeImage extends AppCompatActivity {
     public boolean onTouchEvent(MotionEvent event) {
 
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                x1 = event.getX();
-                y1 = event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2 = event.getX();
-                y2 = event.getY();
-                if (x1 < x2) {
-                    // swipe right
-                    // go to previous screen
-                   // Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
-                   // startActivity(intent);
 
-                    // Save test:
-                    saveImage(takenPicture) ;
-                }
-
-
-                if (x1 > x2) {
-                    // swipe left
-                    // share menu
-
-
-
-                    Intent intent = new Intent(UploadTakeImage.this, Share.class);
-                    startActivity(intent);
-                    finish() ;
-                }
-                break;
-
-        }//end switch
-        //if swipe left to right
-
-        return super.onTouchEvent(event);
+        return sd.onTouch(null, event);
     }
 
 
@@ -420,8 +416,16 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         protected void onPostExecute(String result) {
 
             txtView.setText(result + "\n" );
-            Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
+            final Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
             illustrate.startSynthesize();
+
+            // To repeat description
+            txtView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    illustrate.startSynthesize();
+                }
+            });
         }
     }.execute();
 } //end callcloudvision

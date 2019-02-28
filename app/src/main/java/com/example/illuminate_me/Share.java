@@ -35,19 +35,34 @@ public class Share extends AppCompatActivity {
     private ImageButton whats ;
     private ImageButton twitter ;
     private UploadTakeImage uti ;
+    private SwipeDetector sd ;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_share);
         setbtnviews ();
 
+        // Swiping :
+        sd = new SwipeDetector(this, new SwipeDetector.OnSwipeListener() {
 
 
+            @Override
+            public void onSwipeRight(float distance, float velocity) {
+                // previous
+                Intent intent = new Intent(Share.this, UploadTakeImage.class);
+                startActivity(intent);
+            }
 
 
+            @Override
+            public void onSwipeDown(float distance, float velocity) {
+                // Home page
+                Intent intent = new Intent(Share.this, MainActivity.class);
+                startActivity(intent) ;
+            }
+        });
 
         //  btn listeners
         inst.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +70,7 @@ public class Share extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Instagram share
-
+/*
                 Bitmap img = retriveImg() ;
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
                 shareIntent.setType("image/*");
@@ -72,7 +87,7 @@ public class Share extends AppCompatActivity {
 
                 c1.close();
 
-            }
+          */  }
          });
 
         whats.setOnClickListener(new View.OnClickListener() {
@@ -162,31 +177,11 @@ public class Share extends AppCompatActivity {
 
 
     public boolean onTouchEvent(MotionEvent event) {
-
-        // Problem: when it goes back it opens the "gallery" or "camera" not go back to the description
-        switch (event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-                x1=event.getX();
-                y1=event.getY();
-                break;
-            case MotionEvent.ACTION_UP:
-                x2=event.getX();
-                y2=event.getY();
-                if(x1<x2){
-                    // swipe right
-                    // go to previous screen
-                    Intent intent = new Intent (Share.this, UploadTakeImage.class);
-                    startActivity(intent);
-                }
-
-                break;
-
-        }//end switch
-        return super.onTouchEvent(event);
-
+        return sd.onTouch(null, event);
     }
-    private void setbtnviews (){
 
+
+    private void setbtnviews (){
         inst = findViewById(R.id.btn_inst);
         whats = findViewById(R.id.btn_whats);
         twitter = findViewById(R.id.btn_twitter);
