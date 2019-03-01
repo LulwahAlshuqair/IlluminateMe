@@ -45,7 +45,7 @@ public class Share extends AppCompatActivity {
         setbtnviews ();
 
         // Swiping :
-        sd = new SwipeDetector(this, new SwipeDetector.OnSwipeListener() {
+      /*  sd = new SwipeDetector(this, new SwipeDetector.OnSwipeListener() {
 
 
             @Override
@@ -70,7 +70,7 @@ public class Share extends AppCompatActivity {
             public void onClick(View v) {
 
                 // Instagram share
-/*
+
                 Bitmap img = retriveImg() ;
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
                 shareIntent.setType("image/*");
@@ -87,7 +87,7 @@ public class Share extends AppCompatActivity {
 
                 c1.close();
 
-          */  }
+           }
          });
 
         whats.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +107,7 @@ public class Share extends AppCompatActivity {
                 // Twitter share
             }
         });
-
+*/
     }
 
 

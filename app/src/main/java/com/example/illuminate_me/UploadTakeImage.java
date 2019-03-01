@@ -88,8 +88,14 @@ public class UploadTakeImage extends AppCompatActivity {
     private byte[] photo ;
     private String imageFileName ;
     private SwipeDetector sd ;
-
-
+    private String [] excludeTextLabels = {"text","line","font","calligraphy","word","clip art","handwriting","witting","document","number"};
+    private String[] receivedLabels = new String[20] ;
+    private String[] maleLabels = { "beard","facialhair","moustache","physician","macho man","macho"};
+    //"feminine" is a female label
+    private String [] manLabel = {"man" , "gentleman","businessman","men", "king","prince","father","guy","grandfather","old man"};
+    private String[] womanLabel = {"woman" , "lady" , "mam","businesswoman","gentlewoman","mother","old woman", "women","queen","princess","grandmother"};
+    private String[] childrenLabels = { "child" , "baby", "girl" , "boy" };
+    private String[] genderLabels = {"male","female"};
 
     UserImage userImage = new UserImage();
     // we should replace the selected and taken with only one attribute
@@ -127,8 +133,7 @@ public class UploadTakeImage extends AppCompatActivity {
         colorList.add(new ColorName("Yellow", 0xFF, 0xFF, 0x00));///
         return colorList; }
     //"paper"
-    private String [] excludeTextLabels = {"text","line","font","calligraphy","word","clip art","handwriting","witting","document","number"};
-    private String[] receivedLabels = new String[5] ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -367,7 +372,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 List<Feature> featureList = new ArrayList<>();
                 Feature labelDetection = new Feature();
                 labelDetection.setType("LABEL_DETECTION");
-                labelDetection.setMaxResults(5);
+                labelDetection.setMaxResults(20);
                 featureList.add(labelDetection);
 
                 Feature textDetection = new Feature();
@@ -477,16 +482,16 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
 
                 String joy=  String.format(face.getJoyLikelihood());
                 if (joy.equals("VERY_LIKELY")||joy.equals("LIKELY")||joy.equals("POSSIBLE"))
-                    person="a happy person";
+                    person="a happy ";
                 String sorrow=  String.format(face.getSorrowLikelihood());
                 if (sorrow.equals("VERY_LIKELY")||sorrow.equals("LIKELY")||sorrow.equals("POSSIBLE"))
-                    person="a sad person";
+                    person="a sad ";
                 String anger =String.format(face.getAngerLikelihood());
                 if (anger.equals("VERY_LIKELY")||anger.equals("LIKELY")||anger.equals("POSSIBLE"))
-                    person="a sad person";
+                    person="a sad ";
                 String surprise =String.format(face.getSurpriseLikelihood());
                 if (surprise.equals("VERY_LIKELY")||surprise.equals("LIKELY")||surprise.equals("POSSIBLE"))
-                    person="a surprised person";
+                    person="a surprised ";
                 if (numberofpersons > 1 ){
                     //person=+person;
                 TextfacialExpressions.append("and "+person);} else
@@ -501,15 +506,18 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
         if (labels != null) {
             //this loop will add all labels received from vision API to receivedLabels array
-            int i=0;
-            for (EntityAnnotation label : labels){
-                receivedLabels[i]=(String.format( label.getDescription()));
-                i++; }
+            int i = 0;
+            for (EntityAnnotation label : labels) {
+                receivedLabels[i] = (String.format(label.getDescription()));
+                i++;
+            }
+            Textlabel.append(getLabel(receivedLabels));
             //send receivedLabels to getLabel method that will exclude some labels inorder to get accurate result
-            if(faces==null)
+            /*if(faces==null)
             { Textlabel.append(getLabel(receivedLabels));}
         } else {
-            Textlabel.append(""); }
+            Textlabel.append(""); }*/
+        }//end if labels!=null
 
         //colors
         // message.append("\n"+"COLORS:\n");
@@ -525,10 +533,9 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             Textcolors.append(""); }
         //HERE COMBINED RECEIVED STRING
         if(!(Textlabel.toString().equals("Written Text:")))
-            message.append(Textcolors+" ");
-        message.append(Textlabel+" ");
+        message.append(Textcolors+" ");
         message.append(TextfacialExpressions+" ");
-        //message.append(TextOCR+" ");
+        message.append(Textlabel+" ");
 
         ett =  new EnglishToTagalog(from,ocrtext);
         if (texts!=null&& from!="ar"){
@@ -575,19 +582,63 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         image.encodeContent(imageBytes);
         return image;
     }
-    public String getLabel(String []labels){
-        String label="";
-        String firstLabel="";
-        firstLabel= labels[0].toLowerCase();
-        for (int i=0;i<3;i++) {
-            label= labels[i].toLowerCase();
+    public String getLabel(String []labels) {
+        String label = "";
+        String firstLabel = "";
+        String maleLabel = "";
+        String man = "";
+        String woman = "";
+        String Child = "";
+        String gender = "";
+        firstLabel = labels[0].toLowerCase();
+
+        for (int i = 0; i < 3; i++) {
+            label = labels[i].toLowerCase();
             for (int k = 0; k < excludeTextLabels.length; k++) {
                 if (label.equals(excludeTextLabels[k])) {
-                    label="Written Text:";
-                    return label; }}// end for exclude
-        }// end for labels
+                    label = "Written Text:";
+                    return label;
+                }
+            }// end for exclude
+        }
+        // person
+        for (int l = 0; l < receivedLabels.length; l++) {
+            label = labels[l].toLowerCase();
+            for (int m = 0; m < maleLabels.length; m++) {
+                if (label.equals(maleLabels[m])) {
+                    label = "Man";
+                    return label;
+                }
+                if (label.equals(manLabel[m])) {
+                    label = manLabel[m];
+                    return label;
+                }
+            }
+        }
+        for (int l = 0; l < receivedLabels.length; l++) {
+            label = labels[l].toLowerCase();
+            for (int n = 0; n < womanLabel.length; n++) {
+                if (label.equals(womanLabel[n])) {
+                    label = womanLabel[n];
+                    return label;
+                }
+            }}
+
+        for (int l = 0; l < receivedLabels.length; l++) {
+            label = labels[l].toLowerCase();
+            // String label="";
+            for (int n = 0; n < childrenLabels.length; n++) {
+                if (label.equals(childrenLabels[n])) {
+                    label = childrenLabels[n];
+                        /*if (label1.equals(genderLabels[n])) {
+                            label1 = genderLabels[n];*/
+                 return label;
+                }
+            }}
+
         return firstLabel;
     }//end method getLabels
+
     public static String getColorNameFromRgb(int r, int g, int b) {
         ArrayList<ColorName> colorList = initColorList();
         ColorName closestMatch = null;
