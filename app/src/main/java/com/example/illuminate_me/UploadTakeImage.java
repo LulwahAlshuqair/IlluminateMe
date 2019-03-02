@@ -71,6 +71,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+
 
 public class UploadTakeImage extends AppCompatActivity {
     private float x1, x2, y1, y2;
@@ -96,8 +99,10 @@ public class UploadTakeImage extends AppCompatActivity {
     private String[] womanLabel = {"woman" , "lady" , "mam","businesswoman","gentlewoman","mother","old woman", "women","queen","princess","grandmother"};
     private String[] childrenLabels = { "child" , "baby", "girl" , "boy" };
     private String[] genderLabels = {"male","female"};
-
+    private MediaPlayer tone;
     UserImage userImage = new UserImage();
+      boolean  isPlayingAudio = true;
+
     // we should replace the selected and taken with only one attribute
 //startttt
     private final String LOG_TAG = "MainActivity";
@@ -311,10 +316,6 @@ public class UploadTakeImage extends AppCompatActivity {
         }
 
 
-
-
-
-
     }
 
 
@@ -328,7 +329,6 @@ public class UploadTakeImage extends AppCompatActivity {
 
         return sd.onTouch(null, event);
     }
-
 
 
     private File createImageFile() {
@@ -356,11 +356,25 @@ public class UploadTakeImage extends AppCompatActivity {
 //start
 @SuppressLint("StaticFieldLeak")
 private void callCloudVision(final Bitmap bitmap) throws IOException {
-    txtView.setText("Uploading...");
+
+    tone = MediaPlayer.create(UploadTakeImage.this, R.raw.uploading1);
+    tone.start();
+    tone.setLooping(true);
+
+
+    // txtView.setText("Uploading...");
+
+ //   if (tone.isPlaying()) {
+
+  //      isPlayingAudio = false;
+ //   }
 
     new AsyncTask<Object, Void, String>() {
         @Override
         protected String doInBackground(Object... params) {
+
+
+
 
             try {
                 Vision.Builder visionBuilder = new Vision.Builder(new NetHttpTransport(),
@@ -419,8 +433,9 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         }
 
         protected void onPostExecute(String result) {
-
+            tone.release();
             txtView.setText(result + "\n" );
+
             final Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
             illustrate.startSynthesize();
 
@@ -433,6 +448,9 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             });
         }
     }.execute();
+
+
+
 } //end callcloudvision
 
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
@@ -593,7 +611,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         firstLabel = labels[0].toLowerCase();
 
         for (int i = 0; i < 3; i++) {
-            label = labels[i].toLowerCase();
+      //      label = labels[i].toLowerCase();
             for (int k = 0; k < excludeTextLabels.length; k++) {
                 if (label.equals(excludeTextLabels[k])) {
                     label = "Written Text:";
@@ -603,7 +621,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         }
         // person
         for (int l = 0; l < receivedLabels.length; l++) {
-            label = labels[l].toLowerCase();
+          //  label = labels[l].toLowerCase();
             for (int m = 0; m < maleLabels.length; m++) {
                 if (label.equals(maleLabels[m])) {
                     label = "Man";
@@ -616,7 +634,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             }
         }
         for (int l = 0; l < receivedLabels.length; l++) {
-            label = labels[l].toLowerCase();
+          //  label = labels[l].toLowerCase();
             for (int n = 0; n < womanLabel.length; n++) {
                 if (label.equals(womanLabel[n])) {
                     label = womanLabel[n];
@@ -625,7 +643,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             }}
 
         for (int l = 0; l < receivedLabels.length; l++) {
-            label = labels[l].toLowerCase();
+            //label = labels[l].toLowerCase();
             // String label="";
             for (int n = 0; n < childrenLabels.length; n++) {
                 if (label.equals(childrenLabels[n])) {

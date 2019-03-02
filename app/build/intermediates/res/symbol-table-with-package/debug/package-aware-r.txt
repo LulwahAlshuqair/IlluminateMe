@@ -951,6 +951,7 @@ mipmap up1_round
 mipmap upload1
 mipmap upload11
 mipmap upload11_round
+raw uploading1
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
