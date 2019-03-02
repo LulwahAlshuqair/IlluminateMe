@@ -550,26 +550,38 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         else {
             Textcolors.append(""); }
         //HERE COMBINED RECEIVED STRING
-        if(!(Textlabel.toString().equals("Written Text:")))
+        if(!(Textlabel.toString().equals("Written Text: ")))
         message.append(Textcolors+" ");
         message.append(TextfacialExpressions+" ");
         message.append(Textlabel+" ");
 
-        ett =  new EnglishToTagalog(from,ocrtext);
-        if (texts!=null&& from!="ar"){
-        ett.doInBackground();
-        ett.translated();
-        ocrtext=ett.getMsg();}
-        if(!(message.equals(""))){
-        ett.setFrom("en");
-        ett.setMsg(message.toString());
-        ett.doInBackground();
-        ett.translated();
-        TranslatedText=ett.getMsg();}
 
-        imageDescription.setTranslatedDescription(ett.getMsg());
 
-        return TranslatedText + ocrtext;
+
+        String arabicText="";
+        if ((from.equals("ar"))) {
+
+            arabicText = " "+ocrtext;
+            ocrtext="";}
+        else  {
+            ett = new EnglishToTagalog(from, ocrtext);
+            if (texts != null) {
+                ett.doInBackground();
+                ett.translated();
+                ocrtext = " "+ett.getMsg();
+            }
+        }
+        if(!(Textcolors.equals("")||Textlabel.equals("")||TextfacialExpressions.equals(""))){
+            ett = new EnglishToTagalog("", "");
+
+            ett.setFrom("en");
+            ett.setMsg(message.toString());
+            ett.doInBackground();
+            ett.translated();
+            TranslatedText=ett.getMsg();}
+        imageDescription.setTranslatedDescription(ett.getMsg()+ocrtext);
+
+        return TranslatedText + ocrtext  + arabicText;
     }// end tostring
 
 
@@ -611,17 +623,19 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         firstLabel = labels[0].toLowerCase();
 
         for (int i = 0; i < 3; i++) {
-      //      label = labels[i].toLowerCase();
+            if(labels[i]!=null){
+                label = labels[i].toLowerCase();}
             for (int k = 0; k < excludeTextLabels.length; k++) {
                 if (label.equals(excludeTextLabels[k])) {
-                    label = "Written Text:";
+                    label = "Written Text: ";
                     return label;
                 }
             }// end for exclude
         }
         // person
         for (int l = 0; l < receivedLabels.length; l++) {
-          //  label = labels[l].toLowerCase();
+            if(labels[l]!=null){
+           label = labels[l].toLowerCase();}
             for (int m = 0; m < maleLabels.length; m++) {
                 if (label.equals(maleLabels[m])) {
                     label = "Man";
@@ -634,7 +648,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             }
         }
         for (int l = 0; l < receivedLabels.length; l++) {
-          //  label = labels[l].toLowerCase();
+            if(labels[l]!=null){
+                label = labels[l].toLowerCase();}
             for (int n = 0; n < womanLabel.length; n++) {
                 if (label.equals(womanLabel[n])) {
                     label = womanLabel[n];
@@ -643,7 +658,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             }}
 
         for (int l = 0; l < receivedLabels.length; l++) {
-            //label = labels[l].toLowerCase();
+            if(labels[l]!=null){
+                label = labels[l].toLowerCase();}
             // String label="";
             for (int n = 0; n < childrenLabels.length; n++) {
                 if (label.equals(childrenLabels[n])) {
