@@ -23,15 +23,14 @@
 
     <ImageButton
         android:id="@+id/btn_inst"
-        android:background="@drawable/roundcorneri"
-        android:padding="4dp"
-        android:scaleType="fitCenter"
-        app:srcCompat="@drawable/ins"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@drawable/roundcorneri"
         android:gravity="center_horizontal"
-        />
+        android:padding="4dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ins" />
 
     <ImageButton
         android:id="@+id/btn_whats"

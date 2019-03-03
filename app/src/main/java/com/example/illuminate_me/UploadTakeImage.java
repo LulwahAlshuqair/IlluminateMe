@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -29,9 +31,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+
+import static android.app.Activity.RESULT_OK;
 import static android.os.Environment.getExternalStoragePublicDirectory;
 //startttt
 import android.Manifest;
@@ -101,6 +106,7 @@ public class UploadTakeImage extends AppCompatActivity {
     private String[] genderLabels = {"male","female"};
     private MediaPlayer tone;
     UserImage userImage = new UserImage();
+    private String currentPhotoPath;
       boolean  isPlayingAudio = true;
 
     // we should replace the selected and taken with only one attribute
@@ -167,6 +173,7 @@ public class UploadTakeImage extends AppCompatActivity {
             @Override
             public void onSwipeUp(float distance, float velocity) {
                 // Save
+                saveImage();
 
             }
 
@@ -217,9 +224,7 @@ public class UploadTakeImage extends AppCompatActivity {
         // intent to open camera
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-            File photoFile = null;
-
-            photoFile = createImageFile();
+            File photoFile = createImageFile();
 
 
             if (photoFile != null) {
@@ -234,6 +239,39 @@ public class UploadTakeImage extends AppCompatActivity {
         }
 
     }
+
+    private File createImageFile() {
+        // Create an image file name
+        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        imageFileName = "JPEG_" + timeStamp + "_";
+
+        // getExternalFilesDir(Environment.DIRECTORY_PICTURES); < this will make the img available in our app only
+        File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File Fimage = null;
+
+        try {
+            Fimage = File.createTempFile(imageFileName,".jpg",storageDir);
+        } catch (Exception e) {
+            Log.d("mylog", "Exception : " + e.toString());
+        }
+
+        // Save a file: path for use with ACTION_VIEW intents
+        setCurrentPhotoPath(Fimage.getAbsolutePath());
+        return Fimage;
+    }
+
+
+    private void saveImage() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(currentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+        Toast.makeText(getApplicationContext(), "تم حفظ الصورة بنجاح", Toast.LENGTH_LONG).show();
+
+    }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
@@ -250,13 +288,18 @@ public class UploadTakeImage extends AppCompatActivity {
                 txtView.setText("selected Image is empty");
             } else {
                 try {
-                    // userImage.setImageUri(selectedImage);
                     // userImage.setImageBit(recognizer.resizeBitmap(userImage.getImageBit()));
                     // recognizer.callCloudVision(userImage.getImageBit());
                     userImage.setImageUri(selectedImage);
                     takenPicture = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                     userImage.setImageBit(recognizer.resizeBitmap(takenPicture));
+
+
+                   // Problem > image rotation
+                    takenPicture = handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ) ;
+
                     image.setImageBitmap(takenPicture);
+                   // image.setImageBitmap( handleSamplingAndRotationBitmap(this, selectedImage)) ;
                     // recognizer.callCloudVision(userImage.getImageBit());
 
 
@@ -324,34 +367,11 @@ public class UploadTakeImage extends AppCompatActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-
-
         return sd.onTouch(null, event);
     }
 
 
-    private File createImageFile() {
-        // Create an image file name
-        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        imageFileName = "JPEG_" + timeStamp + "_";
-        setImageFileName(imageFileName);
 
-        // getExternalFilesDir(Environment.DIRECTORY_PICTURES); < this will make the img available in our app only
-        File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-        File Fimage = null;
-
-        try {
-            Fimage = File.createTempFile(imageFileName,  /* prefix */
-                    ".jpg",         /* suffix */
-                    storageDir      /* directory */);
-
-        } catch (Exception e) {
-            Log.d("mylog", "Exception : " + e.toString());
-        }
-        return Fimage;
-    }
 
 //start
 @SuppressLint("StaticFieldLeak")
@@ -439,6 +459,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             final Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
             illustrate.startSynthesize();
 
+
+
             // To repeat description
             txtView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -446,6 +468,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                     illustrate.startSynthesize();
                 }
             });
+
+
         }
     }.execute();
 
@@ -699,56 +723,103 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
     }// end getcolorhex
 
 
-    public void saveImage (Bitmap img) {
 
-/*
-        boolean success = false;
-
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/saved_images");
-        myDir.mkdirs();
-
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fname = "Shutta_"+ timeStamp +".jpg";
-
-        File file = new File(myDir, fname);
-        if (file.exists()) file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            img.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-            success = true ;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (success) {
-            Toast.makeText(getApplicationContext(), "تم حفظ الصورة بنجاح", Toast.LENGTH_LONG).show();
-            Toast.makeText(getApplicationContext(), Environment.getExternalStorageDirectory().getAbsolutePath(), Toast.LENGTH_LONG).show();
-
-        } else {
-            Toast.makeText(getApplicationContext(),
-                    "لم يتم حفظ الصورة", Toast.LENGTH_LONG).show();
-        }
-
-
-        //To get the path :        جالس يحفظهم ب > /storage/emulated/0/Pictures
-    */   }
 
     // to know the exact name of the image.
-    public void setImageFileName (String name) {
-        name = name ;
-    }
     public String getImageFileName () {
         return imageFileName ;
     }
 
+    public String getCurrentPhotoPath () { return currentPhotoPath; }
+    public void setCurrentPhotoPath (String currentPhotoPath) {
+        this.currentPhotoPath = currentPhotoPath ;
+    }
 
 
 
+// To solve rotation problem:
+
+public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage)
+        throws IOException {
+    int MAX_HEIGHT = 1024;
+    int MAX_WIDTH = 1024;
+
+    // First decode with inJustDecodeBounds=true to check dimensions
+    final BitmapFactory.Options options = new BitmapFactory.Options();
+    options.inJustDecodeBounds = true;
+    InputStream imageStream = context.getContentResolver().openInputStream(selectedImage);
+    BitmapFactory.decodeStream(imageStream, null, options);
+    imageStream.close();
+
+    // Calculate inSampleSize
+    options.inSampleSize = calculateInSampleSize(options, MAX_WIDTH, MAX_HEIGHT);
+
+    // Decode bitmap with inSampleSize set
+    options.inJustDecodeBounds = false;
+    imageStream = context.getContentResolver().openInputStream(selectedImage);
+    Bitmap img = BitmapFactory.decodeStream(imageStream, null, options);
+
+    img = rotateImageIfRequired(context, img, selectedImage);
+    return img;
+}
+
+    private static int calculateInSampleSize( BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            // Calculate ratios of height and width to requested height and width
+            final int heightRatio = Math.round((float) height / (float) reqHeight);
+            final int widthRatio = Math.round((float) width / (float) reqWidth);
+
+            // Choose the smallest ratio as inSampleSize value, this will guarantee a final image
+            // with both dimensions larger than or equal to the requested height and width.
+            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+
+            final float totalPixels = width * height;
+
+            // Anything more than 2x the requested pixels we'll sample down further
+            final float totalReqPixelsCap = reqWidth * reqHeight * 2;
+
+            while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
+                inSampleSize++;
+            }
+        }
+        return inSampleSize;
+    }
 
 
 
+    private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
 
-}//end callcloudvision
+        InputStream input = context.getContentResolver().openInputStream(selectedImage);
+        ExifInterface ei;
+        if (Build.VERSION.SDK_INT > 23)
+            ei = new ExifInterface(input);
+        else
+            ei = new ExifInterface(selectedImage.getPath());
+
+        int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                return rotateImage(img, 90);
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                return rotateImage(img, 180);
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                return rotateImage(img, 270);
+            default:
+                return img;
+        }
+    }
+    private static Bitmap rotateImage(Bitmap img, int degree) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degree);
+        Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
+        img.recycle();
+        return rotatedImg;
+    }
+}//end class

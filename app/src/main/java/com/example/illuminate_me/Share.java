@@ -44,9 +44,14 @@ public class Share extends AppCompatActivity {
         setContentView(R.layout.activity_share);
         setbtnviews ();
 
-        // Swiping :
-      /*  sd = new SwipeDetector(this, new SwipeDetector.OnSwipeListener() {
+// Swiping :
+        sd = new SwipeDetector(this, new SwipeDetector.OnSwipeListener() {
 
+
+            @Override
+            public void onSwipeUp(float distance, float velocity) {
+                // Nothing
+            }
 
             @Override
             public void onSwipeRight(float distance, float velocity) {
@@ -55,6 +60,10 @@ public class Share extends AppCompatActivity {
                 startActivity(intent);
             }
 
+            @Override
+            public void onSwipeLeft(float distance, float velocity) {
+                //Nothing
+            }
 
             @Override
             public void onSwipeDown(float distance, float velocity) {
@@ -64,12 +73,14 @@ public class Share extends AppCompatActivity {
             }
         });
 
+
         //  btn listeners
         inst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // Instagram share
+                /*
 
                 Bitmap img = retriveImg() ;
                 Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -86,7 +97,7 @@ public class Share extends AppCompatActivity {
                 shareIntent.setPackage("com.instagram.android");
 
                 c1.close();
-
+*/
            }
          });
 
@@ -95,6 +106,14 @@ public class Share extends AppCompatActivity {
             public void onClick(View v) {
 
                 // WhatsApp share
+                /*
+                Bitmap bitmap = BitmapFactory.decodeFile(uti.getCurrentPhotoPath());
+                Intent share = new Intent(Intent.ACTION_SEND);
+                share.setType("image/jpeg");
+                share.putExtra(Intent.EXTRA_STREAM, bitmap);
+                share.setPackage("com.whatsapp");//package name of the app
+                startActivity(Intent.createChooser(share, "Share Image"));
+*/
             }
         });
 
@@ -107,9 +126,35 @@ public class Share extends AppCompatActivity {
                 // Twitter share
             }
         });
-*/
+
     }
 
+    private void setPic() {
+        /* This method reduce the size of the image. it's good to use it when displaying the taken/uploaded image it image view
+        // Get the dimensions of the View
+        String currentPhotoPath = uti.getCurrentPhotoPath() ;
+        int targetW = inst.getWidth();
+        int targetH = inst.getHeight();
+
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(currentPhotoPath, boptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(currentPhotoPath, boptions);
+        inst.setImageBitmap(bitmap);
+        */
+    }
 
 
     private void shareTwitter(String message , Uri Shimg) {
@@ -187,4 +232,8 @@ public class Share extends AppCompatActivity {
         twitter = findViewById(R.id.btn_twitter);
 
     }
+
+
+
+
     }
