@@ -41,12 +41,11 @@ public class Share extends AppCompatActivity {
     private ImageButton inst ;
     private ImageButton whats ;
     private ImageButton twitter ;
-    private UploadTakeImage uti ;
     private SwipeDetector sd ;
     private Bitmap photoBit ;
-    private Bitmap PhotoBitSmall ;
     private Uri photoUri ;
     private String photoPath ;
+    private UploadTakeImage uti ;
 
 
     @Override
@@ -56,12 +55,7 @@ public class Share extends AppCompatActivity {
         setbtnviews ();
         photoPath = uti.getCurrentPhotoPath() ;
         photoBit = BitmapFactory.decodeFile(photoPath);
-        // instagram size : 720x1280
-        // whatsapp size : 750x1334
-       // PhotoBitSmall = Bitmap.createScaledBitmap(photoBit , 750 , 1334 , false) ; // No need to resize :) 
         photoUri = getImageUri(this, photoBit) ;
-
-
 
 
 // Swiping :
@@ -94,14 +88,11 @@ public class Share extends AppCompatActivity {
         });
 
 
-
-
         //  btn listeners
         inst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Instagram share
-
                 shareInstagram();
             }
          });
@@ -109,15 +100,12 @@ public class Share extends AppCompatActivity {
         whats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 // WhatsApp share
-
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/jpeg");
                 share.putExtra(Intent.EXTRA_STREAM, photoUri);
-                share.setPackage("com.whatsapp");//package name of the app
+                share.setPackage("com.whatsapp");
                 startActivity(Intent.createChooser(share, "Share Image"));
-
             }
         });
 
@@ -125,8 +113,6 @@ public class Share extends AppCompatActivity {
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 // Twitter share
                 shareTwitter("Test Share");
             }
@@ -138,8 +124,6 @@ public class Share extends AppCompatActivity {
 
 
     private void shareInstagram () {
-
-
         Intent intent = getPackageManager().getLaunchIntentForPackage("com.instagram.android");
         if (intent != null)
         {
@@ -166,23 +150,13 @@ public class Share extends AppCompatActivity {
             intent.setData(Uri.parse("market://details?id="+"com.instagram.android"));
             startActivity(intent);
         }
-
     }
-
-
-
-
     private void shareTwitter(String message ) {
-        UploadTakeImage img = new UploadTakeImage();
-        Bitmap Shimg =  img.getTakenPicture();
-
-        Bitmap photo=Bitmap.createScaledBitmap(Shimg, 200, 10, true);
-
         Intent tweetIntent = new Intent(Intent.ACTION_SEND);
         tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
         tweetIntent.setType("text/plain");
-        if (photo != null) {
-            tweetIntent.putExtra(Intent.EXTRA_STREAM, photo);
+        if (photoUri != null) {
+            tweetIntent.putExtra(Intent.EXTRA_STREAM, photoUri);
             tweetIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             tweetIntent.setType("image/*");
         }
@@ -202,25 +176,6 @@ public class Share extends AppCompatActivity {
         if (resolved) {
             startActivity(tweetIntent);
     } }
-
-    private String urlEncode(String s) {
-        try {
-            return URLEncoder.encode(s, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            // Log.wtf();
-            //TAG, "UTF-8 should always be supported", e);
-            return "";
-        }}
-
-
-        public Bitmap retriveImg () {
-        // To get the image path:
-            String fname = uti.getImageFileName() ;
-            String path = "/storage/emulated/0/Pictures/" + fname ;
-            Bitmap bitmap = BitmapFactory.decodeFile(path);
-            return bitmap ;
-
-    }
 
 
     public boolean onTouchEvent(MotionEvent event) {
