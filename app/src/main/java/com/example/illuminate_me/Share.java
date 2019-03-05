@@ -175,7 +175,12 @@ public class Share extends AppCompatActivity {
         }
         if (resolved) {
             startActivity(tweetIntent);
-    } }
+    } else {
+          Intent  intent = new Intent(Intent.ACTION_VIEW);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setData(Uri.parse("market://details?id="+"com.twitter.android"));
+            startActivity(intent);}
+    }
 
 
     public boolean onTouchEvent(MotionEvent event) {

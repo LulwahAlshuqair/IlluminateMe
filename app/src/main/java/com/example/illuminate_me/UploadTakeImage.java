@@ -454,8 +454,9 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         }
 
         protected void onPostExecute(String result) {
-            tone.release();
             txtView.setText(result + "\n" );
+            tone.release();
+
 
             final Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
             illustrate.startSynthesize();
@@ -604,9 +605,11 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             ett.doInBackground();
             ett.translated();
             TranslatedText=ett.getMsg();}
+            String arabicFullMsg="";
+        arabicFullMsg= textContainsArabic(TranslatedText + ocrtext  + arabicText);
         imageDescription.setTranslatedDescription(ett.getMsg()+ocrtext);
 
-        return TranslatedText + ocrtext  + arabicText;
+        return arabicFullMsg;
     }// end tostring
 
 
@@ -836,6 +839,23 @@ public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri select
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
         return cursor.getString(idx);
+    }
+    public  String textContainsArabic(String text) {
+        String [] arr = text.split(" ");
+        String [] newArray = new String [arr.length];
+        String ocr="";
+int newArrayCount=0;
+        for(int i =0 ; i <arr.length;i++){
+            if (Character.UnicodeBlock.of(arr[i].charAt(0)) == Character.UnicodeBlock.ARABIC){
+                newArray[newArrayCount++]= arr[i];
+            }
+
+
+        }//for
+
+        for (int i =0 ; i < newArrayCount ; i++)
+ocr+=newArray[i] + " ";
+            return ocr;
     }
 
 
