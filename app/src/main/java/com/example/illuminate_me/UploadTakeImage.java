@@ -2,8 +2,11 @@ package com.example.illuminate_me;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -86,7 +89,7 @@ public class UploadTakeImage extends AppCompatActivity {
     private TextView txtView;
     private Uri selectedImage;
     private Uri photoUri;
-    private Bitmap takenPicture;
+    private  static Bitmap takenPicture;
     private String pathToFile;
     private Recognizer recognizer = new Recognizer();
     private Translator translator = new Translator();
@@ -106,7 +109,7 @@ public class UploadTakeImage extends AppCompatActivity {
     private String[] genderLabels = {"male","female"};
     private MediaPlayer tone;
     UserImage userImage = new UserImage();
-    private String currentPhotoPath;
+    private static String currentPhotoPath;
       boolean  isPlayingAudio = true;
 
     // we should replace the selected and taken with only one attribute
@@ -173,8 +176,7 @@ public class UploadTakeImage extends AppCompatActivity {
             @Override
             public void onSwipeUp(float distance, float velocity) {
                 // Save
-                saveImage();
-
+               saveImage();
             }
 
             @Override
@@ -226,15 +228,11 @@ public class UploadTakeImage extends AppCompatActivity {
         if (cameraIntent.resolveActivity(getPackageManager()) != null) {
             File photoFile = createImageFile();
 
-
             if (photoFile != null) {
                 pathToFile = photoFile.getAbsolutePath();
-
                 photoUri = FileProvider.getUriForFile(this, "com.example.android.fileprovider", photoFile);
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-
                 startActivityForResult(cameraIntent, MainActivity.chosenButton);
-
             }
         }
 
@@ -242,10 +240,9 @@ public class UploadTakeImage extends AppCompatActivity {
 
     private File createImageFile() {
         // Create an image file name
-        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         imageFileName = "JPEG_" + timeStamp + "_";
 
-        // getExternalFilesDir(Environment.DIRECTORY_PICTURES); < this will make the img available in our app only
         File storageDir = getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
         File Fimage = null;
 
@@ -262,6 +259,7 @@ public class UploadTakeImage extends AppCompatActivity {
 
 
     private void saveImage() {
+
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(currentPhotoPath);
         Uri contentUri = Uri.fromFile(f);
@@ -282,7 +280,7 @@ public class UploadTakeImage extends AppCompatActivity {
         //to upload picture
 
         if (requestCode == MainActivity.UPLOAD_PIC && resultCode == RESULT_OK && data != null) {
-            selectedImage = data.getData(); // This is URI need to convert to Bitmap
+            selectedImage = data.getData();
 
             if (selectedImage == null) {
                 txtView.setText("selected Image is empty");
@@ -294,7 +292,6 @@ public class UploadTakeImage extends AppCompatActivity {
                     takenPicture = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                     userImage.setImageBit(recognizer.resizeBitmap(takenPicture));
 
-
                    // Problem > image rotation
                     takenPicture = handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ) ;
 
@@ -305,7 +302,10 @@ public class UploadTakeImage extends AppCompatActivity {
 
                     callCloudVision(userImage.getImageBit());
 
-                    //
+                    // To get the uploaded image path :
+
+                    setCurrentPhotoPath(getRealPathFromURI(selectedImage)) ;
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -332,7 +332,11 @@ public class UploadTakeImage extends AppCompatActivity {
                 try {
                     //   userImage.setImageBit(recognizer.resizeBitmap(userImage.getImageBit()));
                     //recognizer.callCloudVision(userImage.getImageBit());
-                    image.setImageBitmap(takenPicture);
+
+                    // Problem > image rotation:
+                   selectedImage =  getImageUri(getApplicationContext() , takenPicture) ;
+                   // takenPicture = handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ) ;
+                    image.setImageBitmap(handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ));
                     userImage.setImageBit(resizeBitmap(takenPicture));
                     // recognizer.callCloudVision(userImage.getImageBit());
 
@@ -360,9 +364,6 @@ public class UploadTakeImage extends AppCompatActivity {
 
 
     }
-
-
-    // Transfer the image to the share class
 
 
     @Override
@@ -506,8 +507,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             if (logos != null){
                 ocrtext = ocrtext + "from" + Logo + " company";
             }
-            ocrtext.toLowerCase();
-            ocrtext=ocrtext.replaceAll("[\r\n]+", " ");
+            ocrtext = ocrtext.toLowerCase();
+            ocrtext= ocrtext.replaceAll("[\r\n]+", " ");
 
             TextOCR.append("Written on it: "+ocrtext); }
         else {
@@ -729,8 +730,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
     public String getImageFileName () {
         return imageFileName ;
     }
-
-    public String getCurrentPhotoPath () { return currentPhotoPath; }
+    public static String getCurrentPhotoPath () { return currentPhotoPath; }
     public void setCurrentPhotoPath (String currentPhotoPath) {
         this.currentPhotoPath = currentPhotoPath ;
     }
@@ -738,9 +738,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
 
 
 // To solve rotation problem:
-
-public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage)
-        throws IOException {
+public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage) throws IOException {
     int MAX_HEIGHT = 1024;
     int MAX_WIDTH = 1024;
 
@@ -762,7 +760,6 @@ public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri select
     img = rotateImageIfRequired(context, img, selectedImage);
     return img;
 }
-
     private static int calculateInSampleSize( BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
@@ -790,9 +787,6 @@ public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri select
         }
         return inSampleSize;
     }
-
-
-
     private static Bitmap rotateImageIfRequired(Context context, Bitmap img, Uri selectedImage) throws IOException {
 
         InputStream input = context.getContentResolver().openInputStream(selectedImage);
@@ -822,4 +816,27 @@ public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri select
         img.recycle();
         return rotatedImg;
     }
+
+
+// To get image for share
+    public Uri getImageUri(Context context, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+    public void setPhotoUri (Uri uri) {  uri = photoUri ; }
+    public Uri getPhotoUri () { return  photoUri; }
+    public Bitmap getTakenPicture () { return takenPicture; }
+
+
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
+    }
+
+
 }//end class
