@@ -649,7 +649,9 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         String Child = "";
         String gender = "";
         firstLabel = labels[0].toLowerCase();
-
+        //ٍREMOVING STEEPLE
+if (firstLabel.equals("steeple")||firstLabel.equals("church"))
+    firstLabel="Mosque";
         for (int i = 0; i < 3; i++) {
             if(labels[i]!=null){
                 label = labels[i].toLowerCase();}
