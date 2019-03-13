@@ -2,6 +2,7 @@ package com.example.illuminate_me;
 
 import android.Manifest;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public static final int TAKE_PIC =2;
    private  Button takePic;
    private Button uploadPic;
+    private MediaPlayer tone, instruction, instasound, twittersound, whatssound, mainsound, prevsound,sharesound, savesound, takesound, uploadsound ;
+
 
     ///private Button pronouncer;
 EnglishToTagalog ett ;
@@ -30,6 +33,8 @@ EnglishToTagalog ett ;
         //to remove top bar
        // getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
+
+
 
       Typeface cusFont = Typeface.createFromAsset(getAssets(),"fonts/coconnextarabic-light.ttf");
 
@@ -53,7 +58,10 @@ EnglishToTagalog ett ;
         takePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              chosenButton=TAKE_PIC;
+                takesound = MediaPlayer.create(MainActivity.this, R.raw.takevoice);
+                takesound.start();
+
+                chosenButton=TAKE_PIC;
                 //call user.takePic or write the code directly
                 Intent intent = new Intent (MainActivity.this, UploadTakeImage.class);
                 startActivity(intent);
@@ -66,6 +74,9 @@ EnglishToTagalog ett ;
         uploadPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                uploadsound = MediaPlayer.create(MainActivity.this, R.raw.uploadvoice);
+                uploadsound.start();
+
                 chosenButton=UPLOAD_PIC;
                 //call user.uploadPic or write the code directly
                 Intent intent = new Intent (MainActivity.this, UploadTakeImage.class);

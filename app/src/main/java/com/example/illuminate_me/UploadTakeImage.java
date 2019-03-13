@@ -99,7 +99,7 @@ public class UploadTakeImage extends AppCompatActivity {
     private byte[] photo ;
     private String imageFileName ;
     private SwipeDetector sd ;
-    private MediaPlayer tone;
+    private MediaPlayer tone, instruction, instasound, twittersound, whatssound, mainsound, prevsound,sharesound, savesound, hi ;
     // we should replace the selected and taken with only one attribute
     UserImage userImage = new UserImage();
     private static String currentPhotoPath;
@@ -122,7 +122,7 @@ public class UploadTakeImage extends AppCompatActivity {
     private String[] emotionLabels = {"smile","laugh","laughing"};
     private String[] wearingsLabels = {"white coat","coat","stethoscope","cowboy hat","sun hat","hat","dress","t-shirt","jeans","headgear","fashion accessory"};
     private String[] describeHairLabels={"blond","long hair","brown hair","black hair"};
-    private String[] onLabels ={"table","desk","shelf","side table","coffee table","sofa tables","outdoor table","dresser","night stand","writing desk","computer desk","drawer","chest of drawers"};
+    private String[] onLabels ={"table","desk","shelf","side table", "coffee table","sofa tables","outdoor table","dresser","night stand","writing desk","computer desk","drawer","chest of drawers", "kitchen & dining room table"};
     private String[] natureLabels = {"grassland","grass","hill","mountain","natural landscape"};
     private String [] lookingatLabels ={"sky","cloud"};
     private String[] inLabels = {"water","lake","pond","waterfowl","swimming pool","sea","raver"};
@@ -132,7 +132,7 @@ public class UploadTakeImage extends AppCompatActivity {
     private String[] placesLabels={"restaurant","hospital"};
     //baharat , Indian Cuisine , Baked Goods, Dessert,"vegetarian food"
     private String[] ExcludefoodLabels ={"food","meat","dish","plate","natural foods","indian cuisine ","dessert","baked goods","superfood","plant","gluten","vegan nutrition","cruciferous vegetables","recipe","cuisine","brunch","breakfast","dinner","lunch","cooking","snack","produce","kids' meal","junk food","ingredient","sweetness","finger food","fast food","baking"};
-    private String[] ExcludeTableLabels={"office","room","wood","furniture","metal","technology","floor","flooring","interior design","building","rectangle","writing office","office writing","marble","hutch","wood stain","interior design","end table","hardwood","living room","chair","solid wood","tile","tiles","iron"};
+    private String[] ExcludeTableLabels={"office","room","wood","furniture","metal","technology","floor","flooring","interior design","building","rectangle","writing office","office writing","marble","hutch","wood stain","interior design","end table","hardwood","living room","chair","solid wood","tile","tiles","iron","electronics", "property", "material property"};
 
     private static ArrayList<ColorName> initColorList() {
         ArrayList<ColorName> colorList = new ArrayList<ColorName>();
@@ -190,7 +190,7 @@ public class UploadTakeImage extends AppCompatActivity {
             txtView.setTypeface(cusFont);
 
         } catch (Exception e){
-            Log.d("mylog", "ExcCCCeption : " + e.toString());
+            Log.d("mylog", "Exception : " + e.toString());
         }
 
         // Swiping :
@@ -200,11 +200,15 @@ public class UploadTakeImage extends AppCompatActivity {
             public void onSwipeUp(float distance, float velocity) {
                 // Save
                saveImage();
+                savesound = MediaPlayer.create(UploadTakeImage.this, R.raw.savevoice);
+                savesound.start();
             }
 
             @Override
             public void onSwipeRight(float distance, float velocity) {
                 // previous
+                prevsound = MediaPlayer.create(UploadTakeImage.this, R.raw.prev);
+                prevsound.start();
                 Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -212,15 +216,22 @@ public class UploadTakeImage extends AppCompatActivity {
             @Override
             public void onSwipeLeft(float distance, float velocity) {
                 // SHARE
+                sharesound = MediaPlayer.create(UploadTakeImage.this, R.raw.sharevoice);
+                sharesound.start();
                 Intent intent = new Intent(UploadTakeImage.this, Share.class);
                 startActivity(intent);
-                finish() ;
+                finish();
             }
 
             @Override
             public void onSwipeDown(float distance, float velocity) {
+                int count =0;
                 // Home page
-                Intent intent = new Intent(UploadTakeImage.this, MainActivity.class);
+                mainsound = MediaPlayer.create(UploadTakeImage.this, R.raw.mainvoice);
+                mainsound.start();
+
+
+                Intent intent = new Intent(UploadTakeImage.this, logoScreen.class);
                 startActivity(intent) ;
             }
         });
@@ -291,7 +302,6 @@ public class UploadTakeImage extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "تم حفظ الصورة بنجاح", Toast.LENGTH_LONG).show();
 
     }
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -401,17 +411,10 @@ public class UploadTakeImage extends AppCompatActivity {
 @SuppressLint("StaticFieldLeak")
 private void callCloudVision(final Bitmap bitmap) throws IOException {
 
-    tone = MediaPlayer.create(UploadTakeImage.this, R.raw.uploading1);
+    tone = MediaPlayer.create(UploadTakeImage.this, R.raw.proc123);
     tone.start();
     tone.setLooping(true);
 
-
-    // txtView.setText("Uploading...");
-
- //   if (tone.isPlaying()) {
-
-  //      isPlayingAudio = false;
- //   }
 
     new AsyncTask<Object, Void, String>() {
         @Override
@@ -503,7 +506,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
 } //end callcloudvision
 
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-        StringBuilder message = new StringBuilder("");
+        StringBuilder message= new StringBuilder("");
         StringBuilder TextOCR = new StringBuilder("");
         StringBuilder TextfacialExpressions = new StringBuilder("");
         StringBuilder Textlabel = new StringBuilder("");
@@ -593,7 +596,9 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 receivedLabels.add(String.format(label.getDescription()));
                 i++;
             }
+
             Textlabel.append(getLabel(receivedLabels));
+
             message.append(Textlabel + " ");
         }// end if labels !=null
 
@@ -657,7 +662,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
     }
     public String getLabel(ArrayList<String>labels) {
         String label = null;
-        String firstLabel = labels.get(0).toLowerCase();
+        String firstLabel = receivedColor + " "+labels.get(0).toLowerCase();
         String wearings = "";
         String food=" ";
         //String table= labels.get(0).toLowerCase()+" "+labels.get(1).toLowerCase()+" "+labels.get(2).toLowerCase()+" ";
@@ -669,7 +674,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             if (ocrtext != null)
                 return label + " written on it: ";
             else
-                return receivedColor + " " + label;
+                return  " " + label;
         }
 
 
@@ -776,7 +781,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         if (food != null) {
             return food; }
 
-        return receivedColor+" "+firstLabel;
+        return firstLabel;
 
 
     }//end method getLabels

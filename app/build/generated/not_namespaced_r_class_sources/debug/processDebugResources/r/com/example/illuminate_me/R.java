@@ -3776,7 +3776,19 @@ public final class R {
     public static final int upload11_round=0x7f0c000b;
   }
   public static final class raw {
-    public static final int uploading1=0x7f0d0000;
+    public static final int instavoice=0x7f0d0000;
+    public static final int instruction1=0x7f0d0001;
+    public static final int mainvoice=0x7f0d0002;
+    public static final int prev=0x7f0d0003;
+    public static final int proc123=0x7f0d0004;
+    public static final int savevoice=0x7f0d0005;
+    public static final int sharevoice=0x7f0d0006;
+    public static final int takevoice=0x7f0d0007;
+    public static final int twittervoice=0x7f0d0008;
+    public static final int upload123=0x7f0d0009;
+    public static final int uploading1=0x7f0d000a;
+    public static final int uploadvoice=0x7f0d000b;
+    public static final int whatsvoice=0x7f0d000c;
   }
   public static final class string {
     public static final int abc_action_bar_home_description=0x7f0e0000;

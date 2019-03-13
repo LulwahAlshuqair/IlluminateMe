@@ -11,6 +11,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -46,6 +47,8 @@ public class Share extends AppCompatActivity {
     private Uri photoUri ;
     private String photoPath ;
     private UploadTakeImage uti ;
+    private MediaPlayer tone, instruction, instasound, twittersound, whatssound, mainsound, prevsound,sharesound, savesound ;
+
 
 
     @Override
@@ -64,12 +67,16 @@ public class Share extends AppCompatActivity {
 
             @Override
             public void onSwipeUp(float distance, float velocity) {
+
                 // Nothing
             }
 
             @Override
             public void onSwipeRight(float distance, float velocity) {
                 // previous
+                prevsound = MediaPlayer.create(Share.this, R.raw.prev);
+                prevsound.start();
+
                 Intent intent = new Intent(Share.this, UploadTakeImage.class);
                 startActivity(intent);
             }
@@ -82,6 +89,9 @@ public class Share extends AppCompatActivity {
             @Override
             public void onSwipeDown(float distance, float velocity) {
                 // Home page
+                mainsound = MediaPlayer.create(Share.this, R.raw.mainvoice);
+                mainsound.start();
+
                 Intent intent = new Intent(Share.this, MainActivity.class);
                 startActivity(intent) ;
             }
@@ -92,6 +102,9 @@ public class Share extends AppCompatActivity {
         inst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                instasound = MediaPlayer.create(Share.this, R.raw.instavoice);
+                instasound.start();
+
                 // Instagram share
                 shareInstagram();
             }
@@ -100,6 +113,9 @@ public class Share extends AppCompatActivity {
         whats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                whatssound = MediaPlayer.create(Share.this, R.raw.whatsvoice);
+                whatssound.start();
+
                 // WhatsApp share
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/jpeg");
@@ -114,6 +130,9 @@ public class Share extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Twitter share
+                twittersound = MediaPlayer.create(Share.this, R.raw.twittervoice);
+                twittersound.start();
+
                 shareTwitter("Test Share");
             }
         });
