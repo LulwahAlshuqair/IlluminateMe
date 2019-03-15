@@ -107,69 +107,8 @@ public class UploadTakeImage extends AppCompatActivity {
 
 //startttt
     private final String LOG_TAG = "MainActivity";
-    private String [] excludeTextLabels = {"text","line","font","calligraphy","word","clip art","handwriting","witting","number","ink"};
-    // private String[] receivedLabels = new String[20] ;
     private ArrayList<String> receivedLabels = new ArrayList<String>();
-    private String[] maleLabels = { "male","beard","facialhair","moustache","macho"};
-    //"feminine" is a female label
-    //cowboy//"king","prince",
-    private String [] manLabel = {"man","gentleman","businessman","men", "macho man","father","guy","grandfather","old man"};
-    //"queen","princess",
-    private String[] womanLabel = {"woman" , "lady" , "mam","businesswoman","gentlewoman","mother","old woman", "women","grandmother"};
-    private String[] childrenLabels = { "child" , "baby", "girl" , "boy" ,"baby laughing"};
-    private String[] genderLabels = {"male","female"};
-    // private String[] jobLabels = {"physician","pharmacy technician","chemist","scientist"};
-    private String[] emotionLabels = {"smile","laugh","laughing"};
-    private String[] wearingsLabels = {"white coat","coat","stethoscope","cowboy hat","sun hat","hat","dress","t-shirt","jeans","headgear","fashion accessory"};
-    private String[] describeHairLabels={"blond","long hair","brown hair","black hair"};
-    private String[] onLabels ={"table","desk","shelf","side table", "coffee table","sofa tables","outdoor table","dresser","night stand","writing desk","computer desk","drawer","chest of drawers", "kitchen & dining room table"};
-    private String[] natureLabels = {"grassland","grass","hill","mountain","natural landscape"};
-    private String [] lookingatLabels ={"sky","cloud"};
-    private String[] inLabels = {"water","lake","pond","waterfowl","swimming pool","sea","raver"};
-    private String [] stateLabels ={"sitting","standing","swimming","running"};
-    //if "nature" private String[] timeLabels={"sunlight","evening","sunrise","sunset","morning"};
-    private String[] textLabels={"street sign","sign","traffic sign","signage","book","notebook","diary","paper product","paper","product","document"};
-    private String[] placesLabels={"restaurant","hospital"};
-    //baharat , Indian Cuisine , Baked Goods, Dessert,"vegetarian food"
-    private String[] ExcludefoodLabels ={"food","meat","dish","plate","natural foods","indian cuisine ","dessert","baked goods","superfood","plant","gluten","vegan nutrition","cruciferous vegetables","recipe","cuisine","brunch","breakfast","dinner","lunch","cooking","snack","produce","kids' meal","junk food","ingredient","sweetness","finger food","fast food","baking"};
-    private String[] ExcludeTableLabels={"office","room","wood","furniture","metal","technology","floor","flooring","interior design","building","rectangle","writing office","office writing","marble","hutch","wood stain","interior design","end table","hardwood","living room","chair","solid wood","tile","tiles","iron","electronics", "property", "material property"};
 
-    private static ArrayList<ColorName> initColorList() {
-        ArrayList<ColorName> colorList = new ArrayList<ColorName>();
-        colorList.add(new ColorName("Black", 0x00, 0x00, 0x00));/////
-        colorList.add(new ColorName("Blue", 0x00, 0x00, 0xFF));///
-        colorList.add(new ColorName("Brown", 0xA5, 0x2A, 0x2A));///
-        colorList.add(new ColorName("Dark Blue", 0x00, 0x00, 0x8B));//
-        colorList.add(new ColorName("Dark Gray", 0xA9, 0xA9, 0xA9));///
-        colorList.add(new ColorName("Dark Green", 0x00, 0x64, 0x00));//
-        colorList.add(new ColorName("Dark Orange", 0xFF, 0x8C, 0x00));//
-        colorList.add(new ColorName("Dark Red", 0x8B, 0x00, 0x00));//
-        colorList.add(new ColorName("Gold", 0xFF, 0xD7, 0x00));///
-        colorList.add(new ColorName("Gray", 0x80, 0x80, 0x80));///
-        colorList.add(new ColorName("Green", 0x00, 0x80, 0x00));///
-        colorList.add(new ColorName("Green Yellowish", 0xAD, 0xFF, 0x2F));///
-        colorList.add(new ColorName("Ivory", 0xFF, 0xFF, 0xF0));////
-        colorList.add(new ColorName("Light Blue", 0xAD, 0xD8, 0xE6));///
-        colorList.add(new ColorName("Light Gray", 0xD3, 0xD3, 0xD3));//
-        colorList.add(new ColorName("Light Green", 0x90, 0xEE, 0x90));//
-        colorList.add(new ColorName("Light Yellow", 0xFF, 0xFF, 0xE0));//
-        colorList.add(new ColorName("Maroon", 0x80, 0x00, 0x00));///
-        colorList.add(new ColorName("Navy", 0x00, 0x00, 0x80));//
-        colorList.add(new ColorName("Orange", 0xFF, 0xA5, 0x00));//
-        colorList.add(new ColorName("Orange Reddish", 0xFF, 0x45, 0x00));//
-        colorList.add(new ColorName("Pink", 0xFF, 0xC0, 0xCB));///
-        colorList.add(new ColorName("Purple", 0x80, 0x00, 0x80));///
-        colorList.add(new ColorName("Red", 0xFF, 0x00, 0x00));///
-        colorList.add(new ColorName("Silver", 0xC0, 0xC0, 0xC0));///
-        colorList.add(new ColorName("Violet", 0xEE, 0x82, 0xEE));///
-        colorList.add(new ColorName("White", 0xFF, 0xFF, 0xFF));///
-        colorList.add(new ColorName("Yellow", 0xFF, 0xFF, 0x00));///
-        return colorList; }
-
-    private  int numberofpersons=0;
-    private String person ;
-    private String receivedColor;
-    String ocrtext="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -319,37 +258,26 @@ public class UploadTakeImage extends AppCompatActivity {
                 txtView.setText("selected Image is empty");
             } else {
                 try {
-                    // userImage.setImageBit(recognizer.resizeBitmap(userImage.getImageBit()));
-                    // recognizer.callCloudVision(userImage.getImageBit());
+
                     userImage.setImageUri(selectedImage);
                     takenPicture = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
-                    userImage.setImageBit(recognizer.resizeBitmap(takenPicture));
+                    userImage.setImageBit(resizeBitmap(takenPicture));
 
                    // Problem > image rotation
                     takenPicture = handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ) ;
 
                     image.setImageBitmap(takenPicture);
-                   // image.setImageBitmap( handleSamplingAndRotationBitmap(this, selectedImage)) ;
-                    // recognizer.callCloudVision(userImage.getImageBit());
+
 
 
                     callCloudVision(userImage.getImageBit());
 
                     // To get the uploaded image path :
-
                     setCurrentPhotoPath(getRealPathFromURI(selectedImage)) ;
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-           /* imageDescription.setDescription(recognizer.getDescription());
-            ett =  new EnglishToTagalog("en",imageDescription.getDescription());
-            ett.doInBackground();
-            ett.translated();
-            imageDescription.setTranslatedDescription(ett.getMsg());
-            txtView.setText(imageDescription.getTranslatedDescription());
-             pronouncer.synthesize(imageDescription.getTranslatedDescription());
-            */
 
             }
         }
@@ -363,33 +291,19 @@ public class UploadTakeImage extends AppCompatActivity {
                 // image.setImageBitmap(takenPicture);
             } else {
                 try {
-                    //   userImage.setImageBit(recognizer.resizeBitmap(userImage.getImageBit()));
-                    //recognizer.callCloudVision(userImage.getImageBit());
 
                     // Problem > image rotation:
                    selectedImage =  getImageUri(getApplicationContext() , takenPicture) ;
-                   // takenPicture = handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ) ;
                     image.setImageBitmap(handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ));
                     userImage.setImageBit(resizeBitmap(takenPicture));
-                    // recognizer.callCloudVision(userImage.getImageBit());
-
 
                     callCloudVision(userImage.getImageBit());
 
-                    //
-                    //    imageDescription.setDescription(recognizer.getDescription());
                     String des = "" + txtView.getText();
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                //imageDescription.setDescription(recognizer.getDescription());
-           /* ett =  new EnglishToTagalog("en",imageDescription.getDescription());
-            ett.doInBackground();
-            ett.translated();
-            imageDescription.setTranslatedDescription(ett.getMsg());*/
-                //txtView.setText(imageDescription.getDescription());
-                //pronouncer.synthesize(imageDescription.getTranslatedDescription());
 
             }
 
@@ -433,7 +347,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 List<Feature> featureList = new ArrayList<>();
                 Feature labelDetection = new Feature();
                 labelDetection.setType("LABEL_DETECTION");
-                labelDetection.setMaxResults(20);
+                labelDetection.setMaxResults(30);
                 featureList.add(labelDetection);
 
                 Feature textDetection = new Feature();
@@ -502,108 +416,58 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
     }.execute();
 
 
-
 } //end callcloudvision
 
     private String convertResponseToString(BatchAnnotateImagesResponse response) {
-        StringBuilder message= new StringBuilder("");
-        StringBuilder TextOCR = new StringBuilder("");
-        StringBuilder TextfacialExpressions = new StringBuilder("");
-        StringBuilder Textlabel = new StringBuilder("");
-        StringBuilder Textcolors = new StringBuilder("");
-        StringBuilder logo1 = new StringBuilder();
-        String Logo ="",from="";
+        Recognizer recognizer = new Recognizer();
+        StringBuilder message = new StringBuilder("");
+        String ocrtext = "", from = "", Logo = "";
 
-        String l1 ="";
-        List<EntityAnnotation> logos = response.getResponses().get(0)
-                .getLogoAnnotations();
+        //OCR
+        List<EntityAnnotation> logos = response.getResponses().get(0).getLogoAnnotations();
+        List<EntityAnnotation> texts = response.getResponses().get(0).getTextAnnotations();
+
         if (logos != null) {
             for (EntityAnnotation logo : logos) {
                 Logo = String.format(Locale.getDefault(), "%.3f: %s", logos.get(0).getLocale(), logo.getDescription());
                 Logo = Logo.substring(4);
-                logo1.append(Logo);
+
             }
-        } else {
-            logo1.append("");
         }
-        // "Text"
-        List<EntityAnnotation> texts = response.getResponses().get(0).getTextAnnotations();
+
         if (texts != null) {
-            ocrtext= texts.get(0).getDescription();
-            from=  texts.get(0).getLocale();
-            if (logos != null){
+            from = texts.get(0).getLocale();
+            ocrtext = texts.get(0).getDescription();
+            if (logos != null) {
                 ocrtext = ocrtext + "from" + Logo + " company";
             }
             ocrtext = ocrtext.toLowerCase();
-            ocrtext= ocrtext.replaceAll("[\r\n]+", " ");
+            ocrtext = ocrtext.replaceAll("[\r\n]+", " ");
 
-            TextOCR.append("Written on it: "+ocrtext); }
-        else {
-            TextOCR.append(""); }
-
-        //FACE START
-         person = "";
-         numberofpersons=0;
-        List<FaceAnnotation> faces = response.getResponses().get(0)
-                .getFaceAnnotations();
-        if (faces != null) {
-            for (FaceAnnotation face: faces) {
-                numberofpersons++;
-
-                String joy=  String.format(face.getJoyLikelihood());
-                if (joy.equals("VERY_LIKELY")||joy.equals("LIKELY")||joy.equals("POSSIBLE"))
-                    person="  happy ";
-                String sorrow=  String.format(face.getSorrowLikelihood());
-                if (sorrow.equals("VERY_LIKELY")||sorrow.equals("LIKELY")||sorrow.equals("POSSIBLE"))
-                    person="  sad ";
-                String anger =String.format(face.getAngerLikelihood());
-                if (anger.equals("VERY_LIKELY")||anger.equals("LIKELY")||anger.equals("POSSIBLE"))
-                    person="  angry ";
-                String surprise =String.format(face.getSurpriseLikelihood());
-                if (surprise.equals("VERY_LIKELY")||surprise.equals("LIKELY")||surprise.equals("POSSIBLE"))
-                    person="  surprised ";
-                if (numberofpersons > 1 ){
-                    //person=+person;
-                TextfacialExpressions.append("and "+person);} else
-
-                TextfacialExpressions.append(person);
-
-            }
-
-        } else {
-            message.append("");
         }
 
-        //colors
+
+        //Facial Expression
+        List<FaceAnnotation> faces = response.getResponses().get(0).getFaceAnnotations();
+        recognizer.setFacialExpressions(faces);
+
+        //Colors
         DominantColorsAnnotation colors  = response.getResponses().get(0).getImagePropertiesAnnotation().getDominantColors();
-        if(faces==null) {
-            for (ColorInfo color : colors.getColors()) {
-                Textcolors.append(
-                        "" + getColorNameFromRgb((int) Math.round(color.getColor().getRed()), (int) Math.round(color.getColor().getGreen()), (int) Math.round(color.getColor().getBlue())));
-                receivedColor=Textcolors.toString();
-                break;
-            }
+        for ( ColorInfo color : colors.getColors()) {
+            recognizer.setColorNameFromRgb((int) Math.round(color.getColor().getRed()), (int) Math.round(color.getColor().getGreen()), (int) Math.round(color.getColor().getBlue()));
+            break;
         }
-        else {
-            Textcolors.append(""); }
-
-            //labels
+        //Labels
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
         if (labels != null) {
             //this loop will add all labels received from vision API to receivedLabels array
-            int i = 0;
             for (EntityAnnotation label : labels) {
-                receivedLabels.add(String.format(label.getDescription()));
-                i++;
-            }
-
-            Textlabel.append(getLabel(receivedLabels));
-
-            message.append(Textlabel + " ");
-        }// end if labels !=null
+                receivedLabels.add(String.format(label.getDescription())); }
+            message.append(recognizer.getLabel(receivedLabels)); }
 
 
-
+        //translation part
+        // ocrtext=recognizer.getOcrtext();
         String arabicText="";
         if ((from.equals("ar"))) {
 
@@ -617,7 +481,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 ocrtext = " "+ett.getMsg();
             }
         }
-        if(!(Textcolors.equals("")||Textlabel.equals("")||TextfacialExpressions.equals(""))){
+        if(!(recognizer.getColor()==null||recognizer.getLabel()==null||recognizer.getFacialExpression()==null)){
             ett = new EnglishToTagalog("", "");
 
             ett.setFrom("en");
@@ -625,12 +489,13 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             ett.doInBackground();
             ett.translated();
             TranslatedText=ett.getMsg();}
-            String arabicFullMsg="";
+        String arabicFullMsg="";
         arabicFullMsg= textContainsArabic(TranslatedText + ocrtext  + arabicText);
         imageDescription.setTranslatedDescription(ett.getMsg()+ocrtext);
 
         return arabicFullMsg;
     }// end tostring
+
 
 
     public Bitmap resizeBitmap(Bitmap bitmap) {
@@ -660,300 +525,6 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         image.encodeContent(imageBytes);
         return image;
     }
-    public String getLabel(ArrayList<String>labels) {
-        String label = null;
-        String firstLabel = receivedColor + " "+labels.get(0).toLowerCase();
-        String wearings = "";
-        String food=" ";
-        //String table= labels.get(0).toLowerCase()+" "+labels.get(1).toLowerCase()+" "+labels.get(2).toLowerCase()+" ";
-        String table=null;
-
-        // papers,books etc.
-        label = findBestLabel(labels, textLabels);
-        if (label != null) {
-            if (ocrtext != null)
-                return label + " written on it: ";
-            else
-                return  " " + label;
-        }
-
-
-        // person
-        wearings = getWearings(labels);
-        // hair = getHair;
-        //men
-        if(label==null) {
-            label = findBestLabel(labels, manLabel);
-            if (label != null) {
-                label = "a " + label;
-                if (wearings != null) {
-                    if (numberofpersons > 1) {
-                        label = " men ";
-                        wearings = wearings + "s";
-                    }
-                    return person + " " + label + " " + wearings;
-                } else {
-                    if (numberofpersons > 1) {
-                        label = " men ";
-                        return person + " " + label;
-                    }
-                }
-                return "a " + person + " " + label;
-            }
-        }
-        if(label==null){
-            // if(label.equals("male")||label.equals("facialhair")||label.equals("moustache")||label.equals("macho")||label.equals("beard"))
-           /* if (labels.contains("male") || labels.contains("facialhair") || labels.contains("moustache") || labels.contains("macho") || labels.contains("beard"))
-                label = "a man ";*/
-            label= findBestLabel(labels,maleLabels);
-            if (label != null) {
-                if (wearings != null && person != null) {
-                    if (numberofpersons > 1) {
-                        label = " men ";
-                        wearings = wearings + "s";
-                    }
-                    return person + " " + label + " " + wearings;
-                } else {
-                    if (numberofpersons > 1) {
-                        label = " men ";
-                        return person + " " + label;
-                    }
-                    return "a " + person + " " + label;
-                }
-            }
-        }
-        //women
-        if(label==null){
-            label = findBestLabel(labels,womanLabel);
-
-            if(label!=null) {
-                if (wearings != null){
-                    if( numberofpersons>1){
-                        label=" women ";
-                        wearings=wearings+"s";}
-                    return person+" "+label+" "+wearings;}
-                else{
-                    if( numberofpersons>1){
-                        label=" women ";
-                        return person+" "+label;
-                    }
-
-                    return "a "+person+" "+label;}
-            }}
-
-        //children
-        if(label==null){
-            label = findBestLabel(labels,childrenLabels);
-            if(label!=null) {
-                if (wearings != null){
-                    if( numberofpersons>1){
-                        label=" children ";
-                        wearings=wearings+"s";}
-                    return person+" "+label+" "+ wearings;}
-                else{
-                    if( numberofpersons>1){
-                        label=" children ";
-
-                        return person+" "+label;}
-                }
-                return "a "+person + " " + label;
-            }}
-
-        //if it did not recognize the gender but recognized it's a person or recognized the person's job
-        if (label==null&& wearings != null){
-            if(numberofpersons>1)
-                return " persons  "+wearings;
-            else
-                return "a person  "+wearings;}
-
-        // tables
-        //supposed to be  if(labels.contains("table"))
-        // if(table.contains("table"))
-        table= getThingsOnTable(labels);
-        if(table!=null)
-            return table;
-
-        // food : fruits , vegetables etc.
-        //why did not work?
-        // if(labels.contains("food")||labels.contains("dish")||labels.contains("cuisine")||labels.contains("recipe")||labels.contains("produce"))
-        //  if(firstLabel.equals("food")||firstLabel.equals("dish")||firstLabel.equals("cuisine")||firstLabel.equals("recipe")||firstLabel.equals("produce"))
-        food = getFood(labels);
-        if (food != null) {
-            return food; }
-
-        return firstLabel;
-
-
-    }//end method getLabels
-
-
-    //(1) Man, Woman, Child
-    public String findBestLabel (ArrayList<String>labels, String [] compare){
-        String label ="";
-        for(int i =0; i< labels.size(); i++) {
-            if(labels.get(i)!=null)
-                label=labels.get(i).toLowerCase();
-            for (int j = 0; j < compare.length; j++) {
-                if (label.equals(compare[j])){
-                    if(label.equals("text")||label.equals("line")||label.equals("font")||label.equals("calligraphy")||label.equals("word")||label.equals("clip art")||label.equals("handwriting")||label.equals("witting")||label.equals("number"))
-                    {label ="written text: ";
-                        return label;}
-                    if(label.equals("male")||label.equals("facialhair")||label.equals("moustache")||label.equals("macho")||label.equals("beard"))
-                        label=" man";
-                    if(label.equals("child model"))
-                        label="child";
-                    if(label.equals("child")||label.equals("baby")||label.equals("child model"))
-                        label = getChildGender(labels,label);
-
-                    return label;
-                }
-            }
-        }
-        return null;
-    }
-
-    //(2)Child gender
-    public String getChildGender(ArrayList<String>labels , String child){
-        String gender="";
-        for(int i =0; i< labels.size(); i++) {
-            if(labels.get(i)!=null)
-                gender = labels.get(i).toLowerCase();
-            for (int j = 0; j < genderLabels.length; j++) {
-                if (gender.equals(genderLabels[j])) {
-                    if (gender.equals("male"))
-                        child = " a baby boy ";
-                    else
-                        child = " a baby girl ";
-                    return child;
-                }
-
-            }
-        }
-        return child ;
-    }
-    //(3) Wearings
-    public String getWearings(ArrayList<String>labels  ){
-        String wearing="";
-        for(int i =0; i< labels.size(); i++) {
-            if(labels.get(i)!=null)
-                wearing = labels.get(i).toLowerCase();
-            for (int j = 0; j < wearingsLabels.length; j++) {
-                if (wearing.equals(wearingsLabels[j])) {
-                    if(receivedColor!=null)
-                        return " wearing  " +receivedColor+" "+wearing;
-                    return " wearing  " +wearing;
-                }
-
-            }
-        }
-        return null ;
-    }
-
-    //(4) Tables
-    public String  getThingsOnTable(ArrayList<String>labels) {
-        String table= "";
-        String onTable="";
-        int count=0;
-        ArrayList<String>things=labels;
-
-        //problem when to return null? to optimize search time for other categories , i solution
-
-        //to get the table type
-        for(int i=0;i<labels.size();i++){
-            table=labels.get(i).toLowerCase();
-            for(int k=0;k<onLabels.length;k++){
-                if(table.equals(onLabels[k]))
-                {  //break if you find the type of table
-                    table=onLabels[k];
-                    count=1;
-                    break;}
-            }
-            if(count==1)
-                break;
-        }
-
-        //if a kind of table exists
-        if(count==1) {
-            //remove table , furniture ......
-            for(int i=things.size()-1;i>=0;i--) {
-                onTable = things.get(i).toLowerCase();
-                for (int k = 0; k < onLabels.length; k++) {
-                    if (onTable.equals(onLabels[k]))
-                        if(i<things.size())
-                            things.remove(i);
-                    //if i<things.size() why is it required ?? above it works without it
-                }
-            }
-            //need optimization
-            for(int i=things.size()-1;i>=0;i--) {
-                onTable = things.get(i).toLowerCase();
-                for (int k = 0; k < ExcludeTableLabels.length; k++) {
-                    if (onTable.equals(ExcludeTableLabels[k]))
-                        if(i<things.size())
-                            things.remove(i);
-                }
-            }
-            if(things.size()==0)
-                onTable=null;
-            if(things.size()>1)
-                onTable= " a "+things.get(0)+" and a "+things.get(1);
-            else
-            if(things.size()==1)
-                onTable= " a "+things.get(0);
-            // return onTable+" on a "+table;
-            if (onTable != null)
-                return  onTable + " on a " +" "+ table;
-
-            return receivedColor +"  " + table ;
-        }
-
-        return null;
-    }
-
-    //(5)food
-    public String getFood(ArrayList<String>labels){
-
-        String food="";
-        ArrayList<String>foods=labels;
-
-        for(int i=foods.size()-1;i>=0;i--){
-            food=foods.get(i).toLowerCase();
-            for(int k=0;k<ExcludefoodLabels.length;k++){
-                if(food.equals(ExcludefoodLabels[k]))
-                    foods.remove(i);
-            }
-        }
-        return foods.get(0)+" ";
-    } // end getFood
-
-   //(6) colors
-    public static String getColorNameFromRgb(int r, int g, int b) {
-        ArrayList<ColorName> colorList = initColorList();
-        ColorName closestMatch = null;
-        int minMSE = Integer.MAX_VALUE;
-        int mse;
-        for (ColorName c : colorList) {
-            mse = c.computeMSE(r, g, b);
-            if (mse < minMSE) {
-                minMSE = mse;
-                closestMatch = c;
-            }
-        }
-        if (closestMatch != null) {
-            return closestMatch.getName();
-        } else {
-            return "No matched color name.";
-        }
-    }// end getcolor
-    public static String getColorNameFromHex(int hexColor) {
-        int r = (hexColor & 0xFF0000) >> 16;
-        int g = (hexColor & 0xFF00) >> 8;
-        int b = (hexColor & 0xFF);
-        return getColorNameFromRgb(r, g, b);
-    }// end getcolorhex
-
-
-
 
     // to know the exact name of the image.
     public String getImageFileName () {
@@ -963,7 +534,6 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
     public void setCurrentPhotoPath (String currentPhotoPath) {
         this.currentPhotoPath = currentPhotoPath ;
     }
-
 
 
 // To solve rotation problem:
