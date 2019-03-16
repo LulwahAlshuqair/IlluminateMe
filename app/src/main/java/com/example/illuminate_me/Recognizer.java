@@ -42,15 +42,17 @@ public class Recognizer {
     private String[] ExcludefoodLabels ={"food","meat","dish","plate","natural foods","indian cuisine ","dessert","baked goods","superfood","plant","gluten","vegan nutrition","cruciferous vegetables","recipe","cuisine","brunch","breakfast","dinner","lunch","cooking","snack","produce","kids' meal","junk food","ingredient","sweetness","finger food","fast food","baking"};
 
     //nature arrays
-    private String [] excludeNatureLabels = {"people in nature","natural view","natural views","klippe","spring","moss","rock","vascular plant","terrestrial plant","tributary","arroyo","fluvial landforms of streams","stream bed","riparian forest","riparian zone","mist","yellow","atmospheric phenomenon","plain","field","massif","sunlight","branch","path","dirt road","infrastructure","park","national park","fence","state park","maple leaf","autumn","red","green","house","reservoir","fell","tarn","tourist attraction","elaeis","arecales","leisure","resort","sound","cape","world","drainage basin","headland","terrain","spit","shore","promontory","inlet","vacation","tourism","wildlife","theatrical scenery","adaptation","tropics","walkway","annual plant","rhododendron","maple","deciduous","state park","groundcover","temperate broadleaf and mixed forest","shrub","botany","woody plant","bird's-eye view","terrace","aerial photography","thoroughfare","plant community","road","grass","biome","body of water","water feature","hill station","water resource","water","water resources","stream","watercourse","calm","leaf","reflection","spring ","wilderness"};
+    private String [] excludeNatureLabels = {"blue","natural view","natural views","klippe","spring","moss","rock","vascular plant","terrestrial plant","tributary","arroyo","fluvial landforms of streams","stream bed","riparian forest","riparian zone","mist","yellow","atmospheric phenomenon","plain","field","massif","sunlight","branch","path","dirt road","infrastructure","park","national park","fence","state park","maple leaf","autumn","red","green","house","reservoir","fell","tarn","tourist attraction","elaeis","arecales","leisure","resort","sound","cape","world","drainage basin","headland","terrain","spit","shore","promontory","inlet","vacation","tourism","wildlife","theatrical scenery","adaptation","tropics","walkway","annual plant","rhododendron","maple","deciduous","state park","groundcover","temperate broadleaf and mixed forest","shrub","botany","woody plant","bird's-eye view","terrace","aerial photography","thoroughfare","plant community","road","grass","biome","body of water","water feature","hill station","water resource","water","water resources","stream","watercourse","calm","leaf","reflection","spring ","wilderness"};
     private String [] natureLabel = {"nature","highland","headland","landscaping","natural view","natural views","vegetation", "natural landscape" ,"nature reserve","natural environment","nature landscape", "landscape"};
 
+    //for general labels
+    private String [] excludVerbsLabels = {"drink","drinking","eat","eating","sitting","standing","swimming"};
 
 
 
     public String getLabel(ArrayList<String>labels) {
 
-        String firstLabel = receivedColor + " " + labels.get(0).toLowerCase();
+        String firstLabel;
         String wearings;
         String hair ;
 
@@ -136,7 +138,6 @@ public class Recognizer {
 
 
         //children
-
         label = findBestLabel(labels,childrenLabels);
         if (label != null) {
             if (numberofpersons > 1) {
@@ -157,29 +158,35 @@ public class Recognizer {
         }
 
 
-        //if it did not recognize the gender but recognized it's a person or recognized the person's job
+        //if it did not recognize the gender but recognized the facial expression , or wearings
         if (label==null&& wearings != null){
             if(numberofpersons>1)
                 return " persons  "+wearings;
             else
                 return "a person  "+wearings;}
 
+        if (label==null&& person!= null){
+            if(numberofpersons>1)
+                return person+" people";
+            else{
+                if(hair!=null){
+                  return "a "+person+" person "+hair;
+                }
+                return "a "+person+" person ";
+            }
+               }
+
         // tables
-        //supposed to be  if(labels.contains("table"))
-        // if(table.contains("table"))
         label= getThingsOnTable(labels);
         if(label!=null)
             return label;
 
         // food : fruits , vegetables etc.
-        //why did not work?
-        // if(labels.contains("food")||labels.contains("dish")||labels.contains("cuisine")||labels.contains("recipe")||labels.contains("produce"))
-        //  if(firstLabel.equals("food")||firstLabel.equals("dish")||firstLabel.equals("cuisine")||firstLabel.equals("recipe")||firstLabel.equals("produce"))
         label = getFood(labels);
         if (label != null) {
             return label; }
 
-
+         firstLabel= getBestLabel(labels);
         return firstLabel;
 
     }//end method getLabels
@@ -379,7 +386,7 @@ public class Recognizer {
             }
             if(labels.size()!=0)
                 return " a natural view for "+labels.get(0)+"s";
-            return null;
+            return " a picture for a natural view ";
 
         }// end if naturalScenery
 
@@ -469,7 +476,48 @@ public class Recognizer {
         colorList.add(new ColorName("Yellow", 0xFF, 0xFF, 0x00));///
         return colorList; }
 
+        //(9) general labels
+    public String getBestLabel (ArrayList<String> labels) {
 
+        String firstLabel="";
+        String secondLabel="";
+        String finalLabel = receivedColor + " ";
+
+        //to remove any verbs or adjectives from the received array
+        for (int i = labels.size() - 1; i >= 0; i--) {
+            if (labels.get(i) != null) {
+                firstLabel = labels.get(i).toLowerCase();
+                for (int k = 0; k < excludVerbsLabels.length; k++) {
+                    if (firstLabel.equals(excludVerbsLabels[k]))
+                        labels.remove(i);
+                }
+            }
+        }
+
+        finalLabel= receivedColor+ " "+labels.get(0);
+        return finalLabel;
+        //do not delete additional
+        //sometimes first and second label are the same , this loop is to solve this problem
+      /*  if (labels.size() != 0) {
+            for (int i = 0; i < labels.size(); i++) {
+                if (labels.get(i) != null) {
+                    firstLabel = labels.get(i).toLowerCase();
+                    if (!(i + 1 >= labels.size()))
+                        secondLabel = labels.get(i + 1).toLowerCase();
+                    else {
+                        finalLabel = firstLabel + firstLabel;
+                        return finalLabel;
+                    }
+                    if (firstLabel.equals(secondLabel)) {
+                        secondLabel = labels.get(i + 2);
+                    }
+                }
+            }
+            finalLabel += firstLabel + " and " + secondLabel;
+            return firstLabel;
+        }
+        return null;*/
+    }
     //setters
     public void setOCR (  List<EntityAnnotation> logos,List<EntityAnnotation> texts){
 
