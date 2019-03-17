@@ -369,15 +369,33 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             final Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
             illustrate.startSynthesize();
 
+            /* To repeat description
 
+            txtView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    illustrate.startSynthesize();
+                    return false;
+                }
+            });
+
+            image.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    illustrate.startSynthesize();
+                    return false;
+                }
+            });*/
 
             // To repeat description
             txtView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     illustrate.startSynthesize();
+
                 }
             });
+
 
 
         }

@@ -6,14 +6,18 @@ import android.content.SharedPreferences.Editor;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 public class logoScreen extends AppCompatActivity {
 
-    private MediaPlayer instruction ;
+    private MediaPlayer instruction , nohi , hi ;
     SharedPreferences prefs = null;
     Editor editor;
+    private ImageView imageView;
+    private static int count =0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,14 +35,32 @@ public class logoScreen extends AppCompatActivity {
         // to hide the action bar
         //getSupportActionBar().hide();
 
+        //To Start Hi for the first time open
+        if (count <1){
+            hi = MediaPlayer.create(logoScreen.this, R.raw.hi);
+            hi.start();
+            count++;
+        }
 
-        // to not go back to this screen
+        //To repeat Instruction
+        imageView = findViewById(R.id.imageView);
+        imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                nohi = MediaPlayer.create(logoScreen.this, R.raw.nohi);
+                nohi.start();
+                return false;
+            }
+        });
+
+        //To not go back to this screen
         logoLauncher logo = new logoLauncher();
-       logo.start();
+        logo.start();
 
 
     }// end onCreate
 
+    //To start instruction for the first time use
 
     @Override
     protected void onResume() {
@@ -56,23 +78,6 @@ public class logoScreen extends AppCompatActivity {
     }
 
 
-/*
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-        if (prefs.getBoolean("firstrun", true)) {
-            instruction = MediaPlayer.create(logoScreen.this, R.raw.instruction1);
-            instruction.start();
-            // Do first run stuff here then set 'firstrun' as false
-            // using the following line to edit/commit prefs
-            prefs.edit().putBoolean("firstrun", false).commit();
-        }
-    }
-
-*/
-
     // this class purpose is to make the logo screen appears for a number of seconds before showing the main screen
 
     private class logoLauncher extends Thread {
@@ -80,8 +85,8 @@ public class logoScreen extends AppCompatActivity {
 
         public void run (){
             try {
-                // to make the logo appear for 2 seconds
-                sleep(2000);
+                // to make the logo appear for 3 seconds
+                sleep(3000);
             }
             catch (InterruptedException e){
                 e.printStackTrace();

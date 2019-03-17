@@ -168,7 +168,7 @@ public class Recognizer {
         if (label==null&& person!= null){
             if(numberofpersons>1)
                 return person+" people";
-            else{
+           else{
                 if(hair!=null){
                   return "a "+person+" person "+hair;
                 }

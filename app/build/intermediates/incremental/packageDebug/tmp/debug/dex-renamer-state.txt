@@ -1,4 +1,4 @@
-#Sat Mar 16 19:48:22 AST 2019
-base.0=C\:\\Users\\areej\\AndroidStudioProjects\\IlluminateMe\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
+#Sun Mar 17 02:32:26 AST 2019
+base.0=/Users/saja/AndroidStudioProjects/IlluminateMe/app/build/intermediates/dex/debug/mergeDexDebug/out
 path.0=classes.dex
 renamed.0=classes.dex

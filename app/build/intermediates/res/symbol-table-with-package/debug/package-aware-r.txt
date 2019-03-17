@@ -951,9 +951,11 @@ mipmap up1_round
 mipmap upload1
 mipmap upload11
 mipmap upload11_round
+raw hi
 raw instavoice
 raw instruction1
 raw mainvoice
+raw nohi
 raw prev
 raw proc123
 raw savevoice
