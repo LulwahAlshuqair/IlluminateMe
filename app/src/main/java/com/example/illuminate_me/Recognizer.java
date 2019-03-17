@@ -52,9 +52,11 @@ public class Recognizer {
 
     public String getLabel(ArrayList<String>labels) {
 
-        String firstLabel;
+        String firstLabel= "a "+receivedColor+" "+labels.get(0);
         String wearings;
         String hair ;
+
+
 
         // papers,books etc.
         label = findBestLabel(labels, textLabels);
@@ -65,11 +67,11 @@ public class Recognizer {
                 return receivedColor + " " + label;
         }
 
-        //natural scenery
-        label = getNaturalScenery(labels);
-        if (label != null) {
+
+        // tables
+        label= getThingsOnTable(labels);
+        if(label!=null)
             return label;
-        }
 
         // person
         wearings = getWearings(labels);
@@ -97,6 +99,7 @@ public class Recognizer {
             }
         }
 
+
         label= findBestLabel(labels,maleLabels);
         if (label != null) {
             if (numberofpersons > 1) {
@@ -115,6 +118,7 @@ public class Recognizer {
                 return "a " + person + " " + label+" "+hair;
             return "a " + person + " " + label;
         }
+
 
         //women
         label = findBestLabel(labels,womanLabel);
@@ -159,13 +163,30 @@ public class Recognizer {
 
 
         //if it did not recognize the gender but recognized the facial expression , or wearings
-        if (label==null&& wearings != null){
+
+
+
+        if ( wearings != null){
             if(numberofpersons>1)
                 return " persons  "+wearings;
             else
-                return "a person  "+wearings;}
+                return "a person  "+wearings;
 
-        if (label==null&& person!= null){
+        }
+
+        label = getNaturalScenery(labels);
+        if(label!=null){
+            return label;
+        }
+        //food
+        label = getFood(labels);
+        if (label != null) {
+            return label; }
+
+        if (person!= null)
+            return "a "+person+" person ";
+
+      /*  if (label==null&& person!= null){
             if(numberofpersons>1)
                 return person+" people";
            else{
@@ -174,19 +195,15 @@ public class Recognizer {
                 }
                 return "a "+person+" person ";
             }
-               }
-
-        // tables
-        label= getThingsOnTable(labels);
-        if(label!=null)
-            return label;
-
-        // food : fruits , vegetables etc.
-        label = getFood(labels);
+               }*/
+        //natural scenery
+       /* label = getNaturalScenery(labels);
         if (label != null) {
-            return label; }
+            return label;
+        }*/
 
-         firstLabel= getBestLabel(labels);
+
+        //firstLabel= getBestLabel(labels);
         return firstLabel;
 
     }//end method getLabels
@@ -386,7 +403,7 @@ public class Recognizer {
             }
             if(labels.size()!=0)
                 return " a natural view for "+labels.get(0)+"s";
-            return " a picture for a natural view ";
+            return " a picture of a natural view ";
 
         }// end if naturalScenery
 
