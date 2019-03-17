@@ -18,10 +18,11 @@ public class Recognizer {
     private ArrayList<String> receivedLabels = new ArrayList<String>();
 
     //to find gender
-    private String[] maleLabels = { "male","beard","facialhair","moustache","macho"};
-    private String [] manLabel = {"man","gentleman","businessman","men", "macho man","father","guy","grandfather","old man"};
-    private String[] womanLabel = {"woman" , "lady" , "mam","businesswoman","gentlewoman","mother","old woman", "women","grandmother"};
-    private String[] childrenLabels = { "child" , "baby", "girl" , "boy" ,"baby laughing"};
+    //face in one array
+    private String[] maleLabels = { "male","beard","facialhair","moustache","macho","face"};
+    private String [] manLabel = {"face","man","gentleman","businessman","men", "macho man","father","guy","grandfather","old man"};
+    private String[] womanLabel = {"woman" , "lady" , "mam","businesswoman","face","gentlewoman","mother","old woman", "women","grandmother"};
+    private String[] childrenLabels = { "child" , "baby", "girl" , "boy" ,"face","baby laughing"};
     private String[] genderLabels = {"male","female"};
 
     //to describe people
@@ -52,11 +53,9 @@ public class Recognizer {
 
     public String getLabel(ArrayList<String>labels) {
 
-        String firstLabel= "a "+receivedColor+" "+labels.get(0);
+        String firstLabel= getBestLabel(labels);
         String wearings;
         String hair ;
-
-
 
         // papers,books etc.
         label = findBestLabel(labels, textLabels);
@@ -162,17 +161,28 @@ public class Recognizer {
         }
 
 
-        //if it did not recognize the gender but recognized the facial expression , or wearings
-
-
-
+        //if it did not recognize the gender but recognized the facial expression , or wearings.
         if ( wearings != null){
             if(numberofpersons>1)
                 return " persons  "+wearings;
             else
                 return "a person  "+wearings;
-
         }
+
+        //does not work
+      /*  if ( person != null) {
+            if (numberofpersons > 1)
+                return person + " people";
+            else {
+                if(hair!=null)
+                return "a" + person + " person "+hair;
+                else
+               return "a" + person+" person";
+            }
+        }
+*/
+        /*if (person!= null)
+            return "a "+person+" person ";*/
 
         label = getNaturalScenery(labels);
         if(label!=null){
@@ -182,9 +192,6 @@ public class Recognizer {
         label = getFood(labels);
         if (label != null) {
             return label; }
-
-        if (person!= null)
-            return "a "+person+" person ";
 
       /*  if (label==null&& person!= null){
             if(numberofpersons>1)
@@ -202,12 +209,9 @@ public class Recognizer {
             return label;
         }*/
 
-
-        //firstLabel= getBestLabel(labels);
         return firstLabel;
 
     }//end method getLabels
-
 
     //(1) Man, Woman, Child
     public String findBestLabel (ArrayList<String>labels, String [] compare){
@@ -221,6 +225,8 @@ public class Recognizer {
                             label = "written text: ";
                             return label;
                         }
+                        if(label.equals("face"))
+                            return " person";
                         if (label.equals("male") || label.equals("facialhair") || label.equals("moustache") || label.equals("macho") || label.equals("beard"))
                             label = " man";
                         if (label.equals("child model"))
@@ -510,10 +516,10 @@ public class Recognizer {
                 }
             }
         }
-
+         receivedColor=getColor();
         finalLabel= receivedColor+ " "+labels.get(0);
         return finalLabel;
-        //do not delete additional
+       //do not delete additional
         //sometimes first and second label are the same , this loop is to solve this problem
       /*  if (labels.size() != 0) {
             for (int i = 0; i < labels.size(); i++) {
