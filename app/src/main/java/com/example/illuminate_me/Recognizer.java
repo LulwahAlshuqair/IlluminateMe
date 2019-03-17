@@ -516,6 +516,7 @@ public class Recognizer {
                 }
             }
         }
+
          receivedColor=getColor();
         finalLabel= receivedColor+ " "+labels.get(0);
         return finalLabel;
