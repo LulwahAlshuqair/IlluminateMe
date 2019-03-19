@@ -449,7 +449,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             //this loop will add all labels received from vision API to receivedLabels array
             for (EntityAnnotation label : labels) {
                 receivedLabels.add(String.format(label.getDescription())); }
-            message.append(recognizer.getLabel(receivedLabels)); }
+            message.append(recognizer.generateDescreption(receivedLabels)); }
 
 
         //translation part
