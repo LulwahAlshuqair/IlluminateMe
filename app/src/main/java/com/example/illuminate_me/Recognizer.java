@@ -46,47 +46,28 @@ public class Recognizer {
 
     //for general labels
     private String [] excludVerbsLabels = {"drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
-
+    String written=" مكتوب عليها: ";
 
 //(1) This method shows how a final description of the photo is generated.
     public String generateDescreption(ArrayList<String>labels) {
         String wearings;
         String hair ;
-        //natural scenes
-        label = getNaturalScenery(labels);
-        if(label!=null){
-            return label; }
-        // signs,papers,books etc.
-        label = findTextLabel(labels, textLabels);
-        if (label != null) {
-            if(label.equals("handwriting"))
-                return "handwritten  ";
-            if (ocrtext != null)
-                return label + " written on it: ";
-            else
-                return receivedColor + " " + label; }
-        // tables
-        label= getThingsOn(labels);
-        if(label!=null){
-            return label;}
-        //food
-        label = getFood(labels);
-        if (label != null) {
-            return label; }
 
         // find the wearings and hair type to describe people in the picture
         wearings = getWearings(labels);
         hair = getHair(labels);
         // to find gender of a person
          label = findGender(labels, manLabel);
+         if(label==null)
          label = findGender(labels,womanLabel);
+         if(label==null)
          label = findGender(labels,childrenLabels);
          //return full description about person
             if (label != null) {
                 //if more than one person in the picture
                 if (numberofpersons > 1) {
               if(label.contains("man"))
-                 label= label.replaceAll("woman","women");
+                 label= label.replaceAll("man","men");
               if(label.equals("father")||label.equals("grandfather"))
                   label = label+"s";
               if(label.contains("woman"))
@@ -100,39 +81,65 @@ public class Recognizer {
                     if(wearings!=null){
                   wearings = wearings + "s";
                   return facialExpression + " " + label + " " + wearings;}
-                    return facialExpression + " " + label; }
+                  return facialExpression + " " + label; }
+               if(numberofpersons==1){
                 // only one person
                 if(wearings!=null)
                     return facialExpression + " " + label + " " + wearings;
-                else
                 if(hair!=null)
-                    return "a " + facialExpression + " " + label+" "+hair;
-                return "a " + facialExpression + " " + label; }
+                  return "a " + facialExpression + " " + label+" "+hair;
+                return "a " + facialExpression + " " + label; }}
 
         //if it did not recognize the gender but recognized the facial expression , or wearings.
-        if ( facialExpression != null) {
+        if (!(facialExpression.equals(""))) {
             if (numberofpersons > 1)
                 return facialExpression + " people";
-            else {
-                if(hair!=null)
-                  return "a" + facialExpression + " person "+hair;
-                else
-                return "a" + facialExpression+" person"; } }
+                if(hair!=null){
+                    label ="a" + facialExpression + " person "+hair;
+                  return label; }
+                  if(wearings!=null){
+                      label="a" + facialExpression+" person"+wearings;
+                return label;}
+                return "a" + facialExpression+" person";}
+
         if ( wearings != null){
             if(numberofpersons>1)
                 return " persons  "+wearings;
-            else
                 return "a person  "+wearings; }
 
-        if(labels.contains("face")) {
+        if(labels.contains("face")||labels.contains("human")) {
             return "a person "; }
         //if gender is not recognized and no "face" label
-        if(labels.contains("nose")||labels.contains("mouth")) {
+        if(labels.contains("nose")||labels.contains("mouth")||labels.contains("chin")||labels.contains("forehead")
+                ||labels.contains("eyebrow") ||labels.contains("lip")) {
             return "a close picture of a face  ";
         }
 
+        // surfaces
+        label= getThingsOnSurface(labels);
+        if(label!=null){
+            return label;}
+        //natural scenes
+        label = getNaturalScenery(labels);
+        if(label!=null){
+            return label; }
+        // signs,papers,books etc.
+        label = findTextLabel(labels, textLabels);
+        if (label != null) {
+            if(label.equals("handwriting"))
+                return "handwritten  ";
+            if (ocrtext != null)
+                return label + "  written on it: ";
+            else
+                return receivedColor + " " + label; }
+
+        //food
+        label = getFood(labels);
+        if (label != null) {
+            return label; }
      // General object case,"getBestLabel" method removes verbs and adjective from the received labels to get the "name" of the object
-          return receivedColor+" "+getBestLabel(labels); }//end method getLabels
+        label=receivedColor+" "+getBestLabel(labels);
+          return label; }//end method getLabels
 
     //(1) This method shows how description of any picture that contains text is generated
     public String findTextLabel (ArrayList<String>labels, String [] textLabels) {
@@ -143,17 +150,17 @@ public class Recognizer {
                 for (int j = 0; j < textLabels.length; j++) {
                     if ( Label.equals(textLabels[j])) {
                        if(Label.equals("handwriting"))
-                           return Label;
-          //replace
+                           Label="handwriting";
+         //replace
           if ( Label.equals("text") ||  Label.equals("line") ||  Label.equals("font") ||  Label.equals("calligraphy") ||
                   Label.equals("word") ||  Label.equals("clip art") ||  Label.equals("witting") ||  Label.equals("number"))
-                        { Label= "written text: ";
-                            return  Label; } } } } }
+                        { Label= " written text: ";
+                             }
+                        return  Label;} } } }
 
             // if no sign ,book ,text is found.
             return null;
     }
-
     //(2) This method shows how a person's gender could be found.
     public String findGender(ArrayList<String>labels, String [] targetGender){
         String Label = "";
@@ -182,7 +189,6 @@ public class Recognizer {
 
         //if no person in the picture
         return null; }
-
 
     //(3)This method shows how a child's gender can be found.
     public String getChildGender(ArrayList<String>labels , String child){
@@ -262,7 +268,7 @@ public class Recognizer {
 
 
     //(7) This method shows how a description about surfaces such as tables can be generated.
-    public String  getThingsOn(ArrayList<String>labels) {
+    public String  getThingsOnSurface(ArrayList<String>labels) {
         String surface= "";
         String onSurface="";
         int count=0;
@@ -314,29 +320,32 @@ public class Recognizer {
             //if onTable (Nothing on the table) return the table type and its color.
             return receivedColor +"  " + surface ; }
 
-       // if no table is found
+       // if no Surface / table is found
          return null; }
 
 
     //(8) This method shows how a food type can be identified correctly.
     public String getFood(ArrayList<String>labels){
+
     String food= "";
     ArrayList<String>foods=labels;
-    // "ExcludefoodLabels" contains labels that represents a food photo such as "food","natural foods","junk food".
+    boolean isFood = false;
+    //"ExcludefoodLabels" contains labels that represents a food photo such as "food","natural foods","junk food".
      for(int i=foods.size()-1;i>=0;i--) {
      if (foods.get(i) != null) {
          food = foods.get(i).toLowerCase();
          for (int k = 0; k < ExcludefoodLabels.length; k++) {
             if (food.equals(ExcludefoodLabels[k]))
-                 foods.remove(i); }
-            } }
-       // after removing "ExcludefoodLabels" labels from the received list
-        // type of the food will remain in the list and will be returned.
-        if(foods.size()!=0)
-            return foods.get(0)+" ";
+            { foods.remove(i);
+                  isFood=true;} } }}
+       // after removing "ExcludeFoodLabels" labels from the received list.
+       // type of the food will remain in the list and will be returned.
+        if(isFood==true)
+        {  if(foods.size()!=0)
+            return foods.get(0)+" ";}
         //if no food found
         return null;
-    } // end getFood
+ } // end getFood
 
     //(9) This method shows how a description of natural scenery is generated.
     public String getNaturalScenery (ArrayList<String>labels){

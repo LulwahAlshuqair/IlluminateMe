@@ -412,7 +412,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         //OCR
         List<EntityAnnotation> logos = response.getResponses().get(0).getLogoAnnotations();
         List<EntityAnnotation> texts = response.getResponses().get(0).getTextAnnotations();
-
+         recognizer.setOCRText(logos,texts);
         if (logos != null) {
             for (EntityAnnotation logo : logos) {
                 Logo = String.format(Locale.getDefault(), "%.3f: %s", logos.get(0).getLocale(), logo.getDescription());
@@ -429,7 +429,6 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             }
             ocrtext = ocrtext.toLowerCase();
             ocrtext = ocrtext.replaceAll("[\r\n]+", " ");
-
         }
 
 
