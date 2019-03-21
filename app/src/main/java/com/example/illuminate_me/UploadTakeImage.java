@@ -177,6 +177,7 @@ public class UploadTakeImage extends AppCompatActivity {
             }
         }
 
+
     }
 
     private File createImageFile() {
@@ -222,7 +223,7 @@ public class UploadTakeImage extends AppCompatActivity {
         if (requestCode == MainActivity.UPLOAD_PIC && resultCode == RESULT_OK && data != null) {
             selectedImage = data.getData();
 
-            if (selectedImage == null) {
+            if (selectedImage == null ) {
                 txtView.setText("selected Image is empty");
             } else {
                 try {
@@ -261,10 +262,39 @@ public class UploadTakeImage extends AppCompatActivity {
                 try {
 
                     // Problem > image rotation:
-                   selectedImage =  getImageUri(getApplicationContext() , takenPicture) ;
-                    image.setImageBitmap(handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ));
+                  // selectedImage =  getImageUri(getApplicationContext() , takenPicture) ;
+                   // image.setImageBitmap(handleSamplingAndRotationBitmap(getApplicationContext() , selectedImage ));
                     userImage.setImageBit(resizeBitmap(takenPicture));
 
+                    // Rotation problem
+                    ExifInterface ei = new ExifInterface(pathToFile);
+                    int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
+                            ExifInterface.ORIENTATION_UNDEFINED);
+
+                    Bitmap rotatedBitmap = null;
+                    switch(orientation) {
+
+                        case ExifInterface.ORIENTATION_ROTATE_90:
+                            rotatedBitmap = rotateImage(takenPicture, 90);
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_180:
+                            rotatedBitmap = rotateImage(takenPicture, 180);
+                            break;
+
+                        case ExifInterface.ORIENTATION_ROTATE_270:
+                            rotatedBitmap = rotateImage(takenPicture, 270);
+                            break;
+
+                        case ExifInterface.ORIENTATION_NORMAL:
+                        default:
+                            rotatedBitmap = takenPicture;
+                    }
+
+                    image.setImageBitmap(rotatedBitmap);
+
+
+                    // End solution
                     callCloudVision(userImage.getImageBit());
 
                     String des = "" + txtView.getText();
@@ -600,6 +630,9 @@ public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri select
         img.recycle();
         return rotatedImg;
     }
+
+
+
 
 
 // To get image for share

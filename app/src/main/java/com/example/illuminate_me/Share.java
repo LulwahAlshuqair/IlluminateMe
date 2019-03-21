@@ -77,7 +77,7 @@ public class Share extends AppCompatActivity {
                 prevsound = MediaPlayer.create(Share.this, R.raw.prev);
                 prevsound.start();
 
-                Intent intent = new Intent(Share.this, UploadTakeImage.class);
+                Intent intent = new Intent(Share.this, MainActivity.class);
                 startActivity(intent);
             }
 
