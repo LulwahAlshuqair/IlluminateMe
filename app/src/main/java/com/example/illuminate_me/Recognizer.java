@@ -23,6 +23,8 @@ public class Recognizer {
     private String[] womanLabel = {"woman" , "lady" ,"gentlewoman","mother","old woman", "women","grandmother"};
     private String[] childrenLabels = { "child" , "baby", "girl" , "boy" ,"baby laughing"};
     private String[] genderLabels = {"male","female"};
+    private String[] humanLabels = {"face","human","nose","mouth","chin","forehead","eyebrow","lip","cheeks"};
+
 
     //to describe people
     private String[] emotionLabels = {"smile","laugh","laughing","crying","smiling"};
@@ -45,7 +47,7 @@ public class Recognizer {
     private String [] natureLabels= {"nature","highland","headland","landscaping","natural view","natural views","vegetation", "natural landscape" ,"nature reserve","natural environment","nature landscape", "landscape"};
 
     //for general labels
-    private String [] excludVerbsLabels = {"drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
+    private String [] excludeGeneralLabels = {"product","electronic device","technology","city","drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
     String written=" مكتوب عليها: ";
 
 //(1) This method shows how a final description of the photo is generated.
@@ -66,18 +68,7 @@ public class Recognizer {
             if (label != null) {
                 //if more than one person in the picture
                 if (numberofpersons > 1) {
-              if(label.contains("man"))
-                 label= label.replaceAll("man","men");
-              if(label.equals("father")||label.equals("grandfather"))
-                  label = label+"s";
-              if(label.contains("woman"))
-               label=label.replaceAll("woman","women");
-              if(label.equals("child"))
-                  label ="children";
-              if(label.equals("mother")||label.equals("grandmother"))
-                   label = label+"s";
-              if(label.equals("boy")||label.equals("girl"))
-                  label = label+"s";
+                  label = " people ";
                     if(wearings!=null){
                   wearings = wearings + "s";
                   return facialExpression + " " + label + " " + wearings;}
@@ -100,21 +91,26 @@ public class Recognizer {
                   if(wearings!=null){
                       label="a" + facialExpression+" person"+wearings;
                 return label;}
-                return "a" + facialExpression+" person";}
+                label="a" + facialExpression+" person";
+                return label;}
 
         if ( wearings != null){
-            if(numberofpersons>1)
-                return " persons  "+wearings;
-                return "a person  "+wearings; }
+            if(numberofpersons>1){
+              label=" persons  "+wearings;
+              return label;
+            }
+              label="a person  "+wearings;
+            return label; }
 
-        if(labels.contains("face")||labels.contains("human")) {
-            return "a person "; }
         //if gender is not recognized and no "face" label
-        if(labels.contains("nose")||labels.contains("mouth")||labels.contains("chin")||labels.contains("forehead")
-                ||labels.contains("eyebrow") ||labels.contains("lip")) {
-            return "a close picture of a face  ";
+        if(isHuman(labels)) {
+            if (!(facialExpression.equals(""))){
+                label= "Close-up of a  "+facialExpression+" face ";
+                return label;
+            }
+               label="Close-up of a face  ";
+            return label;
         }
-
         // surfaces
         label= getThingsOnSurface(labels);
         if(label!=null){
@@ -126,10 +122,16 @@ public class Recognizer {
         // signs,papers,books etc.
         label = findTextLabel(labels, textLabels);
         if (label != null) {
-            if(label.equals("handwriting"))
-                return "handwritten  ";
-            if (ocrtext != null)
-                return label + "  written on it: ";
+            if(label.equals("handwriting")){
+                label="handwriting: ";
+                return label;
+            }
+
+            if (ocrtext != null){
+                label=label +" written on it: ";
+                return label ;
+            }
+
             else
                 return receivedColor + " " + label; }
 
@@ -138,6 +140,9 @@ public class Recognizer {
         if (label != null) {
             return label; }
      // General object case,"getBestLabel" method removes verbs and adjective from the received labels to get the "name" of the object
+        if(!(ocrtext.equals(""))||!(ocrtext==null)){
+        label=receivedColor+" "+getBestLabel(labels)+" written on it: ";
+        return label;}
         label=receivedColor+" "+getBestLabel(labels);
           return label; }//end method getLabels
 
@@ -266,6 +271,19 @@ public class Recognizer {
         // if no hair type
         return null ; }
 
+        public boolean isHuman (ArrayList<String>labels){
+
+        String Label;
+            for (int i = 0; i < labels.size(); i++) {
+                if (labels.get(i) != null) {
+                    Label= labels.get(i).toLowerCase();
+                    for (int j = 0; j < humanLabels.length; j++) {
+                        if (Label.equals( humanLabels[j])) {
+                            return true;
+
+                        } } } }
+        return false;
+        }
 
     //(7) This method shows how a description about surfaces such as tables can be generated.
     public String  getThingsOnSurface(ArrayList<String>labels) {
@@ -397,8 +415,8 @@ public class Recognizer {
         for (int i = labels.size() - 1; i >= 0; i--) {
             if (labels.get(i) != null) {
                 firstLabel = labels.get(i).toLowerCase();
-                for (int k = 0; k < excludVerbsLabels.length; k++) {
-                    if (firstLabel.equals(excludVerbsLabels[k]))
+                for (int k = 0; k <  excludeGeneralLabels.length; k++) {
+                    if (firstLabel.equals( excludeGeneralLabels[k]))
                         labels.remove(i); } } }
 
 
