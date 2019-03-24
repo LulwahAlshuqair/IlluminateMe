@@ -392,7 +392,11 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         }
 
         protected void onPostExecute(String result) {
-            txtView.setText(result + "\n" );
+            if (result == "") {
+                result = " يتعذر التعرف على محتوى الصورة، حاول مرةً أخرى" ;
+            }
+
+                txtView.setText(result + "\n" );
             tone.release();
 
 

@@ -172,8 +172,8 @@ public class Share extends AppCompatActivity {
     }
     private void shareTwitter(String message ) {
         Intent tweetIntent = new Intent(Intent.ACTION_SEND);
-        tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
-        tweetIntent.setType("text/plain");
+      //  tweetIntent.putExtra(Intent.EXTRA_TEXT, "This is a Test.");
+      //  tweetIntent.setType("text/plain");
         if (photoUri != null) {
             tweetIntent.putExtra(Intent.EXTRA_STREAM, photoUri);
             tweetIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
