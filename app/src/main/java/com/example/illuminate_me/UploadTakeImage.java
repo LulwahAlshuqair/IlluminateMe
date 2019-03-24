@@ -392,11 +392,71 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         }
 
         protected void onPostExecute(String result) {
-            if (result == "") {
-                result = " يتعذر التعرف على محتوى الصورة، حاول مرةً أخرى" ;
-            }
+            String Checkedresult="" ;
+            int dup=-1;
 
-                txtView.setText(result + "\n" );
+            String [] resultarr = result.split(" ");
+            //String [] resultarr = {"نستله",  "نستله" , "نستله" , "اخضر"};
+            String []  resultCh = new String[resultarr.length];
+            if (result==""|| result==null){
+                result="تعذُر التعرف على الصورة";}
+            else {
+
+
+                int j = 0;
+                if (resultarr.length == 1){
+                    Checkedresult = resultarr[0];}
+                else{
+ /*   for( int i=0 ; i <resultarr.length-1; i++) {
+        if (i + 1 == resultarr.length)
+            break;
+        if (resultarr[i] == resultarr[i + 1]) {
+            resultCh[j] = resultarr[i];
+            j++;
+        } else {
+            resultCh[j] = resultarr[i];
+            j++;
+            resultCh[j] = resultarr[i + 1];
+            j++;
+        }//f
+
+    }*/
+                    boolean same= false , brk=false;
+                    for(int i =0 ; i < resultarr.length ; i+=1) {
+                        same =false;
+                        brk=false;
+                        if (i + 1 == resultarr.length) {
+                            if (resultarr[i-1].equals(resultarr[i]) )
+                                brk=true;
+                            else
+                                resultCh[j++] = resultarr[i];
+                            break;}
+
+                        if(brk==true) break;
+
+                        if ( i==dup){
+                            same=true;}
+                        if (resultarr[i].equals(resultarr[i + 1]) ) {
+                            dup =i+1;
+                        }
+
+                        if(same==false)
+                            resultCh[j++] = resultarr[i];
+                        //resultCh[j++] = resultarr[i + 1];
+
+
+
+
+                    }
+
+                }//else if size >1
+            }//big else
+            for ( int i =0 ; i < resultCh.length;i++)
+            {
+                if(resultCh[i]!=null)
+                    Checkedresult+=resultCh[i]+" ";
+            }
+            txtView.setText(Checkedresult + "\n" );
             tone.release();
 
 
