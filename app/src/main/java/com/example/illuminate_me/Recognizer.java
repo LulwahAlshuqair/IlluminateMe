@@ -28,26 +28,26 @@ public class Recognizer {
 
     //to describe people
     private String[] emotionLabels = {"smile","laugh","laughing","crying","smiling"};
-    private String[] wearingsLabels = {"white coat","coat","stethoscope","cowboy hat","sun hat","hat","dress","t-shirt","jeans","headgear","fashion accessory"};
+    private String[] wearingsLabels = {"glasses","white coat","coat","stethoscope","cowboy hat","sun hat","hat","dress","t-shirt","jeans","headgear","fashion accessory"};
     private String[] describeHairLabels={"blond","blonde","short hair","brown hair","black hair","long hair"};
 
     //table lebls
     private String[] surfaceLabels ={"table","desk","shelf","side table","coffee table","sofa tables","outdoor table","dresser","night stand","writing desk","computer desk","drawer","chest of drawers"};
-    private String[] ExcludeSurfaceLabels={"office","room","wood","furniture","metal","technology","floor","flooring","interior design","building","rectangle","writing office","office writing","marble","hutch","wood stain","interior design","end table","hardwood","living room","chair","solid wood","tile","tiles","iron"};
+    private String[] ExcludeSurfaceLabels={"turquoise","plastic","design","material","property","property material","office","room","wood","furniture","metal","technology","floor","flooring","building","rectangle","writing office","office writing","marble","hutch","wood stain","interior design","end table","hardwood","living room","chair","solid wood","tile","tiles","iron"};
 
     //text labels
     private String[] textLabels={"street sign","sign","traffic sign","signage","book","notebook","diary","paper product","paper","product","document"};
    // private String [] excludeTextLabels = {"text","line","font","calligraphy","word","clip art","handwriting","witting","number","ink"};
 
     //food labels
-    private String[] ExcludefoodLabels ={"food","meat","dish","plate","natural foods","indian cuisine ","dessert","baked goods","superfood","plant","gluten","vegan nutrition","cruciferous vegetables","recipe","cuisine","brunch","breakfast","dinner","lunch","cooking","snack","produce","kids' meal","junk food","ingredient","sweetness","finger food","fast food","baking"};
+    private String[] ExcludefoodLabels ={"italian food","food","meat","dish","plate","natural foods","indian cuisine ","dessert","baked goods","superfood","plant","gluten","vegan nutrition","cruciferous vegetables","recipe","cuisine","brunch","breakfast","dinner","lunch","cooking","snack","produce","kids' meal","junk food","ingredient","sweetness","finger food","fast food","baking"};
 
     //nature scene labels
     private String [] excludeNatureLabels = {"blue","natural view","natural views","klippe","spring","moss","rock","vascular plant","terrestrial plant","tributary","arroyo","fluvial landforms of streams","stream bed","riparian forest","riparian zone","mist","yellow","atmospheric phenomenon","plain","field","massif","sunlight","branch","path","dirt road","infrastructure","park","national park","fence","state park","maple leaf","autumn","red","green","house","reservoir","fell","tarn","tourist attraction","elaeis","arecales","leisure","resort","sound","cape","world","drainage basin","headland","terrain","spit","shore","promontory","inlet","vacation","tourism","wildlife","theatrical scenery","adaptation","tropics","walkway","annual plant","rhododendron","maple","deciduous","state park","groundcover","temperate broadleaf and mixed forest","shrub","botany","woody plant","bird's-eye view","terrace","aerial photography","thoroughfare","plant community","road","grass","biome","body of water","water feature","hill station","water resource","water","water resources","stream","watercourse","calm","leaf","reflection","spring ","wilderness"};
     private String [] natureLabels= {"nature","highland","headland","landscaping","natural view","natural views","vegetation", "natural landscape" ,"nature reserve","natural environment","nature landscape", "landscape"};
 
     //for general labels
-    private String [] excludeGeneralLabels = {"product","electronic device","technology","city","drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
+    private String [] excludeGeneralLabels = {"floor","room","wall","glass","iron","wood","electronic ","product","electronic device","technology","city","drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
     String written=" مكتوب عليها: ";
 
 //(1) This method shows how a final description of the photo is generated.
@@ -140,7 +140,7 @@ public class Recognizer {
         if (label != null) {
             return label; }
      // General object case,"getBestLabel" method removes verbs and adjective from the received labels to get the "name" of the object
-        if(!(ocrtext.equals(""))||!(ocrtext==null)){
+        if(ocrtext.equals("")!=true&&ocrtext!=null){
         label=receivedColor+" "+getBestLabel(labels)+" written on it: ";
         return label;}
         label=receivedColor+" "+getBestLabel(labels);
