@@ -141,7 +141,7 @@ public class Recognizer {
             return label; }
      // General object case,"getBestLabel" method removes verbs and adjective from the received labels to get the "name" of the object
         if(ocrtext.equals("")!=true&&ocrtext!=null){
-        label=receivedColor+" "+getBestLabel(labels)+" written on it: ";
+        label=receivedColor+" "+getBestLabel(labels)+" ";
         return label;}
         label=receivedColor+" "+getBestLabel(labels);
           return label; }//end method getLabels
