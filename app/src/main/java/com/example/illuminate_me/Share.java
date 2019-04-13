@@ -49,7 +49,7 @@ public class Share extends AppCompatActivity {
     private UploadTakeImage uti ;
     private MediaPlayer tone, instruction, instasound, twittersound, whatssound, mainsound, prevsound,sharesound, savesound ;
 
-private static int instg =0 , wts=0 , twit=0 ;
+private  int instg =0 , wts=0 , twit=0 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
