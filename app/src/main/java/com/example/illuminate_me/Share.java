@@ -49,7 +49,7 @@ public class Share extends AppCompatActivity {
     private UploadTakeImage uti ;
     private MediaPlayer tone, instruction, instasound, twittersound, whatssound, mainsound, prevsound,sharesound, savesound ;
 
-
+private static int instg =0 , wts=0 , twit=0 ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,26 +102,32 @@ public class Share extends AppCompatActivity {
         inst.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                instasound = MediaPlayer.create(Share.this, R.raw.instavoice);
-                instasound.start();
+                if (instg==0) {
+                    instg++;
+                    instasound = MediaPlayer.create(Share.this, R.raw.instavoice);
+                    instasound.start();
 
+                }else{
                 // Instagram share
-                shareInstagram();
+                shareInstagram();}
             }
          });
 
         whats.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                whatssound = MediaPlayer.create(Share.this, R.raw.whatsvoice);
-                whatssound.start();
-
+                if(wts==0) {
+                    wts++;
+                    whatssound = MediaPlayer.create(Share.this, R.raw.whatsvoice);
+                    whatssound.start();
+              }
                 // WhatsApp share
+                else{
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/jpeg");
                 share.putExtra(Intent.EXTRA_STREAM, photoUri);
                 share.setPackage("com.whatsapp");
-                startActivity(Intent.createChooser(share, "Share Image"));
+                startActivity(Intent.createChooser(share, "Share Image"));}
             }
         });
 
@@ -130,10 +136,12 @@ public class Share extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Twitter share
-                twittersound = MediaPlayer.create(Share.this, R.raw.twittervoice);
-                twittersound.start();
+                if(twit==0){
+                    twit++;
+                    twittersound = MediaPlayer.create(Share.this, R.raw.twittervoice);
+               twittersound.start();}else{
 
-                shareTwitter("Test Share");
+                shareTwitter("Test Share");}
             }
         });
 

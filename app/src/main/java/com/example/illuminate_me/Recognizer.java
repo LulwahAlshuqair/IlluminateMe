@@ -128,7 +128,7 @@ public class Recognizer {
             }
 
             if (ocrtext != null){
-                label=label +" written on it: ";
+                label=label +" ";
                 return label ;
             }
 

@@ -550,14 +550,14 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         String arabicText="";
         if ((from.equals("ar"))) {
 
-            arabicText = " "+ocrtext;
+            arabicText = " مكتوب عليه:"+ocrtext;
             ocrtext="";}
         else  {
             ett = new EnglishToTagalog(from, ocrtext);
             if (texts != null) {
                 ett.doInBackground();
                 ett.translated();
-                ocrtext = " "+ett.getMsg();
+                ocrtext = " مكتوب عليه: "+ett.getMsg();
             }
         }
         if(!(recognizer.getColor()==null||recognizer.getLabel()==null||recognizer.getFacialExpression()==null)){
