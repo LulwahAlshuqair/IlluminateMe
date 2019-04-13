@@ -108,9 +108,10 @@ private  int instg =0 , wts=0 , twit=0 ;
                     instasound.start();
 
                 }else{
-                // Instagram share
+                    instg=0;
+                    // Instagram share
                 shareInstagram();}
-            }
+                 }
          });
 
         whats.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +124,7 @@ private  int instg =0 , wts=0 , twit=0 ;
               }
                 // WhatsApp share
                 else{
+                    wts=0;
                 Intent share = new Intent(Intent.ACTION_SEND);
                 share.setType("image/jpeg");
                 share.putExtra(Intent.EXTRA_STREAM, photoUri);
@@ -140,7 +142,7 @@ private  int instg =0 , wts=0 , twit=0 ;
                     twit++;
                     twittersound = MediaPlayer.create(Share.this, R.raw.twittervoice);
                twittersound.start();}else{
-
+                    twit=0;
                 shareTwitter("Test Share");}
             }
 
