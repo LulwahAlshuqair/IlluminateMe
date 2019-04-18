@@ -18,7 +18,6 @@ public class Recognizer {
     private ArrayList<String> receivedLabels = new ArrayList<String>();
 
     //to find gender
-   // private String[] maleLabels = {"male","beard","facialhair","moustache"};
     private String [] manLabel = {"man","gentleman","businessman","men", "macho man","male","beard","facialhair","guy","moustache","father","grandfather","old man"};
     private String[] womanLabel = {"woman" , "lady" ,"gentlewoman","mother","old woman", "women","grandmother"};
     private String[] childrenLabels = { "child" , "baby", "girl" , "boy" ,"baby laughing"};
@@ -27,17 +26,15 @@ public class Recognizer {
 
 
     //to describe people
-    private String[] emotionLabels = {"smile","laugh","laughing","crying","smiling"};
     private String[] wearingsLabels = {"glasses","white coat","coat","stethoscope","cowboy hat","sun hat","hat","dress","t-shirt","jeans","headgear","fashion accessory"};
     private String[] describeHairLabels={"blond","blonde","short hair","brown hair","black hair","long hair"};
 
     //table lebls
     private String[] surfaceLabels ={"table","desk","shelf","side table","coffee table","sofa tables","outdoor table","dresser","night stand","writing desk","computer desk","drawer","chest of drawers"};
-    private String[] ExcludeSurfaceLabels={"turquoise","plastic","design","material","property","property material","office","room","wood","furniture","metal","technology","floor","flooring","building","rectangle","writing office","office writing","marble","hutch","wood stain","interior design","end table","hardwood","living room","chair","solid wood","tile","tiles","iron"};
+    private String[] ExcludeSurfaceLabels={"space","space science","turquoise","plastic","design","material","property","property material","office","room","wood","furniture","metal","technology","floor","flooring","building","rectangle","writing office","office writing","marble","hutch","wood stain","interior design","end table","hardwood","living room","chair","solid wood","tile","tiles","iron"};
 
     //text labels
-    private String[] textLabels={"street sign","sign","traffic sign","signage","book","notebook","diary","paper product","paper","product","document"};
-   // private String [] excludeTextLabels = {"text","line","font","calligraphy","word","clip art","handwriting","witting","number","ink"};
+    private String[] textLabels={"neon sign","electronic signage","street sign","sign","traffic sign","signage","book","notebook","diary","paper product","paper","product","document"};
 
     //food labels
     private String[] ExcludefoodLabels ={"italian food","food","meat","dish","plate","natural foods","indian cuisine ","dessert","baked goods","superfood","plant","gluten","vegan nutrition","cruciferous vegetables","recipe","cuisine","brunch","breakfast","dinner","lunch","cooking","snack","produce","kids' meal","junk food","ingredient","sweetness","finger food","fast food","baking"};
@@ -46,9 +43,9 @@ public class Recognizer {
     private String [] excludeNatureLabels = {"blue","natural view","natural views","klippe","spring","moss","rock","vascular plant","terrestrial plant","tributary","arroyo","fluvial landforms of streams","stream bed","riparian forest","riparian zone","mist","yellow","atmospheric phenomenon","plain","field","massif","sunlight","branch","path","dirt road","infrastructure","park","national park","fence","state park","maple leaf","autumn","red","green","house","reservoir","fell","tarn","tourist attraction","elaeis","arecales","leisure","resort","sound","cape","world","drainage basin","headland","terrain","spit","shore","promontory","inlet","vacation","tourism","wildlife","theatrical scenery","adaptation","tropics","walkway","annual plant","rhododendron","maple","deciduous","state park","groundcover","temperate broadleaf and mixed forest","shrub","botany","woody plant","bird's-eye view","terrace","aerial photography","thoroughfare","plant community","road","grass","biome","body of water","water feature","hill station","water resource","water","water resources","stream","watercourse","calm","leaf","reflection","spring ","wilderness"};
     private String [] natureLabels= {"nature","highland","headland","landscaping","natural view","natural views","vegetation", "natural landscape" ,"nature reserve","natural environment","nature landscape", "landscape"};
 
-    //for general labels
-    private String [] excludeGeneralLabels = {"floor","room","wall","glass","iron","wood","electronic ","product","electronic device","technology","city","drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
-    String written=" مكتوب عليها: ";
+   //for general labels
+    private String [] excludeGeneralLabels = {"landmark","human settlement","facade","property","architecture","real estate","estate","floor","room","wall","glass","iron","wood","electronic ","product","electronic device","technology","city","drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
+
 
 //(1) This method shows how a final description of the photo is generated.
     public String generateDescreption(ArrayList<String>labels) {
@@ -320,7 +317,7 @@ public class Recognizer {
                 if (things.get(i) != null) {
                     onSurface = things.get(i).toLowerCase();
                     for (int k = 0; k < ExcludeSurfaceLabels.length; k++) {
-                        if (onSurface.equals(ExcludeSurfaceLabels[k]))
+                        if (onSurface.equals(ExcludeSurfaceLabels[k])||onSurface.contains("architecture")||onSurface.contains("design"))
                             if (i < things.size())
                                 things.remove(i); } } }
          // After removing unneeded labels from the received labels list things on the surface can be identified.
@@ -422,7 +419,7 @@ public class Recognizer {
 
         finalLabel= labels.get(0);
         return finalLabel;
-        //do not delete additional
+        //***********do not delete additional****************
         //sometimes first and second label are the same , this loop is to solve this problem
       /*  if (labels.size() != 0) {
             for (int i = 0; i < labels.size(); i++) {
@@ -444,6 +441,7 @@ public class Recognizer {
         }
         return null;*/
     }
+
     //(11) These methods shows how colors are identified.
     public void setColorNameFromRgb(int r, int g, int b) {
 //initiate color list
@@ -522,10 +520,7 @@ public class Recognizer {
             ocrtext = ocrtext.toLowerCase();
             ocrtext= ocrtext.replaceAll("[\r\n]+", " "); } }// end setOCR
 
-
-
     //getters
-
     public String getOcrtext(){
 
         return ocrtext;

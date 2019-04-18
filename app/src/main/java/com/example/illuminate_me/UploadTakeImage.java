@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import static android.os.Environment.getExternalStoragePublicDirectory;
 import android.os.AsyncTask;
+import com.google.api.services.vision.v1.model.*;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.json.GoogleJsonResponseException;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -341,23 +342,23 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 visionBuilder.setVisionRequestInitializer(new VisionRequestInitializer(
                         "AIzaSyB7O3vQ1cNtJ_NAeVPW7S08OtzD6wiOWzk"));
                 Vision vision = visionBuilder.build();
-
+                 //(1)
                 List<Feature> featureList = new ArrayList<>();
                 Feature labelDetection = new Feature();
                 labelDetection.setType("LABEL_DETECTION");
                 labelDetection.setMaxResults(30);
                 featureList.add(labelDetection);
-
+                //(2)
                 Feature textDetection = new Feature();
                 textDetection.setType("DOCUMENT_TEXT_DETECTION");
                 textDetection.setMaxResults(10);
                 featureList.add(textDetection);
-
+                //(3)
                 Feature facesDetection = new Feature();
                 facesDetection.setType("FACE_DETECTION");
                 facesDetection.setMaxResults(5);
                 featureList.add(facesDetection);
-
+                //(4)
                 Feature colorDetection = new Feature();
                 colorDetection.setType("IMAGE_PROPERTIES");
                 colorDetection.setMaxResults(1);
@@ -379,6 +380,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 // Due to a bug: requests to Vision API containing large images fail when GZipped.
                 annotateRequest.setDisableGZipContent(true);
                 Log.d(LOG_TAG, "sending request");
+                // Perform the request
 
                 BatchAnnotateImagesResponse response = annotateRequest.execute();
                 return convertResponseToString(response);
@@ -543,7 +545,6 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             for (EntityAnnotation label : labels) {
                 receivedLabels.add(String.format(label.getDescription())); }
             message.append(recognizer.generateDescreption(receivedLabels)); }
-
 
         //translation part
         // ocrtext=recognizer.getOcrtext();
