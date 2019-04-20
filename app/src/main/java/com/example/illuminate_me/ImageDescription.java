@@ -14,7 +14,7 @@ import android.view.View;
 public class ImageDescription {
 
     private String description;
-    public String translatedDescription = "i'm fatimah sheikho";
+    public String translatedDescription = "";
   //  private Clip  verbalDescription;
 
 

@@ -255,18 +255,52 @@ public class Recognizer {
     //(6) This method shows how the type or color of a person's hair can be found
     public String getHair (ArrayList<String>labels) {
         String hair = "";
+        String hairColor ="";
+        String hairLength ="";
         //to search in the received list for any label that represents a hair type or color
         //"describeHairLabels" include labels such as "brown hair", "long hair".
+
+        //hair color
         for (int i = 0; i < labels.size(); i++) {
             if (labels.get(i) != null) {
                 hair = labels.get(i).toLowerCase();
                 for (int j = 0; j < describeHairLabels.length; j++) {
-                    if (hair.equals(describeHairLabels[j])) {
-                        if (hair.equals("blond")||hair.equals("blonde"))
-                            hair = " blond hair";
-                        return "has a " +hair; } } } }
+                    if (hair.contains("black")){
+                        hairColor = "black";
+                        break;
+                    }
+                    if(hair.contains("brown")){
+                        hairColor="brown";
+                        break;
+                    }
+                    if (hair.equals("blond") || hair.equals("blonde")) {
+                        hairColor = " blond ";
+                        break; } } } }
+        //hair length
+        for (int i = 0; i < labels.size(); i++) {
+            if (labels.get(i) != null) {
+                hair = labels.get(i).toLowerCase();
+                for (int j = 0; j < describeHairLabels.length; j++) {
+                    if (hair.contains("long")) {
+                        hairLength = "long";
+                    break;}
+                    if (hair.contains("short")) {
+                        hairLength = "short";
+                        break;} } } }
+
+        if(!(hairColor.equals(""))&&!(hairLength.equals(""))){
+            hair = "has a "+hairLength+" "+hairColor+" hair";
+        return hair;}
+        if(!(hairColor.equals(""))){
+            hair = "has a "+hairColor+" hair";
+        return hair;}
+
+        if(!(hairLength.equals(""))){
+            hair = "has a "+hairLength+" hair";
+            return hair;}
         // if no hair type
-        return null ; }
+        return null ;
+    }
 
         public boolean isHuman (ArrayList<String>labels){
 
