@@ -14,9 +14,6 @@ import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
-/**
- * Created by HP PC on 7/10/2017.
- */
 
 public class GoogleTranslate {
     private String key;

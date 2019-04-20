@@ -4,11 +4,7 @@ import android.net.Uri;
 
 import com.nuance.speechkit.PcmFormat;
 
-/**
- * All Nuance Developers configuration parameters can be set here.
- *
- * Copyright (c) 2015 Nuance Communications. All rights reserved.
- */
+
 public class Configuration {
 
     //All fields are required.

@@ -84,17 +84,6 @@ EnglishToTagalog ett ;
             }
         });
 
-        //Toast.makeText(this, msg, 1);
-
-    //ImageDescription img = new ImageDescription();
-      /*  pronouncer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent (MainActivity.this, Pronouncer.class);
-                startActivity(intent);
-            }
-        });*/
     }
 
     private void setbtnviews(){

@@ -398,7 +398,6 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             int dup=-1;
 
             String [] resultarr = result.split(" ");
-            //String [] resultarr = {"نستله",  "نستله" , "نستله" , "اخضر"};
             String []  resultCh = new String[resultarr.length];
             if (result==""|| result==null){
                 result="تعذُر التعرف على الصورة";}
@@ -409,20 +408,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 if (resultarr.length == 1){
                     Checkedresult = resultarr[0];}
                 else{
- /*   for( int i=0 ; i <resultarr.length-1; i++) {
-        if (i + 1 == resultarr.length)
-            break;
-        if (resultarr[i] == resultarr[i + 1]) {
-            resultCh[j] = resultarr[i];
-            j++;
-        } else {
-            resultCh[j] = resultarr[i];
-            j++;
-            resultCh[j] = resultarr[i + 1];
-            j++;
-        }//f
 
-    }*/
                     boolean same= false , brk=false;
                     for(int i =0 ; i < resultarr.length ; i+=1) {
                         same =false;
@@ -465,23 +451,6 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             final Illustrate illustrate=new Illustrate(result,UploadTakeImage.this);
             illustrate.startSynthesize();
 
-            /* To repeat description
-
-            txtView.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    illustrate.startSynthesize();
-                    return false;
-                }
-            });
-
-            image.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    illustrate.startSynthesize();
-                    return false;
-                }
-            });*/
 
             // To repeat description
             txtView.setOnClickListener(new View.OnClickListener() {
@@ -491,12 +460,8 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
 
                 }
             });
-
-
-
         }
     }.execute();
-
 
 } //end callcloudvision
 
@@ -547,18 +512,17 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             message.append(recognizer.generateDescreption(receivedLabels)); }
 
         //translation part
-        // ocrtext=recognizer.getOcrtext();
         String arabicText="";
         if ((from.equals("ar"))) {
 
-            arabicText = " مكتوب عليه:"+ocrtext;
+            arabicText = " مكتوب عليها:"+ocrtext;
             ocrtext="";}
         else  {
             ett = new EnglishToTagalog(from, ocrtext);
             if (texts != null) {
                 ett.doInBackground();
                 ett.translated();
-                ocrtext = " مكتوب عليه: "+ett.getMsg();
+                ocrtext = " مكتوب عليها: "+ett.getMsg();
             }
         }
         if(!(recognizer.getColor()==null||recognizer.getLabel()==null||recognizer.getFacialExpression()==null)){

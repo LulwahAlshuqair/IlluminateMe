@@ -453,27 +453,7 @@ public class Recognizer {
 
         finalLabel= labels.get(0);
         return finalLabel;
-        //***********do not delete additional****************
-        //sometimes first and second label are the same , this loop is to solve this problem
-      /*  if (labels.size() != 0) {
-            for (int i = 0; i < labels.size(); i++) {
-                if (labels.get(i) != null) {
-                    firstLabel = labels.get(i).toLowerCase();
-                    if (!(i + 1 >= labels.size()))
-                        secondLabel = labels.get(i + 1).toLowerCase();
-                    else {
-                        finalLabel = firstLabel + firstLabel;
-                        return finalLabel;
-                    }
-                    if (firstLabel.equals(secondLabel)) {
-                        secondLabel = labels.get(i + 2);
-                    }
-                }
-            }
-            finalLabel += firstLabel + " and " + secondLabel;
-            return firstLabel;
-        }
-        return null;*/
+
     }
 
     //(11) These methods shows how colors are identified.
