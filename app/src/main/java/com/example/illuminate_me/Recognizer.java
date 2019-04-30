@@ -23,8 +23,7 @@ public class Recognizer {
     private String[] childrenLabels = { "child" , "baby", "girl" , "boy" ,"baby laughing"};
     private String[] genderLabels = {"male","female"};
     private String[] humanLabels = {"face","human","nose","mouth","chin","forehead","eyebrow","lip","cheeks"};
-
-
+    private String[] facialExpressions = new String [5];
     //to describe people
     private String[] wearingsLabels = {"glasses","white coat","coat","stethoscope","cowboy hat","sun hat","hat","dress","t-shirt","jeans","headgear","fashion accessory"};
     private String[] describeHairLabels={"blond","blonde","short hair","brown hair","black hair","long hair"};
@@ -44,7 +43,7 @@ public class Recognizer {
     private String [] natureLabels= {"nature","highland","headland","landscaping","natural view","natural views","vegetation", "natural landscape" ,"nature reserve","natural environment","nature landscape", "landscape"};
 
    //for general labels
-    private String [] excludeGeneralLabels = {"landmark","human settlement","facade","property","architecture","real estate","estate","floor","room","wall","glass","iron","wood","electronic ","product","electronic device","technology","city","drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
+    private String [] excludeGeneralLabels = {"hand","selector","landmark","human settlement","facade","property","architecture","real estate","estate","floor","room","wall","glass","iron","wood","electronic ","product","electronic device","technology","city","drink","drinking","eat","swings","product","swing","eating","sitting","standing","swimming"};
 
 
 //(1) This method shows how a final description of the photo is generated.
@@ -72,6 +71,8 @@ public class Recognizer {
                   return facialExpression + " " + label; }
                if(numberofpersons==1){
                 // only one person
+                   if(wearings!=null&&hair!=null)
+                       return facialExpression + " " + label + " " + wearings+" and "+ hair;
                 if(wearings!=null)
                     return facialExpression + " " + label + " " + wearings;
                 if(hair!=null)
@@ -119,18 +120,18 @@ public class Recognizer {
         // signs,papers,books etc.
         label = findTextLabel(labels, textLabels);
         if (label != null) {
+            if(label.contains("sign"))
+                label = "لافتة";
             if(label.equals("handwriting")){
                 label="handwriting: ";
                 return label;
             }
-
             if (ocrtext != null){
                 label=label +" ";
                 return label ;
             }
-
             else
-                return receivedColor + " " + label; }
+                return label; }
 
         //food
         label = getFood(labels);
@@ -230,6 +231,7 @@ public class Recognizer {
     public void setFacialExpressions (List<FaceAnnotation> faces ){
         facialExpression= "";
         numberofpersons=0;
+        int index=0;
         if (faces != null) {
             for (FaceAnnotation face : faces) {
                 numberofpersons++;
@@ -245,6 +247,9 @@ public class Recognizer {
                 String surprise = String.format(face.getSurpriseLikelihood());
                 if (surprise.equals("VERY_LIKELY") || surprise.equals("LIKELY") || surprise.equals("POSSIBLE"))
                     facialExpression = "  surprised ";
+
+                facialExpressions[index]= facialExpression;
+                index++;
                /* if (numberofpersons > 1 ){
                     //person=+person;
 
@@ -337,6 +342,8 @@ public class Recognizer {
                     break; } }
         //if any "surface related" label exists
         if(count==1) {
+            if(surface.contains("table"))
+                surface= "طاولة" ;
             //Remove any "surface" labels from received labels.
             for(int i=things.size()-1;i>=0;i--) {
                 if (things.get(i) != null) {
@@ -357,8 +364,15 @@ public class Recognizer {
          // After removing unneeded labels from the received labels list things on the surface can be identified.
             if(things.size()==0)
                 onSurface=null;
-            if(things.size()>1)
-                onSurface= " a "+things.get(0)+" and a "+things.get(1);
+            if(things.size()>1){
+                for(int i=0;i<things.size();i++){
+                    if(i==things.size()-1){
+                        onSurface= onSurface+" and a  "+things.get(i);
+                    }
+                    onSurface= onSurface+" "+things.get(i)+" ,";
+                }
+               // onSurface= " a "+things.get(0)+" and a "+things.get(1);
+            }
             else
             if(things.size()==1)
                 onSurface= " a "+things.get(0);

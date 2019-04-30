@@ -335,7 +335,6 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
 
 
 
-
             try {
                 Vision.Builder visionBuilder = new Vision.Builder(new NetHttpTransport(),
                         new AndroidJsonFactory(), null);
@@ -390,7 +389,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 Log.d(LOG_TAG, "Request failed: " + e.getMessage());
             }
 
-            return "Cloud Vision API request failed.";
+            return "تأكد من اتصالك بالانترنت";
         }
 
         protected void onPostExecute(String result) {
