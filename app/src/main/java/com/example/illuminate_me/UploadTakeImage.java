@@ -75,6 +75,7 @@ public class UploadTakeImage extends AppCompatActivity {
     UserImage userImage = new UserImage();
     private static String currentPhotoPath;
     boolean  isPlayingAudio = true;
+    String ocrLanguage="";
 
     private final String LOG_TAG = "MainActivity";
     private ArrayList<String> receivedLabels = new ArrayList<String>();
@@ -518,22 +519,32 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             ocrtext="";}
         else  {
             ett = new EnglishToTagalog(from, ocrtext);
+            String ara="";
+
             if (texts != null) {
                 ett.doInBackground();
                 ett.translated();
-                ocrtext = " مكتوب عليها: "+ett.getMsg();
+                Language ln = new Language();
+                     ocrLanguage   = "In"+ln.findTextLanguage(from);
+
+              ara=  textContainsArabic(ett.getMsg());
+                ocrtext="";
+                if(!(ara.equals("")||ara.equals(" "))){
+                ocrtext = " مكتوب عليها: "+ara;}
             }
         }
         if(!(recognizer.getColor()==null||recognizer.getLabel()==null||recognizer.getFacialExpression()==null)){
             ett = new EnglishToTagalog("", "");
 
             ett.setFrom("en");
-            ett.setMsg(message.toString());
+            if(!(ocrtext.equals(""))){
+            ett.setMsg(message.toString() +ocrLanguage );}
+            else   ett.setMsg(message.toString());
             ett.doInBackground();
             ett.translated();
             TranslatedText=ett.getMsg();}
         String arabicFullMsg="";
-        arabicFullMsg= textContainsArabic(TranslatedText + ocrtext  + arabicText);
+        arabicFullMsg= textContainsArabic(TranslatedText  + ocrtext  + arabicText);
         imageDescription.setTranslatedDescription(ett.getMsg()+ocrtext);
 
         return arabicFullMsg;
@@ -683,7 +694,10 @@ public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri select
         return cursor.getString(idx);
     }
     public  String textContainsArabic(String text) {
+        text=text+" ";
+
         String [] arr = text.split(" ");
+
         String [] newArray = new String [arr.length];
         String ocr="";
 int newArrayCount=0;
