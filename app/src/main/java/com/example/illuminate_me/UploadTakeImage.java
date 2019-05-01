@@ -504,18 +504,24 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
             break;
         }
         //Labels
+        String labelDescription ="";
         List<EntityAnnotation> labels = response.getResponses().get(0).getLabelAnnotations();
         if (labels != null) {
             //this loop will add all labels received from vision API to receivedLabels array
             for (EntityAnnotation label : labels) {
                 receivedLabels.add(String.format(label.getDescription())); }
+            labelDescription=recognizer.generateDescreption(receivedLabels);
             message.append(recognizer.generateDescreption(receivedLabels)); }
 
         //translation part
         String arabicText="";
         if ((from.equals("ar"))) {
 
-            arabicText = " مكتوب عليها:"+ocrtext;
+         if(labelDescription.contains("لافتة")||labelDescription.equals("paper"))
+         {arabicText = " مكتوب عليها:"+ocrtext;}
+
+            arabicText = " مكتوب عليه:"+ocrtext;
+
             ocrtext="";}
         else  {
             ett = new EnglishToTagalog(from, ocrtext);
@@ -525,12 +531,15 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 ett.doInBackground();
                 ett.translated();
                 Language ln = new Language();
-                     ocrLanguage   = "In"+ln.findTextLanguage(from);
+                     ocrLanguage   = " In "+ln.findTextLanguage(from);
 
               ara=  textContainsArabic(ett.getMsg());
                 ocrtext="";
                 if(!(ara.equals("")||ara.equals(" "))){
-                ocrtext = " مكتوب عليها: "+ara;}
+                        if(labelDescription.contains("لافتة")||labelDescription.equals("paper"))
+                        {  ocrtext = " مكتوب عليها: "+ara;}
+
+                    ocrtext = " مكتوب عليه: "+ara;}
             }
         }
         if(!(recognizer.getColor()==null||recognizer.getLabel()==null||recognizer.getFacialExpression()==null)){
