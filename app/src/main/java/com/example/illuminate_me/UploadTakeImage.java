@@ -469,7 +469,7 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
         Recognizer recognizer = new Recognizer();
         StringBuilder message = new StringBuilder("");
         String ocrtext = "", from = "", Logo = "";
-
+        String TranslatedLanguage="";
         //OCR
         List<EntityAnnotation> logos = response.getResponses().get(0).getLogoAnnotations();
         List<EntityAnnotation> texts = response.getResponses().get(0).getTextAnnotations();
@@ -531,31 +531,59 @@ private void callCloudVision(final Bitmap bitmap) throws IOException {
                 ett.doInBackground();
                 ett.translated();
                 Language ln = new Language();
-                     ocrLanguage   = " In "+ln.findTextLanguage(from);
-
+                ocrLanguage   = " In "+ln.findTextLanguage(from);
               ara=  textContainsArabic(ett.getMsg());
                 ocrtext="";
                 if(!(ara.equals("")||ara.equals(" "))){
                         if(labelDescription.contains("لافتة")||labelDescription.equals("paper"))
                         {  ocrtext = " مكتوب عليها: "+ara;}
 
-                    ocrtext = " مكتوب عليه: "+ara;}
+                    ocrtext = " مكتوب عليه: "+ara;
+                }
             }
         }
-        if(!(recognizer.getColor()==null||recognizer.getLabel()==null||recognizer.getFacialExpression()==null)){
-            ett = new EnglishToTagalog("", "");
 
+        //***************************areej
+        Language ln = new Language();
+        ocrLanguage   = " In "+ln.findTextLanguage(from);
+        EnglishToTagalog ettlan= new EnglishToTagalog(from,ocrLanguage);
+        //******************************areej
+
+        if(!(recognizer.getColor()==null||recognizer.getLabel()==null||recognizer.getFacialExpression()==null)){
+
+            ett = new EnglishToTagalog("", "");
             ett.setFrom("en");
             if(!(ocrtext.equals(""))){
-            ett.setMsg(message.toString() +ocrLanguage );}
+                //here i deleted + ocrLanguage
+            ett.setMsg(message.toString());}
             else   ett.setMsg(message.toString());
             ett.doInBackground();
             ett.translated();
-            TranslatedText=ett.getMsg();}
-        String arabicFullMsg="";
-        arabicFullMsg= textContainsArabic(TranslatedText  + ocrtext  + arabicText);
-        imageDescription.setTranslatedDescription(ett.getMsg()+ocrtext);
+            TranslatedText=ett.getMsg();
 
+            if(!(ocrLanguage.equals(""))){
+                /////////////////////areej
+                ettlan.setFrom("en");
+                if(!(ocrLanguage.equals(""))){
+                    ettlan.setMsg(ocrLanguage );}
+                else    ettlan.setMsg( ocrLanguage);
+                ettlan.doInBackground();
+                ettlan.translated();
+                TranslatedLanguage= ettlan.getMsg();
+                ///////////////////////end areeej
+                //****************************
+            }
+           }
+
+        String arabicFullMsg="";
+       if((!(ocrtext.equals("")))||(!(arabicText.equals("")))){
+        arabicFullMsg= textContainsArabic(TranslatedText  + ocrtext  + arabicText);
+           arabicFullMsg= arabicFullMsg+TranslatedLanguage;}
+         else
+           arabicFullMsg= textContainsArabic(TranslatedText  + ocrtext  + arabicText);
+        imageDescription.setTranslatedDescription(ett.getMsg()+ocrtext+TranslatedLanguage);
+         if(arabicFullMsg.equals(TranslatedLanguage))
+             return "";
         return arabicFullMsg;
     }// end tostring
 

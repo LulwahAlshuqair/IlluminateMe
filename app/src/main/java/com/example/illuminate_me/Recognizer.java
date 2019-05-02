@@ -52,60 +52,68 @@ public class Recognizer {
     //(1) This method shows how a final description of the photo is generated.
     public String generateDescreption(ArrayList<String>labels) {
         String wearings;
-        String hair ;
+        String hair;
 
         // find the wearings and hair type to describe people in the picture
         wearings = getWearings(labels);
         hair = getHair(labels);
-        labelColor= getcolorFromLabel(labels);
-        if(labelColor!=null)
-            receivedColor=labelColor;
+        labelColor = getcolorFromLabel(labels);
+        if (labelColor != null)
+            receivedColor = labelColor;
         // to find gender of a person
         label = findGender(labels, manLabel);
-        if(label==null)
-            label = findGender(labels,womanLabel);
-        if(label==null)
-            label = findGender(labels,childrenLabels);
+        if (label == null)
+            label = findGender(labels, womanLabel);
+        if (label == null)
+            label = findGender(labels, childrenLabels);
         //return full description about person
         if (label != null) {
             //if more than one person in the picture
             if (numberofpersons > 1) {
                 label = " people ";
-                if(wearings!=null){
+                if (wearings != null) {
                     wearings = wearings + "s";
-                    return facialExpression + " " + label + " " + wearings;}
-                return facialExpression + " " + label; }
-            if(numberofpersons==1){
-                // only one person
-                if(wearings!=null&&hair!=null)
-                    return facialExpression + " " + label + " " + wearings+" and "+ hair;
-                if(wearings!=null)
                     return facialExpression + " " + label + " " + wearings;
-                if(hair!=null)
-                    return "a " + facialExpression + " " + label+" "+hair;
-                return "a " + facialExpression + " " + label; }}
+                }
+                return facialExpression + " " + label;
+            }
+            if (numberofpersons == 1) {
+                // only one person
+                if (wearings != null && hair != null)
+                    return facialExpression + " " + label + " " + wearings + " and " + hair;
+                if (wearings != null)
+                    return facialExpression + " " + label + " " + wearings;
+                if (hair != null)
+                    return "a " + facialExpression + " " + label + " " + hair;
+                return "a " + facialExpression + " " + label;
+            }
+        }
 
         //if it did not recognize the gender but recognized the facial expression , or wearings.
         if (!(facialExpression.equals(""))) {
             if (numberofpersons > 1)
                 return facialExpression + " people";
-            if(hair!=null){
-                label ="a" + facialExpression + " person "+hair;
-                return label; }
-            if(wearings!=null){
-                label="a" + facialExpression+" person"+wearings;
-                return label;}
-            label="a" + facialExpression+" person";
-            return label;}
-
-        if ( wearings != null){
-            if(numberofpersons>1){
-                label=" persons  "+wearings;
+            if (hair != null) {
+                label = "a" + facialExpression + " person " + hair;
                 return label;
             }
-            label="a person  "+wearings;
-            return label; }
-
+            if (wearings != null) {
+                label = "a" + facialExpression + " person" + wearings;
+                return label;
+            }
+            label = "a" + facialExpression + " person";
+            return label;
+        }
+        /*if (isHuman(labels)){
+            if (wearings != null) {
+                if (numberofpersons > 1) {
+                    label = " persons  " + wearings;
+                    return label;
+                }
+                label = "a person  " + wearings;
+                return label;
+            }
+    }*/
         //if gender is not recognized and no "face" label
         if(isHuman(labels)) {
             if (!(facialExpression.equals(""))){
@@ -119,10 +127,13 @@ public class Recognizer {
         label= getThingsOnSurface(labels);
         if(label!=null){
             return label;}
-        //natural scenes
-        label = getNaturalScenery(labels);
+
+        //products and cups
+        label = ProductsOrBottols(labels);
         if(label!=null){
-            return label; }
+            return label;
+        }
+
         // signs,papers,books etc.
         label = findTextLabel(labels, textLabels);
         if (label != null) {
@@ -138,6 +149,10 @@ public class Recognizer {
             }
             else
                 return label; }
+        //natural scenes
+        label = getNaturalScenery(labels);
+        if(label!=null){
+            return label; }
 
         //food
         label = getFood(labels);
@@ -480,6 +495,103 @@ public class Recognizer {
         return finalLabel;
 
     }
+
+    public String ProductsOrBottols(ArrayList<String> labels) {
+
+        boolean isProduct=false;
+        boolean isCup=false;
+        boolean isBottle=false;
+        String type;
+        String str;
+        for(int i=0;i<labels.size();i++) {
+            if (labels.get(i) != null) {
+                str = labels.get(i).toLowerCase();
+                if (str.equals("product")){
+                    isProduct=true;
+                }
+
+                if (str.equals("bottle")||str.equals("drink")||str.contains("drink")){
+                    isBottle=true;
+                }
+
+                if ( str.equals("mug")||str.equals("cup")){
+                    isCup=true;
+                }
+                } }
+
+        if (isProduct) {
+            for(int i=0;i<labels.size();i++) {
+                if (labels.get(i) != null) {
+                    type = labels.get(i).toLowerCase();
+                    //1
+                    if (type.contains("beauty")) {
+                        return "a cosmetic product";
+                    }
+                    //2
+                    if (type.contains("skin")) {
+                        return "a skincare product ";
+                    }
+                    //3
+                    if (type.contains("food") || type.contains("nutrition")) {
+                        return "a food product ";
+                    }
+                    //4
+                    if (type.contains("medication") || type.contains("drug")) {
+                        return "a medicine tray";
+                    }
+                    //5
+                    if (type.contains("health") || type.contains("medical") || type.contains("medicine")) {
+                        return "a medicine tray";
+                    }
+                }
+            }
+            return "a "+ receivedColor+" product";}
+
+        if (isBottle) {
+
+            for(int i=0;i<labels.size();i++) {
+                if (labels.get(i) != null) {
+                    type = labels.get(i).toLowerCase();
+                    //1
+                    if (type.contains("water")) {
+                        return "a water bottle";
+                    }
+                    // here we should consider confidence
+                    // 2
+                    if (type.contains("juice")) {
+                        return "a juice bottle ";
+                    }
+
+                    //3
+                    if (type.equals("soft drink")) {
+                        return "a soft drink ";
+                    }
+                }}
+            return "a "+ receivedColor+" bottle";
+        }
+
+        if (isCup){
+            for(int i=0;i<labels.size();i++) {
+                if (labels.get(i) != null) {
+                    type = labels.get(i).toLowerCase();
+                    //1
+                    if (type.contains("coffee")) {
+                        return "a coffee cup ";
+                    }
+                    //2
+                    if (type.contains("tea"))
+                        return "a tea cup ";
+                    //3
+                    if (type.equals("soft drink")) {
+                        return "a soft drink ";
+                    }
+                }}
+            return "a "+ receivedColor+" cup";
+        }
+
+        return null;
+    }
+
     public String getcolorFromLabel (ArrayList<String> labels) {
         String color=null;
         String str="";
