@@ -23,7 +23,8 @@ public class Recognizer {
     private String[] womanLabel = {"woman" , "lady" ,"gentlewoman","mother","old woman", "women","grandmother"};
     private String[] childrenLabels = { "child" , "baby", "girl" , "boy" ,"baby laughing"};
     private String[] genderLabels = {"male","female"};
-    private String[] humanLabels = {"face","human","nose","mouth","chin","forehead","eyebrow","lip","cheeks"};
+    //,"eyebrow","lip","cheeks"
+    private String[] humanLabels = {"face","human","nose","mouth","chin","forehead"};
     private String[] facialExpressions = new String [5];
     //to describe people
     private String[] wearingsLabels = {"glasses","white coat","coat","stethoscope","cowboy hat","sun hat","hat","dress","t-shirt","jeans","headgear","fashion accessory"};
@@ -488,6 +489,13 @@ public class Recognizer {
                     if (firstLabel.equals( excludeGeneralLabels[k]))
                         labels.remove(i); } } }
 
+        for (int i = labels.size() - 1; i >= 0; i--) {
+            if (labels.get(i) != null) {
+                firstLabel = labels.get(i).toLowerCase();
+                for (int k = 0; k <  colorLabels.length; k++) {
+                    if (firstLabel.equals( colorLabels[k]))
+                        labels.remove(i); } } }
+
         if(labels.get(0).contains("material"))
         { finalLabel= " product";
             return finalLabel;}
@@ -506,7 +514,7 @@ public class Recognizer {
         for(int i=0;i<labels.size();i++) {
             if (labels.get(i) != null) {
                 str = labels.get(i).toLowerCase();
-                if (str.equals("product")){
+                if (str.equals("product")||str.equals("cosmetics")){
                     isProduct=true;
                 }
 
@@ -524,8 +532,8 @@ public class Recognizer {
                 if (labels.get(i) != null) {
                     type = labels.get(i).toLowerCase();
                     //1
-                    if (type.contains("beauty")) {
-                        return "a cosmetic product";
+                    if (type.contains("beauty")||type.contains("cosmetics")||type.contains("cosmetic")) {
+                        return " a makeup product";
                     }
                     //2
                     if (type.contains("skin")) {
